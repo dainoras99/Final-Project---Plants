@@ -1,0 +1,13 @@
+.logo {
+    margin-left: 20px;
+    width: 200px;
+    height: 80px;
+}
+
+header hr {
+    padding: 0px;
+    margin: 0px;
+    border: 2px solid #ffdc00;
+}
+
+

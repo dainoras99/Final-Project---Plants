@@ -10,4 +10,57 @@ header hr {
     border: 2px solid #ffdc00;
 }
 
+/* Geltono bloko su fancy borderiu nustatymai left/right side'uose */
+.block {
+    border-bottom-style: groove;
+    color: #333;
+}
 
+.block button {
+    all: unset;
+    cursor: pointer;
+}
+
+.specialWords {
+    font-size: 1.42857rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 25px;
+}
+
+.checkbox-round {
+    width: 3em;
+    height: 3em;
+    background-color: white;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+.checkbox-round::before {
+    position: relative;
+    left: 30%;
+    top: 20%;
+}
+
+#check1::before {
+    content: "XS";
+}
+#check2::before {
+    content: "S";
+}
+#check3::before {
+    content: "L";
+}
+#check4::before {
+    content: "XL";
+}
+#check5::before {
+    content: "XXL";
+}
+
+.checkbox-round:checked {
+    background-color: gray;
+}

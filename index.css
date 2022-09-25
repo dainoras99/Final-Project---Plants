@@ -4,22 +4,27 @@
     height: 80px;
 }
 
+.main {
+    background-color: #8d9e2b3e;
+}
+
 header hr {
     padding: 0px;
     margin: 0px;
     border: 2px solid #ffdc00;
 }
 
-/* Geltono bloko su fancy borderiu nustatymai left/right side'uose */
+
 .block {
     border-bottom-style: groove;
     color: #333;
 }
 
-.block button {
-    all: unset;
-    cursor: pointer;
+.imaginaryRightBorder {
+    
+    border-right: 4px solid #fcf4c1;
 }
+
 
 .specialWords {
     font-size: 1.42857rem;
@@ -27,6 +32,7 @@ header hr {
     text-transform: uppercase;
     line-height: 25px;
 }
+
 
 .checkbox-round {
     width: 3em;
@@ -63,4 +69,31 @@ header hr {
 
 .checkbox-round:checked {
     background-color: gray;
+}
+
+
+.mainPlants{
+    width: 100%;
+    max-width: 250px;
+    max-height: 250px;
+    object-fit: contain;
+}
+
+
+.alignRightBold {
+    float: right;
+    font-weight: bold;
+}
+
+.alignLeft {
+    float: left;
+}
+
+.cardStyle {
+    background-color: #86f70d3e;
+    padding: 10px;
+    border-style: ridge;
+    height: 100%;
+    text-align: center;
+    margin-left: 1em;
 }

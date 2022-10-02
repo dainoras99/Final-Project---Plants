@@ -1,0 +1,99 @@
+.logo {
+    margin-left: 20px;
+    width: 200px;
+    height: 80px;
+}
+
+.main {
+    background-color: #8d9e2b3e;
+}
+
+header hr {
+    padding: 0px;
+    margin: 0px;
+    border: 2px solid #ffdc00;
+}
+
+
+.block {
+    border-bottom-style: groove;
+    color: #333;
+}
+
+.imaginaryRightBorder {
+    
+    border-right: 4px solid #fcf4c1;
+}
+
+
+.specialWords {
+    font-size: 1.42857rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 25px;
+}
+
+
+.checkbox-round {
+    width: 3em;
+    height: 3em;
+    background-color: white;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+.checkbox-round::before {
+    position: relative;
+    left: 30%;
+    top: 20%;
+}
+
+#check1::before {
+    content: "XS";
+}
+#check2::before {
+    content: "S";
+}
+#check3::before {
+    content: "L";
+}
+#check4::before {
+    content: "XL";
+}
+#check5::before {
+    content: "XXL";
+}
+
+.checkbox-round:checked {
+    background-color: gray;
+}
+
+
+.mainPlants{
+    width: 100%;
+    max-width: 250px;
+    max-height: 250px;
+    object-fit: contain;
+}
+
+
+.alignRightBold {
+    float: right;
+    font-weight: bold;
+}
+
+.alignLeft {
+    float: left;
+}
+
+.cardStyle {
+    background-color: #86f70d3e;
+    padding: 10px;
+    border-style: ridge;
+    height: 100%;
+    text-align: center;
+    margin-left: 1em;
+}

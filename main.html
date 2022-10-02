@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Augalų pasaulis</title>
+    <link rel="stylesheet" href="index.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-xl navbar-dark bg-success">
+        <img class="navbar-brand logo" src="Photos/logo.png" />
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mynav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mynav">
+            <ul class="navbar-nav float-left col-lg-4">
+                <li class="nav-item justify-content-center align-self-center">
+                    <a class="nav-link active" href="#">Parduotuvė</a>
+                </li>
+                <li class="nav-item justify-content-center align-self-center">
+                    <a class="nav-link" href="#">Apie mus</a>
+                </li>
+                <li class="nav-item justify-content-center align-self-center">
+                    <a class="nav-link" href="#">Nuolaidų kortelė</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav col-lg-7 justify-content-end">
+                <li class="nav-item">
+                    <button class="btn btn-dark">
+                        <svg width="40" height="40" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                            <path fill-rule="evenodd"
+                                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                        </svg>
+                        <b>PRISIJUNGIMAS</b>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <header>
+        <hr />
+        <img class="img-fluid" src="Photos/header.jpg" />
+        <hr />
+        <div class="navbar navbar-expand-xl navbar-dark bg-success">
+            <div class="btn-group col-xl-2 col-lg-6 px-xl-5">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <svg width="20" height="20" fill="currentColor" class="bi bi-house-fill"
+                        viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+                        <path fill-rule="evenodd"
+                            d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
+                    </svg>
+                    Užsakymo tipas
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#"></a>
+                    <a class="dropdown-item" href="#">atsiėmimas iš parduotuvės</a>
+                    <a class="dropdown-item" href="#">prekių pristatymas</a>
+                    <a class="dropdown-item" href="#">prekių pristatymas į pasirinktą paštomatą</a>
+                </div>
+            </div>
+            <div class="btn-group col-xl-2 col-lg-6 px-5">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <svg width="20" height="20" fill="currentColor" class="bi bi-hourglass-split"
+                        viewBox="0 0 20 20">
+                        <path
+                            d="M2.5 15a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11zm2-13v1c0 .537.12 1.045.337 1.5h6.326c.216-.455.337-.963.337-1.5V2h-7zm3 6.35c0 .701-.478 1.236-1.011 1.492A3.5 3.5 0 0 0 4.5 13s.866-1.299 3-1.48V8.35zm1 0v3.17c2.134.181 3 1.48 3 1.48a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351z" />
+                    </svg>
+                    Užsakymo laikas
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#"></a>
+                    <a class="dropdown-item" href="#">Kuo greičiau</a>
+                    <a class="dropdown-item" href="#">Pasirinkti kitokį laiką</a>
+                </div>
+            </div>
+            <div class="col-xl-5 col-lg-6 px-5">
+                <div class="input-group">
+                    <input type="search" class="form-control rounded" placeholder="Ieškoti..."
+                        aria-label="Search" aria-describedby="search-addon" />
+                    <button type="button" class="btn btn-primary">
+                        <svg width="20" height="20" fill="white"
+                            class="bi bi-search" viewBox="0 0 20 20">
+                            <path
+                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6">
+                <button type="button" class="btn rounded btn-primary">
+                    <svg width="16" height="16" fill="currentColor" class="bi bi-cart-check-fill" viewBox="0 0 16 16">
+                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1.646-7.646-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+                      </svg>
+                      1 produktas krepšelyje | €19.29
+                </button>
+            </div>
+        </div>
+        <hr />
+    </header>
+    <div class="container-fluid main">
+        <div class="row">
+            <div class="col-lg-2 col-md-5 imaginaryRightBorder">
+                <div class="block pt-2">
+                    <p class="specialWords">Kategorijos</p>
+                    <ul>
+                        <li>
+                            <a href="#">Tokie</a>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <a href="#">Kitokie</a>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <a href="#">Anokie</a>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <a href="#">Ir pan.</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="block pt-2">
+                    <p class="mb-2 specialWords">Kaina, €</p>
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="inputPrice col-lg-5">
+                            <input type="number" placeholder="Min" class="inputMin form-control" />
+                        </div>
+                        <div class="priceSeparator col-lg-2  my-auto"></div>
+                        <div class="inputPrice col-lg-5">
+                            <input type="number" placeholder="Max" class="inputMax form-control" />
+                        </div>
+                    </div>
+                    <div class="slider">
+                        <div class="progress"> </div>
+                    </div>
+                </div>
+                <div class="block py-2">
+                    <p class="mb-2 specialWords">Dydis</p>
+                    <input type="checkbox" id="check1" class="checkbox-round" />
+                    <input type="checkbox" id="check2" class="checkbox-round" />
+                    <input type="checkbox" id="check3" class="checkbox-round" />
+                    <input type="checkbox" id="check4" class="checkbox-round" />
+                    <input type="checkbox" id="check5" class="checkbox-round" />
+                </div>
+            </div>
+            <div class="col-lg-10 col-md-7">
+                <div class="row mb-2 justify-content-center">
+                    <!-- buvo cia -->
+                </div>
+                <div class="container-fluid">
+                    <div class="row mb-2 justify-content-center">
+                      <div class="cardStyle mr-xl-2 px-2 col-xl-4 col-lg-6 mr-lg-2 mb-lg-2 mb-xl-0 mb-sm-1" >
+                        <img class="img-fluid mt-3 mainPlants" src="Photos/Plants/AGAPANTAS (AGAPANTHUS) ‘MIDNIGHT STAR’.jpg"
+                          alt="Augalas - AGAPANTAS (AGAPANTHUS) ‘MIDNIGHT STAR’" />
+                        <p>AGAPANTAS (AGAPANTHUS) ‘MIDNIGHT STAR’</p>
+                        <button class="btn btn-success alignLeft" type="button">
+                          Pridėti į krepšelį
+                        </button>
+                        <p class="alignRightBold">Kaina: 7.89€</p>
+                      </div>
+                      <div class="cardStyle mr-xl-2 px-2 col-xl-4 col-lg mr-lg-2 mb-lg-2 mb-xl-0 mb-sm-1">
+                        <img class="img-fluid mt-3 mainPlants" src="Photos/Plants/ASTILBĖ (ASTILBE CHINENSIS) ‘LITTLE VISION IN PURPLE’.jpg"
+                          alt="Augalas - ASTILBĖ (ASTILBE CHINENSIS) ‘LITTLE VISION IN PURPLE’" />
+                        <p class>ASTILBĖ (ASTILBE CHINENSIS) ‘LITTLE VISION IN PURPLE’</p>
+                        <button class="btn btn-success alignLeft" type="button">
+                            Pridėti į krepšelį
+                          </button>
+                        <p class="alignRightBold">Kaina: 11.99€</p>
+                      </div>
+                      <div class="cardStyle mr-xl-2 px-2 col-xl col-lg-6 position-relative">
+                        <img class="img-fluid mt-3 mainPlants" src="Photos/Plants/AŠUOTĖ (STIPA TENUISSIMA) ‘PONY TAILS’.jpg"
+                          alt="Augalas - AŠUOTĖ (STIPA TENUISSIMA) ‘PONY TAILS’" />
+                        <p>AŠUOTĖ (STIPA TENUISSIMA) ‘PONY TAILS’</p>
+                        <button class="btn btn-success alignLeft" type="button">
+                            Pridėti į krepšelį
+                          </button>
+                        <p class="alignRightBold">Kaina: 11.99€</p>
+                      </div>
+                    </div>
+                    <div class="row mb-2 justify-content-center">
+                      <div class="cardStyle px-2 mr-xl-2 col-xl-4 col-lg-6 mr-lg-2 mb-lg-2 mb-xl-0 mb-sm-1">
+                        <img class="img-fluid mt-3 mainPlants" src="Photos/Plants/BUDLĖJA (BUDDLEJA) ‘WISTERIA LANE’.jpg"
+                          alt="Augalas - BUDLĖJA (BUDDLEJA) ‘WISTERIA LANE’" />
+                        <p>BUDLĖJA (BUDDLEJA) ‘WISTERIA LANE’</p>
+                        <button class="btn btn-success alignLeft" type="button">
+                            Pridėti į krepšelį
+                          </button>
+                        <p class="alignRightBold">Kaina: 5.99€</p>
+                      </div>
+                      <div class="cardStyle px-2 mr-xl-2 col-xl-4 col-lg mr-lg-2 mb-lg-2 mb-xl-0 mb-sm-1">
+                        <img class="img-fluid mt-3 mainPlants" src="Photos/Plants/DĖMĖTOJI RŪGTIS (PERSICARIA AMPLEXICAULIS) ‘PINK ELEPHANT’.jpg"
+                          alt="Augalas - DĖMĖTOJI RŪGTIS (PERSICARIA AMPLEXICAULIS) ‘PINK ELEPHANT’" />
+                        <p>DĖMĖTOJI RŪGTIS (PERSICARIA AMPLEXICAULIS) ‘PINK ELEPHANT’</p>
+                        <button class="btn btn-success alignLeft" type="button">
+                            Pridėti į krepšelį
+                          </button>
+                        <p class="alignRightBold">Kaina: 8.99€</p>
+                      </div>
+                      <div class="cardStyle px-2 mr-xl-2 col-xl col-lg-6">
+                        <img class="img-fluid mt-3 mainPlants" src="Photos/Plants/DIDŽIOJI ASTRANTIJA (ASTRANTIA MAJOR) ‘FLORENCE’ PBR.jpg"
+                          alt="Augalas - DIDŽIOJI ASTRANTIJA (ASTRANTIA MAJOR) ‘FLORENCE’ PBR" />
+                        <p>DIDŽIOJI ASTRANTIJA (ASTRANTIA MAJOR) ‘FLORENCE’ PBR</p>
+                        <button class="btn btn-success alignLeft" type="button">
+                            Pridėti į krepšelį
+                          </button>
+                        <p class="alignRightBold">Kaina: 16.19€</p>
+                      </div>
+                    </div>
+                    <div class="row mb-2 justify-content-center">
+                      <div class="cardStyle px-2 mr-xl-2 col-xl-4 col-lg-6 mr-lg-2 mb-lg-2 mb-xl-0 mb-sm-1"">
+                        <img class="img-fluid mt-3 mainPlants" src="Photos/Plants/DIDŽIOJI ASTRANTIJA (ASTRANTIA MAJOR) ‘HADSPEN BLOOD’ PBR.jpg" alt="Augalas - DIDŽIOJI ASTRANTIJA (ASTRANTIA MAJOR) ‘HADSPEN BLOOD’ PBR" 2021 green" width="330px" height="210px">
+                        <p>DIDŽIOJI ASTRANTIJA (ASTRANTIA MAJOR) ‘HADSPEN BLOOD’ PBR</p>
+                        <button class="btn btn-success alignLeft" type="button">
+                            Pridėti į krepšelį
+                          </button>
+                        <p class="alignRightBold">Kaina: 3.79€</p>
+                      </div>
+                      <div class="cardStyle px-2 mr-xl-2 col-xl-4 col-lg mr-lg-2 mb-lg-2 mb-xl-0 mb-sm-1">
+                        <img class="img-fluid mt-3 mainPlants" src="Photos/Plants/GRĖSVIS PLAČIALAPIS (KALMIA LATIFOLIA) EWA.jpg"
+                          alt="Augalas - GRĖSVIS PLAČIALAPIS (KALMIA LATIFOLIA) EWA" />
+                        <p>GRĖSVIS PLAČIALAPIS (KALMIA LATIFOLIA) EWA</p>
+                        <button class="btn btn-success alignLeft" type="button">
+                            Pridėti į krepšelį
+                          </button>
+                        <p class="alignRightBold">Kaina: 6.19€</p>
+                      </div>
+                      <div class="cardStyle px-2 mr-xl-2 col-xl col-lg-6">
+                        <img class="img-fluid mt-3 mainPlants" src="Photos/Plants/HORTENZIJA DIDŽIALAPĖ (HYDRANGEA MACROPHYLLA) ‘SOEUR THERESE’.jpg"
+                          alt="Augalas - HORTENZIJA DIDŽIALAPĖ (HYDRANGEA MACROPHYLLA) ‘SOEUR THERESE’" />
+                        <p>HORTENZIJA DIDŽIALAPĖ (HYDRANGEA MACROPHYLLA)</p>
+                        <button class="btn btn-success alignLeft" type="button">
+                            Pridėti į krepšelį
+                          </button>
+                        <p class="alignRightBold">Kaina: 3.79€</p>
+                      </div>
+                    </div>
+                  </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

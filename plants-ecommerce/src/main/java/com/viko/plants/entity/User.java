@@ -2,13 +2,8 @@ package com.viko.plants.entity;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 
 @Entity
@@ -17,7 +12,7 @@ import java.util.Date;
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
-public class User implements UserDetails {
+public class User {
 
     @Id
     @Column(name = "id")
@@ -55,54 +50,5 @@ public class User implements UserDetails {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-
-    public User(String username,
-                String email,
-                String firstname,
-                String lastname,
-                String password,
-                Date birthdate,
-                Date createTime,
-                Boolean locked,
-                Boolean enabled,
-                UserRole userRole) {
-        this.username = username;
-        this.email = email;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.password = password;
-        this.birthdate = birthdate;
-        this.createTime = createTime;
-        this.locked = locked;
-        this.enabled = enabled;
-        this.userRole = userRole;
-    }
-
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.name());
-        return Collections.singletonList(authority);
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return !locked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
 }
 

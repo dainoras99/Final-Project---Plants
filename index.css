@@ -92,8 +92,11 @@ header hr {
 .cardStyle {
     background-color: #86f70d3e;
     padding: 10px;
-    border-style: ridge;
+    border-style: solid;
+    border-color: rgb(243, 243, 149);
     height: 100%;
     text-align: center;
     margin-left: 1em;
+    border-radius: 25px;
+    
 }

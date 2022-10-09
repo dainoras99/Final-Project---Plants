@@ -1,0 +1,13 @@
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="cardStyle col-3 m-4" *ngFor="let tempPlant of plants">
+            <img class="img-responsive mt-3 mainPlants" src="../../../{{tempPlant.imageUrl}}"
+                alt="Augalas - {{tempPlant.name}}" />
+            <p>{{tempPlant.name}}</p>
+            <button class="btn btn-success alignLeft mb-3" type="button">
+                Pridėti į krepšelį
+            </button>
+            <p class="alignRightBold">Kaina: 7.89€</p>
+        </div>
+    </div>
+</div>

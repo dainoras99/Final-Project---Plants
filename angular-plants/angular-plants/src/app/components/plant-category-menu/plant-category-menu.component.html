@@ -1,0 +1,8 @@
+<div class="block pt-2">
+    <p class="specialWords">Kategorijos</p>
+    <ul>
+        <li *ngFor="let tempCategory of plantCategory">
+            <a routerLink="/category/{{tempCategory.id}}" routerLinkActive="active-link">{{tempCategory.name}}</a>
+        </li>
+    </ul>
+</div>

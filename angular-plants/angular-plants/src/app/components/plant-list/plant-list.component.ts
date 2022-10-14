@@ -12,6 +12,8 @@ export class PlantListComponent implements OnInit {
 
   plants: Plant[] = [];
   currentCategoryId: number = 1;
+  isSearch: boolean = false;
+
   constructor(private productService: ProductService,
               private route: ActivatedRoute) { }
 
@@ -23,6 +25,23 @@ export class PlantListComponent implements OnInit {
 
   listPlants() {
 
+    this.isSearch = this.route.snapshot.paramMap.has('keyword');
+
+    if (this.isSearch) this.handleSearchPlants();
+    else this.handleListPlants();
+  }
+
+  handleSearchPlants() {
+    const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
+
+    this.productService.searchProducts(theKeyword).subscribe(
+      data => {
+        this.plants = data;
+      }
+    )
+  }
+
+  handleListPlants() {
     //patikrint ar id available 
     const categoryIdValid: boolean = this.route.snapshot.paramMap.has('id');
 

@@ -17,14 +17,24 @@ export class ProductService {
 
   getProductList(categoryId: number): Observable<Plant[]> {
     const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`;
-    return this.httpClient.get<GetResponseProduct>(searchUrl).pipe(
-      map(response => response._embedded.plants)
-    );
+    return this.getPlants(searchUrl);
   }
 
   getPlantCategories(): Observable<PlantCategory[]> {
     return this.httpClient.get<GetResponseCategory>(this.categoryUrl).pipe(
       map(response => response._embedded.plantCategory)
+    );
+  }
+
+  searchProducts(theKeyword: string): Observable<Plant[]> {
+    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}`;
+    return this.getPlants(searchUrl);
+  }
+
+
+  private getPlants(searchUrl: string): Observable<Plant[]> {
+    return this.httpClient.get<GetResponseProduct>(searchUrl).pipe(
+      map(response => response._embedded.plants)
     );
   }
 }

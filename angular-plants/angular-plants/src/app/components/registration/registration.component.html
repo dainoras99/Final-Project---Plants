@@ -1,0 +1,51 @@
+<h2 class="text-uppercase text-center mb-5">Susikurkite paskyrą</h2>
+
+<form (ngSubmit)="userRegister()">
+
+
+    <div class="form-outline mb-4">
+        <label class="form-label" for="username">Slapyvardis</label>
+        <input type="text" id="username" name="username" class="form-control form-control-lg" [(ngModel)]="user.username" />
+    </div>
+    <div class="row">
+     <div class="form-outline mb-4 col-6">
+        <label class="form-label" for="firstname">Vardas</label>
+        <input type="text" id="firstname" name="firstName" class="form-control form-control-lg" [(ngModel)]="user.firstname" />
+    </div>
+
+    <div class="form-outline mb-4 col-6">
+        <label class="form-label" for="lastname">Pavardė</label>
+        <input type="text" id="lastname" name="lastName" class="form-control form-control-lg" [(ngModel)]="user.lastname" />
+    </div>
+    </div>
+
+    <div class="form-outline mb-4">
+        <label class="form-label" for="email">El. Paštas</label>
+        <input type="email" id="email" name="email" class="form-control form-control-lg" [(ngModel)]="user.email" />
+    </div>
+
+    <div class="form-outline mb-4">
+        <label class="form-label" for="date">Gimimo data</label>
+        <input type="date" id="date" name="birthdate" class="form-control form-control-lg" [(ngModel)]="user.birthdate" />
+    </div>
+
+    <div class="row">
+    <div class="form-outline mb-4 col-6">
+        <label class="form-label" for="password">Slaptažodis</label>
+        <input type="password" id="password" name="password" class="form-control form-control-lg" [(ngModel)]="user.password" />
+    </div>
+
+    <!-- <div class="form-outline mb-4 col-6">
+        <label class="form-label" for="repeatPassword">Pakartokite slaptažodį</label>
+        <input type="password" id="repeatPassword" class="form-control form-control-lg" />
+    </div> -->
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Registracija</button>
+    </div>
+
+    <p class="text-center text-muted mt-3 mb-0">Jau turite paskyrą? </p> 
+    <p class="text-center mt-2 mb-0 text-primary cursor" (click)="openLoginDialog()">Prisijunkite čia</p>
+            <!-- <a href="" (click)="openLoginDialog()">Cia</button> -->
+</form>

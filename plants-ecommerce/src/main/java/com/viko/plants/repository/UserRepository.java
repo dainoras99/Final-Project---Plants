@@ -8,6 +8,5 @@ import java.util.Optional;
 
 @CrossOrigin("http://localhost:4200")
 public interface UserRepository extends JpaRepository<User, Integer> {
-
-
+    User findByUsername(String username);
 }

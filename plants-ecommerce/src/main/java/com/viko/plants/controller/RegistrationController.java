@@ -7,29 +7,28 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path="api/v1/registration")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class RegistrationController {
 
     @Autowired
     private UserRepository repository;
 
-    @PostMapping
-    public ResponseEntity<String> register(@RequestBody RegistrationRequest request) {
+    @PostMapping("api/v1/login")
+    public ResponseEntity<?> login (@RequestBody RegistrationRequest registrationRequest) {
+        System.out.println(registrationRequest.getUsername() + " " + registrationRequest.getPassword());
+        User user = repository.findByUsername(registrationRequest.getUsername());
+        if (user.getPassword().equals(registrationRequest.getPassword())) return ResponseEntity.ok(user);
+        return (ResponseEntity<?>) ResponseEntity.internalServerError();
+    }
+
+
+    @PostMapping("api/v1/registration")
+    public ResponseEntity<String> register(@RequestBody User user) {
         try {
-            User user = new User();
-            user.setEmail(request.getEmail());
-            user.setPassword(request.getPassword());
-            user.setUsername(request.getUsername());
-            user.setFirstname(request.getFirstName());
-            user.setLastname(request.getLastName());
-            user.setBirthdate(request.getBirthdate());
             repository.save(user);
             return new ResponseEntity<>("Successful Registration", HttpStatus.CREATED);
         }

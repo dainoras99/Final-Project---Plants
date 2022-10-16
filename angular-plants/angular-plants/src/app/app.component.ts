@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog'
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { AuthenticationService } from './services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 export class AppComponent {
   title = 'angular-plants';
 
-  constructor(private dialogRef: MatDialog) {}
+  constructor(private dialogRef: MatDialog, public authenticationService: AuthenticationService) {}
 
   openDialog() {
     this.dialogRef.open(RegistrationComponent, {

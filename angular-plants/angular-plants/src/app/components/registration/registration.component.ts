@@ -37,6 +37,5 @@ export class RegistrationComponent implements OnInit {
       height: '45%',
       width: '30%'
     });
-
   }
 }

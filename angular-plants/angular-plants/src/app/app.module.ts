@@ -17,8 +17,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
+import { PlantDetailsComponent } from './components/plant-details/plant-details.component';
 
 const routes: Routes = [
+  {path: 'plants/:id', component: PlantDetailsComponent},
   {path: 'search/:keyword', component: PlantListComponent},
   {path: 'category/:id', component: PlantListComponent},
   {path: 'category', component: PlantListComponent},
@@ -33,7 +35,8 @@ const routes: Routes = [
     PlantCategoryMenuComponent,
     SearchComponent,
     RegistrationComponent,
-    LoginComponent
+    LoginComponent,
+    PlantDetailsComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

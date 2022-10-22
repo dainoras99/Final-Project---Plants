@@ -1,7 +1,18 @@
 <div class="container">
-    <div class="cardStyle col-3 m-4 w-100">
+    <div class="cardStyle row col-3 m-4 w-100">
         <div class="col-6">
-            wroks
+            <img src="../../../{{ plant.imageUrl }}" class="img-responsive"/>
+        </div>
+        <div class="col-6">
+            <h2>{{plant.name}}</h2>
+            <p class="text-left">{{plant.description}}</p>
+            <p class="alignRightBold">Likutis: {{plant.inStock}}</p>
+            <div class="mt-5">
+                <button class="btn btn-success alignLeft mb-3" type="button">
+                    Pridėti į krepšelį
+                </button>
+                <p class="alignRightBold">Kaina: {{plant.price | currency:'EUR'}} </p>
+            </div>
         </div>
     </div>
-</div>
+</div> 

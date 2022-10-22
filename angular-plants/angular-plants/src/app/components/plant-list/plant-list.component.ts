@@ -60,4 +60,8 @@ export class PlantListComponent implements OnInit {
       }
     )
   }
+
+  addToCart(plant: Plant) {
+    console.log(`kazkas: ${plant.name}, ${plant.price}`);
+    }
 }

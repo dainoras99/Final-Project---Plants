@@ -31,6 +31,10 @@ export class ProductService {
     return this.getPlants(searchUrl);
   }
 
+  getPlant(productId: number) : Observable<Plant> {
+    const plantUrl = `${this.baseUrl}/${productId}`;
+    return this.httpClient.get<Plant>(plantUrl);
+  }
 
   private getPlants(searchUrl: string): Observable<Plant[]> {
     return this.httpClient.get<GetResponseProduct>(searchUrl).pipe(

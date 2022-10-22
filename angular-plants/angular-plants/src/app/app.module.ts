@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { PlantDetailsComponent } from './components/plant-details/plant-details.component';
+import { CartStatusComponent } from './components/cart-status/cart-status.component';
 
 const routes: Routes = [
   {path: 'plants/:id', component: PlantDetailsComponent},
@@ -36,7 +37,8 @@ const routes: Routes = [
     SearchComponent,
     RegistrationComponent,
     LoginComponent,
-    PlantDetailsComponent
+    PlantDetailsComponent,
+    CartStatusComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

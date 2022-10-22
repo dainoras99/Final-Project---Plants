@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name="user")
@@ -50,5 +51,11 @@ public class User {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<CartSession> cartSessions;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<CartItem> cartItems;
 }
 

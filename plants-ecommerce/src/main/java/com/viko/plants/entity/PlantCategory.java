@@ -22,4 +22,7 @@ public class PlantCategory {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private Set<Plant> plants;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="plantCategory")
+    private Set<CartItem> cartItems;
 }

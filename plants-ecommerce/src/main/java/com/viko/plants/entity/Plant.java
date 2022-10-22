@@ -3,6 +3,7 @@ package com.viko.plants.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="plants")
@@ -32,5 +33,8 @@ public class Plant {
 
     @Column(name = "in_stock")
     private Integer inStock;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "plant")
+    private Set<CartItem> cartItems;
 
 }

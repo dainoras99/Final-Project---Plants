@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/authentication.service'
 
 @Component({
   selector: 'app-cart-status',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CartStatusComponent implements OnInit {
 
-  constructor() { }
+  constructor(@Inject(AuthenticationService) public authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
   }

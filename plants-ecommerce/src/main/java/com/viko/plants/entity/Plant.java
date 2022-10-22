@@ -1,5 +1,6 @@
 package com.viko.plants.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -35,6 +36,7 @@ public class Plant {
     private Integer inStock;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "plant")
+    @JsonManagedReference
     private Set<CartItem> cartItems;
 
 }

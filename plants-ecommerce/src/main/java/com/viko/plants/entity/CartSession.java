@@ -1,5 +1,7 @@
 package com.viko.plants.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,13 +21,16 @@ public class CartSession {
     private Integer id;
 
     @Column(name = "total_price")
-    private Double total_price;
+    private Float total_price;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cartSession")
+    @JsonManagedReference
     private Set<CartItem> cartItems;
 
 }

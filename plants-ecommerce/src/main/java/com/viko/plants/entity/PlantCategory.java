@@ -1,5 +1,6 @@
 package com.viko.plants.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,5 +25,6 @@ public class PlantCategory {
     private Set<Plant> plants;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="plantCategory")
+    @JsonManagedReference
     private Set<CartItem> cartItems;
 }

@@ -63,13 +63,14 @@ public class CartSessionController {
                     }
                     existingCartSession = cartTempItem.getCartSession();
                 }
+                existingCartSession.setTotal_price(existingCartSession.getTotal_price() + cartItem.getPlant().getPrice());
                 cartItem.setCartSession(existingCartSession);
                 cartSessionItemRepository.save(cartItem);
                 return new ResponseEntity<>("Sesija jau egzistuoja, pridedamas naujas produktas", HttpStatus.OK);
             }
             cartSession.setUser(user);
             cartSession.setCartItems(cartItems);
-            cartSession.setTotal_price(13.53);
+            cartSession.setTotal_price(cartItem.getPlant().getPrice());
 
 
             cartItem.setCartSession(cartSession);

@@ -11,6 +11,7 @@ import { AuthenticationService } from './services/authentication.service';
 })
 export class AppComponent {
   title = 'angular-plants';
+  showSearchResults = true;
 
   constructor(private dialogRef: MatDialog, public authenticationService: AuthenticationService) {}
 
@@ -26,5 +27,10 @@ export class AppComponent {
       height: '45%',
       width: '30%'
     });
+  }
+
+  refreshSearchResults() {
+    this.showSearchResults = false;
+    setTimeout(() => this.showSearchResults = true);
   }
 }

@@ -80,7 +80,7 @@
                 </div>
             </div>
             <div class="col-lg-10 col-md-7">
-                <div class="navbar navbar-expand-xl navbar-dark bg-success">
+                <div *ngIf="authenticationService.isUserLoggedIn()" class="navbar navbar-expand-xl navbar-dark bg-success">
                     <div class="btn-group col-xl-2 col-lg-6 px-xl-5">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                             <svg width="20" height="20" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 20 20">
@@ -116,7 +116,10 @@
                         <app-search></app-search>
                     </div>
                     <div class="col-xl-3 col-lg-6">
-                        <app-cart-status></app-cart-status>
+                    <ng-container *ngIf="showSearchResults">
+                        <app-cart-status #cartStatusComponent></app-cart-status>
+                    </ng-container>
+
                     </div>
                 </div>
                 <router-outlet></router-outlet>

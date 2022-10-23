@@ -1,5 +1,7 @@
 package com.viko.plants.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -54,11 +56,11 @@ public class User {
     private UserRole userRole;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @JsonManagedReference
+    @JsonIgnore
     private Set<CartSession> cartSessions;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @JsonManagedReference
+    @JsonIgnore
     private Set<CartItem> cartItems;
 }
 

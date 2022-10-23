@@ -19,6 +19,13 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { PlantDetailsComponent } from './components/plant-details/plant-details.component';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
+import { DrawerComponent } from './components/drawer/drawer.component';
+
+import { MatToolbarModule } from '@angular/material/toolbar'
+import { MatSidenavModule } from '@angular/material/sidenav'
+import { MatIconModule } from '@angular/material/icon'
+import { MatListModule } from '@angular/material/list'
+import { MatButtonModule } from '@angular/material/button'
 
 const routes: Routes = [
   {path: 'plants/:id', component: PlantDetailsComponent},
@@ -38,7 +45,8 @@ const routes: Routes = [
     RegistrationComponent,
     LoginComponent,
     PlantDetailsComponent,
-    CartStatusComponent
+    CartStatusComponent,
+    DrawerComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -46,7 +54,8 @@ const routes: Routes = [
     HttpClientModule,
     MatDialogModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    MatSidenavModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

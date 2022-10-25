@@ -25,7 +25,8 @@ import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatIconModule } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
-import { MatButtonModule } from '@angular/material/button'
+import { MatButtonModule } from '@angular/material/button';
+import { CartComponent } from './components/cart/cart.component'
 
 const routes: Routes = [
   {path: 'plants/:id', component: PlantDetailsComponent},
@@ -46,7 +47,8 @@ const routes: Routes = [
     LoginComponent,
     PlantDetailsComponent,
     CartStatusComponent,
-    DrawerComponent
+    DrawerComponent,
+    CartComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

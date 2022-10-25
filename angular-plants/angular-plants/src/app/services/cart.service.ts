@@ -7,6 +7,7 @@ import { CartItem } from '../common/cart-item';
 import { User } from '../common/user';
 import { Subject } from 'rxjs/internal/Subject';
 import { tap } from 'rxjs/internal/operators/tap';
+import { Plant } from '../common/plant';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,18 @@ export class CartService {
     return this.httpClient.get<getResponseCartItems>(cartItemsUrl).pipe(
       map(response => response._embedded.cartItems)
     );
+  }
+
+  getCartItemsByUserId(userId: number): Observable<CartItem[]> {
+    const cartItemsByUserUrl = `${this.baseUrl}/users/${userId}/cartItems`
+    return this.httpClient.get<getResponseCartItems>(cartItemsByUserUrl).pipe(
+      map(response => response._embedded.cartItems)
+    );
+  }
+
+  getPlantsByCartItems(cartItemId: number): Observable<Plant> {
+    const plantsByCartItemIdUrl = `${this.baseUrl}/cartItems/${cartItemId}/plant`
+    return this.httpClient.get<Plant>(plantsByCartItemIdUrl);
   }
 
   getUserByUsername(userName: string) : Observable<User> {

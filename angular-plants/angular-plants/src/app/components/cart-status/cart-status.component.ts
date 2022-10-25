@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CartSession } from 'src/app/common/cart-session';
 import { CartItem } from 'src/app/common/cart-item';
@@ -6,6 +6,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service'
 import { CartService } from 'src/app/services/cart.service';
 import { concat, forkJoin, Observable, Subject } from 'rxjs';
 import { User } from 'src/app/common/user';
+import { SidenavService } from 'src/app/services/sidenav.service';
 
 @Component({
   selector: 'app-cart-status',
@@ -13,8 +14,6 @@ import { User } from 'src/app/common/user';
   styleUrls: ['./cart-status.component.css']
 })
 export class CartStatusComponent implements OnInit {
-
-  opened = false;
 
   cartSessions: CartSession[] = [];
   cartItems: CartItem[] = [];
@@ -30,7 +29,8 @@ export class CartStatusComponent implements OnInit {
 
   constructor(@Inject(AuthenticationService) public authenticationService: AuthenticationService, 
   private cartService: CartService, 
-  private route: ActivatedRoute) { }
+  private route: ActivatedRoute,
+  private sideNavService: SidenavService) { }
 
   ngOnInit(): void {
     this.handleUser();
@@ -86,5 +86,9 @@ export class CartStatusComponent implements OnInit {
     console.log("cartSessions[0].id" + this.cartSessions[0].id);
     console.log("totalPrice: " + this.totalPrice);
     console.log("totalQuantity: " + this.totalQuantity);
+  }
+
+  clickSideNav() { 
+    this.sideNavService.toggle();
   }
 }

@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog'
+import { MatSidenav } from '@angular/material/sidenav';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { AuthenticationService } from './services/authentication.service';
+import { SidenavService } from './services/sidenav.service';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +14,7 @@ import { AuthenticationService } from './services/authentication.service';
 export class AppComponent {
   title = 'angular-plants';
   showSearchResults = true;
-
-  constructor(private dialogRef: MatDialog, public authenticationService: AuthenticationService) {}
+  constructor(private dialogRef: MatDialog, public authenticationService: AuthenticationService, private sideNavService: SidenavService) {}
 
   openDialog() {
     this.dialogRef.open(RegistrationComponent, {

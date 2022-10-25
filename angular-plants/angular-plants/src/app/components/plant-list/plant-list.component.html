@@ -1,7 +1,6 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="cardStyle col-3 m-4" *ngFor="let tempPlant of plants">
-            <button class="btn btn-primary absolute">0</button>
             <a routerLink="/plants/{{ tempPlant.id }}">
                 <img class="img-responsive mt-3 mainPlants" src="../../../{{ tempPlant.imageUrl }}"
                     alt="Augalas - {{ tempPlant.name }}" />

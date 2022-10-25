@@ -7,6 +7,7 @@ import { User } from 'src/app/common/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
+import { SidenavService } from 'src/app/services/sidenav.service';
 import { CartStatusComponent } from '../cart-status/cart-status.component';
 
 @Component({
@@ -24,7 +25,7 @@ export class PlantListComponent implements OnInit {
   constructor(private productService: ProductService,
               private route: ActivatedRoute,
               private authenticationService: AuthenticationService,
-              private cartService: CartService, private dialogRef: MatDialog) { }
+              private cartService: CartService, private dialogRef: MatDialog, private sideNavService: SidenavService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(()=> {
@@ -77,7 +78,7 @@ export class PlantListComponent implements OnInit {
       {
         next: response => {
           console.log("zjbs");
-          let cartStatus = new CartStatusComponent(this.authenticationService, this.cartService, this.route);
+          let cartStatus = new CartStatusComponent(this.authenticationService, this.cartService, this.route, this.sideNavService);
           cartStatus.ngOnInit();
         },
         error: err => {

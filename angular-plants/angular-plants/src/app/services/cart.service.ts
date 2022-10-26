@@ -71,7 +71,11 @@ export class CartService {
     );
   }
   deleteCartItem(cartItemId: number) : Observable<any> {
-    return this.httpClient.delete(`${this.baseUrl}/v1/deleteCartItem?id=${cartItemId}`, {responseType: 'text'});
+    return this.httpClient.delete(`${this.baseUrl}/v1/deleteCartItem?id=${cartItemId}`, {responseType: 'text'}).pipe(
+      tap(()=>{
+        this.getRefreshRequired.next();
+      })
+    );
   }
   removeSession(sessionId: number) : Observable<any> {
     return this.httpClient.delete(`${this.baseUrl}/v1/deleteCartSession?id=${sessionId}`, {responseType: 'text'})

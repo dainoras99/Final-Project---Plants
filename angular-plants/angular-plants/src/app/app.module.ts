@@ -26,9 +26,11 @@ import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatIconModule } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
 import { MatButtonModule } from '@angular/material/button';
-import { CartComponent } from './components/cart/cart.component'
+import { CartComponent } from './components/cart/cart.component';
+import { CheckoutComponent } from './components/checkout/checkout.component'
 
 const routes: Routes = [
+  {path: 'checkout', component: CheckoutComponent},
   {path: 'plants/:id', component: PlantDetailsComponent},
   {path: 'search/:keyword', component: PlantListComponent},
   {path: 'category/:id', component: PlantListComponent},
@@ -48,7 +50,8 @@ const routes: Routes = [
     PlantDetailsComponent,
     CartStatusComponent,
     DrawerComponent,
-    CartComponent
+    CartComponent,
+    CheckoutComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

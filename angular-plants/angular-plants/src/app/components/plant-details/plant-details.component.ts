@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Plant } from 'src/app/common/plant';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class PlantDetailsComponent implements OnInit {
 
   plant!: Plant;
 
-  constructor(private productService: ProductService, private route: ActivatedRoute) { }
+  constructor(private productService: ProductService, private route: ActivatedRoute, public authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {

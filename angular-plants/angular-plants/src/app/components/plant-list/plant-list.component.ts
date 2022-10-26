@@ -24,7 +24,7 @@ export class PlantListComponent implements OnInit {
 
   constructor(private productService: ProductService,
               private route: ActivatedRoute,
-              private authenticationService: AuthenticationService,
+              public authenticationService: AuthenticationService,
               private cartService: CartService, private dialogRef: MatDialog, private sideNavService: SidenavService) { }
 
   ngOnInit(): void {

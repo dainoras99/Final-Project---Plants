@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { AppComponent } from 'src/app/app.component';
 import { Plant } from 'src/app/common/plant';
 import { User } from 'src/app/common/user';
@@ -21,6 +22,8 @@ export class PlantListComponent implements OnInit {
   currentCategoryId: number = 1;
   isSearch: boolean = false;
   user!: User;
+
+  private refreshCartComponent= new BehaviorSubject<boolean>(true);
 
   constructor(private productService: ProductService,
               private route: ActivatedRoute,
@@ -73,7 +76,6 @@ export class PlantListComponent implements OnInit {
 
   addToCart(plant: Plant) {
     let username = this.authenticationService.getLoggedInUserName();
-    console.log(`kazkas: ${plant.name}, ${username}`);
     this.cartService.postCartItem(username!, plant.name!).subscribe(
       {
         next: response => {

@@ -87,7 +87,7 @@ public class CartSessionController {
             return new ResponseEntity<>("Augalas pašalintas iš krepšelio", HttpStatus.OK);
         }
         catch(Exception exc) {
-            return new ResponseEntity<>("an error occured", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("an error has occured", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -98,7 +98,7 @@ public class CartSessionController {
             return new ResponseEntity<>("Sesija ištrinta", HttpStatus.OK);
         }
         catch(Exception exc) {
-            return new ResponseEntity<>("an error occured", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("an error has occured", HttpStatus.BAD_REQUEST);
         }
     }
 

@@ -57,7 +57,7 @@
             <button (click)="addToCart(tempPlant)" class="btn btn-success alignLeft mb-3" type="button">
                 Pridėti į krepšelį
             </button>
-            <p class="alignRightBold">Kaina: 7.89€</p>
+            <p class="alignRightBold">Kaina: {{tempPlant.price | currency:'EUR'}}</p>
         </div>
         <div *ngIf="plants?.length == 0" class="alert alert-warning col-md-12 m-4">
             Pagal jūsų raktažodį - augalų nerasta

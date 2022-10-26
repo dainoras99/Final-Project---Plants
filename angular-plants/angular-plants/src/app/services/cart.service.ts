@@ -8,6 +8,7 @@ import { User } from '../common/user';
 import { Subject } from 'rxjs/internal/Subject';
 import { tap } from 'rxjs/internal/operators/tap';
 import { Plant } from '../common/plant';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +18,15 @@ export class CartService {
   private baseUrl=`http://localhost:8080/api`;
   
   private refreshRequired = new Subject<void>();
-  private refreshRequiredRemoval = new Subject<void>();
+  private refreshCartComponent= new BehaviorSubject<boolean>(true);
 
+  get getRefreshCartComponent() {
+    return this.refreshCartComponent;
+  }
   get getRefreshRequired() {
     return this.refreshRequired;
   }
+
 
   constructor(private httpClient: HttpClient) { }
 
@@ -57,6 +62,8 @@ export class CartService {
   }
 
   postCartItem(username: string, plantName: string) : Observable<any> {
+    this.refreshCartComponent.next(false);
+    this.refreshCartComponent.subscribe(l => console.log(l));
     return this.httpClient.post(`${this.baseUrl}/v1/createSession`, {username, plantName}, {responseType: 'text'}).pipe(
       tap(()=>{
         this.getRefreshRequired.next();
@@ -64,11 +71,7 @@ export class CartService {
     );
   }
   deleteCartItem(cartItemId: number) : Observable<any> {
-    return this.httpClient.delete(`${this.baseUrl}/v1/deleteCartItem?id=${cartItemId}`, {responseType: 'text'}).pipe(
-      tap(()=>{
-        this.refreshRequiredRemoval.next();
-      })
-    );
+    return this.httpClient.delete(`${this.baseUrl}/v1/deleteCartItem?id=${cartItemId}`, {responseType: 'text'});
   }
   removeSession(sessionId: number) : Observable<any> {
     return this.httpClient.delete(`${this.baseUrl}/v1/deleteCartSession?id=${sessionId}`, {responseType: 'text'})

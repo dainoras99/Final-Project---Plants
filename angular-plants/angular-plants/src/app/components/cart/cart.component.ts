@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, Subscription, switchMap } from 'rxjs';
 import { CartItem } from 'src/app/common/cart-item';
 import { CartSession } from 'src/app/common/cart-session';
 import { Plant } from 'src/app/common/plant';
 import { User } from 'src/app/common/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CartService } from 'src/app/services/cart.service';
+import { PlantListComponent } from '../plant-list/plant-list.component';
 
 @Component({
   selector: 'app-cart',
@@ -19,19 +21,24 @@ export class CartComponent implements OnInit {
   cartPlants: Plant[] = [];
   maybeWillWork: CartItem[] = [];
 
+
+
   constructor(public authenticationService: AuthenticationService,
     private cartService: CartService) { }
 
-  ngOnInit(): void {
+
+   ngOnInit(): void {
     this.handleUser();
     this.cartService.getRefreshRequired.subscribe(response => {
       this.handleUser();
     });
-  }
+   }
+
 
   handleUser() {
     this.authenticationService.getUserByUsername().subscribe(
       data => {
+        this.user = new User;
         this.user = data;
         this.handleCartItems();
       }
@@ -41,7 +48,10 @@ export class CartComponent implements OnInit {
   handleCartItems() {
     this.cartService.getCartItemsByUserId(this.user.id).subscribe(
       data => {
+        this.cartItems = [];
         this.cartItems = data;
+        this.cartPlants = [];
+        this.maybeWillWork = [];
         this.cartItems.forEach(tempCartItem => this.handlePlants(tempCartItem.id, tempCartItem));
       }
     )

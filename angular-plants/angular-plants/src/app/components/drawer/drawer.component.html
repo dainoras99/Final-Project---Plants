@@ -1,5 +1,5 @@
 <mat-sidenav-container class='app-drawer-container' fullscreen>
-    <mat-sidenav #sidenav position="end" mode="over">
+    <mat-sidenav (openedChanged)="onOpen()" #sidenav position="end" mode="over">
         <app-cart></app-cart>
     </mat-sidenav>
     <mat-sidenav-content [ngClass]="{'removeScrollBar': sidenav.opened}">

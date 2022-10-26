@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog'
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -8,6 +8,7 @@ import { RegistrationComponent } from '../registration/registration.component';
 import { CartSession } from 'src/app/common/cart-session';
 import { CartItem } from 'src/app/common/cart-item';
 import { User } from 'src/app/common/user';
+import { CartComponent } from '../cart/cart.component';
 
 @Component({
   selector: 'app-drawer',
@@ -16,7 +17,8 @@ import { User } from 'src/app/common/user';
 })
 export class DrawerComponent implements OnInit {
   @ViewChild('sidenav') public sidenav!: MatSidenav;
-  constructor(private sideNavService: SidenavService, private dialogRef: MatDialog, public authenticationService: AuthenticationService) { }
+  constructor(private sideNavService: SidenavService, private dialogRef: MatDialog, public authenticationService: AuthenticationService,
+    private changeDetectorRefs: ChangeDetectorRef) { }
   showSearchResults = true;
 
   opened: any = false;
@@ -25,6 +27,7 @@ export class DrawerComponent implements OnInit {
     this.sideNavService.sideNavToggleSubject.subscribe(()=> {
       this.sidenav.toggle();
     });
+
   } 
 
   
@@ -47,4 +50,7 @@ export class DrawerComponent implements OnInit {
     setTimeout(() => this.showSearchResults = true);
   }
 
+  onOpen(): void {
+    console.log(this.opened);
+  }
 }

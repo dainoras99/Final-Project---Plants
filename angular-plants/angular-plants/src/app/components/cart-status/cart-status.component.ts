@@ -7,6 +7,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { concat, forkJoin, Observable, Subject } from 'rxjs';
 import { User } from 'src/app/common/user';
 import { SidenavService } from 'src/app/services/sidenav.service';
+import { CartComponent } from '../cart/cart.component';
 
 @Component({
   selector: 'app-cart-status',
@@ -14,7 +15,7 @@ import { SidenavService } from 'src/app/services/sidenav.service';
   styleUrls: ['./cart-status.component.css']
 })
 export class CartStatusComponent implements OnInit {
-
+  @ViewChild(CartComponent) cartComponent!:CartComponent;
   cartSessions: CartSession[] = [];
   cartItems: CartItem[] = [];
   user!: User;
@@ -46,6 +47,7 @@ export class CartStatusComponent implements OnInit {
   handleUser() {
     this.authenticationService.getUserByUsername().subscribe(
       data => {
+        data = 
         this.user = data;
         this.handleUserSession(this.user.id);
       }
@@ -70,23 +72,7 @@ export class CartStatusComponent implements OnInit {
     );
   }
 
-  updateCartStatusTotalPrice() {
-    this.totalPriceObservable.subscribe(
-      data => this.totalPrice = data
-    );
-  }
 
-  updateCartStatusTotalQuantity() {
-    this.totalQuantityObservable.subscribe(
-      data => this.totalQuantity = data
-    );
-  }
-
-  updateXUne() {
-    console.log("cartSessions[0].id" + this.cartSessions[0].id);
-    console.log("totalPrice: " + this.totalPrice);
-    console.log("totalQuantity: " + this.totalQuantity);
-  }
 
   clickSideNav() { 
     this.sideNavService.toggle();

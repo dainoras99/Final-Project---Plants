@@ -56,16 +56,38 @@ export class CartComponent implements OnInit {
    )
   }
 
-  deleteCartItem(cartItemId: number) {
+  deleteCartItem(cartItemId: number, cartPlantLength: number) {
     this.cartService.deleteCartItem(cartItemId!).subscribe(
       {
         next: response => {
+          console.log("cia: " + this.user.id);
+          if (cartPlantLength == 1) {
+            this.cartService.getCartSession(this.user.id).subscribe(
+              data => {
+                this.cartSessions = data;
+                this.deleteUserSession(this.cartSessions[0].id);
+              }
+            )
+          }  
         },
         error: err => {
           console.log(err);
         }
       }
     )
+    }
+
+    deleteUserSession(cartItemId: number) {
+      this.cartService.removeSession(cartItemId).subscribe(
+        {
+          next: response => {
+            
+          },
+          error: err => {
+            console.log(err);
+          }
+        }
+      )
     }
 }
   

@@ -90,4 +90,16 @@ public class CartSessionController {
             return new ResponseEntity<>("an error occured", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @DeleteMapping("api/v1/deleteCartSession")
+    public ResponseEntity<?> deleteCartSession(@RequestParam(value="id", required = true) int id) {
+        try {
+            cartRepository.deleteById(id);
+            return new ResponseEntity<>("Sesija ištrinta", HttpStatus.OK);
+        }
+        catch(Exception exc) {
+            return new ResponseEntity<>("an error occured", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

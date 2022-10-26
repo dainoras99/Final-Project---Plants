@@ -69,6 +69,9 @@ export class CartService {
       })
     );
   }
+  removeSession(sessionId: number) : Observable<any> {
+    return this.httpClient.delete(`${this.baseUrl}/v1/deleteCartSession?id=${sessionId}`, {responseType: 'text'})
+  }
 }
 
 interface getResponseCartItems {

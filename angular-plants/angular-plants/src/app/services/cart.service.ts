@@ -17,6 +17,7 @@ export class CartService {
   private baseUrl=`http://localhost:8080/api`;
   
   private refreshRequired = new Subject<void>();
+  private refreshRequiredRemoval = new Subject<void>();
 
   get getRefreshRequired() {
     return this.refreshRequired;
@@ -65,7 +66,7 @@ export class CartService {
   deleteCartItem(cartItemId: number) : Observable<any> {
     return this.httpClient.delete(`${this.baseUrl}/v1/deleteCartItem?id=${cartItemId}`, {responseType: 'text'}).pipe(
       tap(()=>{
-        this.getRefreshRequired.next();
+        this.refreshRequiredRemoval.next();
       })
     );
   }

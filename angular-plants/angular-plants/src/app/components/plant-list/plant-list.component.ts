@@ -78,8 +78,6 @@ export class PlantListComponent implements OnInit {
       {
         next: response => {
           console.log("zjbs");
-          let cartStatus = new CartStatusComponent(this.authenticationService, this.cartService, this.route, this.sideNavService);
-          cartStatus.ngOnInit();
         },
         error: err => {
           console.log(err);

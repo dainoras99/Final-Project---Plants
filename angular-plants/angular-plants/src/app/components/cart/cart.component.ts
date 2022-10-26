@@ -17,7 +17,7 @@ export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
   user!: User;
   cartPlants: Plant[] = [];
-  maybeWillWork: number[] = [];
+  maybeWillWork: CartItem[] = [];
 
   constructor(public authenticationService: AuthenticationService,
     private cartService: CartService) { }
@@ -42,18 +42,30 @@ export class CartComponent implements OnInit {
     this.cartService.getCartItemsByUserId(this.user.id).subscribe(
       data => {
         this.cartItems = data;
-        this.cartItems.forEach(tempCartItem => this.handlePlants(tempCartItem.id, tempCartItem.quantity));
+        this.cartItems.forEach(tempCartItem => this.handlePlants(tempCartItem.id, tempCartItem));
       }
     )
   }
 
-  handlePlants(cartItemId: number, cartItemQuantity: number) {
+  handlePlants(cartItemId: number, tempCartItem: CartItem) {
    this.cartService.getPlantsByCartItems(cartItemId).subscribe(
     data => {
       this.cartPlants.push(data);
-      this.maybeWillWork.push(cartItemQuantity);
+      this.maybeWillWork.push(tempCartItem);
     }
    )
   }
+
+  deleteCartItem(cartItemId: number) {
+    this.cartService.deleteCartItem(cartItemId!).subscribe(
+      {
+        next: response => {
+        },
+        error: err => {
+          console.log(err);
+        }
+      }
+    )
+    }
 }
   

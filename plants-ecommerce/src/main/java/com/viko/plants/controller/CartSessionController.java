@@ -13,10 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -80,6 +77,17 @@ public class CartSessionController {
         catch(Exception exc) {
             System.out.println(exc);
             return new ResponseEntity<>("An error occured", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("api/v1/deleteCartItem")
+    public ResponseEntity<?> deleteCartItem(@RequestParam(value="id", required=true) int id) {
+        try {
+            cartSessionItemRepository.deleteById(id);
+            return new ResponseEntity<>("Augalas pašalintas iš krepšelio", HttpStatus.OK);
+        }
+        catch(Exception exc) {
+            return new ResponseEntity<>("an error occured", HttpStatus.BAD_REQUEST);
         }
     }
 }

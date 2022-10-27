@@ -27,9 +27,11 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
 import { MatButtonModule } from '@angular/material/button';
 import { CartComponent } from './components/cart/cart.component';
-import { CheckoutComponent } from './components/checkout/checkout.component'
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { AboutUsComponent } from './components/about-us/about-us.component'
 
 const routes: Routes = [
+  {path: 'about-us', component: AboutUsComponent},
   {path: 'checkout', component: CheckoutComponent},
   {path: 'plants/:id', component: PlantDetailsComponent},
   {path: 'search/:keyword', component: PlantListComponent},
@@ -51,7 +53,8 @@ const routes: Routes = [
     CartStatusComponent,
     DrawerComponent,
     CartComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    AboutUsComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

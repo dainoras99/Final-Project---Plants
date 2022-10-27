@@ -14,7 +14,7 @@
                         <a class="nav-link active" href="#">Parduotuvė</a>
                     </li>
                     <li class="nav-item justify-content-center align-self-center">
-                        <a class="nav-link" href="#">Apie mus</a>
+                        <a class="nav-link" routerLink="about-us">Apie mus</a>
                     </li>
                     <li class="nav-item justify-content-center align-self-center">
                         <a class="nav-link" href="#">Nuolaidų kortelė</a>
@@ -59,7 +59,7 @@
             <div class="row">
                 <div class="col-lg-2 col-md-5 imaginaryRightBorder">
                     <app-plant-category-menu></app-plant-category-menu>
-                    <div class="block pt-2">
+                    <!-- <div class="block pt-2">
                         <p class="mb-2 specialWords">Kaina, €</p>
                         <div class="input-group input-group-sm mb-3">
                             <div class="inputPrice col-lg-5">
@@ -81,7 +81,13 @@
                         <input type="checkbox" id="check3" class="checkbox-round" />
                         <input type="checkbox" id="check4" class="checkbox-round" />
                         <input type="checkbox" id="check5" class="checkbox-round" />
-                    </div>
+                    </div> -->
+                      <div class="ad block h-40 mb-5 ">
+                        <a href="https://www.novaturas.lt/"><img src="../../../assets/images/Photos/ads/novaturas.png" alt="reklama - novaturas" /></a>
+                      </div>
+                      <div class="ad block h-40 mb-5">
+                        <a href="https://iki.lt/"><img src="../../../assets/images/Photos/ads/eurojackpot.png" alt="reklama - iki" /></a>
+                      </div>
                 </div>
                 <div class="col-lg-10 col-md-7">
                     <router-outlet></router-outlet>
@@ -89,7 +95,7 @@
             </div>
         </div>
         <footer>
-
+                <p>© Dainoras Žiukas PI19B</p>
         </footer>
     </mat-sidenav-content>
 </mat-sidenav-container>

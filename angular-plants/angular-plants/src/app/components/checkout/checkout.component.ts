@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -9,7 +10,7 @@ export class CheckoutComponent implements OnInit {
 
   typeSelected: any;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     
@@ -17,6 +18,9 @@ export class CheckoutComponent implements OnInit {
 
   selectedType(event: any) {
     this.typeSelected = event.target.value;
+    if (this.typeSelected === "Atsiimsiu parduotuvėje") this.router.navigate(['/checkout/take']);
+    if (this.typeSelected === "Pristatyti į namus") this.router.navigate(['checkout/home']);
+    if (this.typeSelected === "Pristatyti į paštomatą") this.router.navigate(['checkout/parcel']);
     console.log(this.typeSelected);
   }
 

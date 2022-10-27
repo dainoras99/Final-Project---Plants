@@ -56,7 +56,16 @@
             <h4 class="mb-3">Įveskite savo duomenis</h4>
             <form class="needs-validation" novalidate="">
                 <div class="row">
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-12 mb-4">
+                        <label for="country">Pasirinkite užsakymo tipą</label>
+                        <select (change)="selectedType($event)" class="custom-select d-block w-100" id="country" required="">
+                            <option>Atsiimsiu parduotuvėje</option>
+                            <option>Pristatyti į namus</option>
+                            <option>Pristatyti į paštomatą</option>
+                        </select>
+                        <div class="invalid-feedback"> Please select a valid country. </div>
+                    </div>
+                    <div class="col-md-6 mb-3" *ngIf="this.getTypeSelected() == 'Atsiimsiu parduotuvėje'">
                         <label for="firstName">Vardas</label>
                         <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
                         <div class="invalid-feedback"> Klaida įvedant Vardo laukelį </div>

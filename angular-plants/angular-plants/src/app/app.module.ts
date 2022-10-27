@@ -28,10 +28,16 @@ import { MatListModule } from '@angular/material/list'
 import { MatButtonModule } from '@angular/material/button';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
-import { AboutUsComponent } from './components/about-us/about-us.component'
+import { AboutUsComponent } from './components/about-us/about-us.component';
+import { CheckouthomeComponent } from './components/checkouthome/checkouthome.component';
+import { CheckoutparcelComponent } from './components/checkoutparcel/checkoutparcel.component';
+import { CheckouttakeComponent } from './components/checkouttake/checkouttake.component'
 
 const routes: Routes = [
   {path: 'about-us', component: AboutUsComponent},
+  {path: 'checkout/take', component: CheckouttakeComponent},
+  {path: 'checkout/home', component: CheckouthomeComponent},
+  {path: 'checkout/parcel', component: CheckoutparcelComponent},
   {path: 'checkout', component: CheckoutComponent},
   {path: 'plants/:id', component: PlantDetailsComponent},
   {path: 'search/:keyword', component: PlantListComponent},
@@ -54,7 +60,10 @@ const routes: Routes = [
     DrawerComponent,
     CartComponent,
     CheckoutComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    CheckouthomeComponent,
+    CheckoutparcelComponent,
+    CheckouttakeComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

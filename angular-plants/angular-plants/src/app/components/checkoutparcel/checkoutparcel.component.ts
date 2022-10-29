@@ -17,7 +17,7 @@ export class CheckoutparcelComponent implements OnInit {
 
   selectedType(event: any) {
     this.typeSelected = event.target.value;
-    if (this.typeSelected === "Atsiimsiu parduotuvėje") this.router.navigate(['/checkout/take']);
+    if (this.typeSelected === "Atsiimsiu parduotuvėje") this.router.navigate(['/checkout']);
     if (this.typeSelected === "Pristatyti į namus") this.router.navigate(['checkout/home']);
     if (this.typeSelected === "Pristatyti į paštomatą") this.router.navigate(['checkout/parcel']);
     console.log(this.typeSelected);

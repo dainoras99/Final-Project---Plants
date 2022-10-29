@@ -15,7 +15,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { PlantDetailsComponent } from './components/plant-details/plant-details.component';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
@@ -31,11 +31,9 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { CheckouthomeComponent } from './components/checkouthome/checkouthome.component';
 import { CheckoutparcelComponent } from './components/checkoutparcel/checkoutparcel.component';
-import { CheckouttakeComponent } from './components/checkouttake/checkouttake.component'
 
 const routes: Routes = [
   {path: 'about-us', component: AboutUsComponent},
-  {path: 'checkout/take', component: CheckouttakeComponent},
   {path: 'checkout/home', component: CheckouthomeComponent},
   {path: 'checkout/parcel', component: CheckoutparcelComponent},
   {path: 'checkout', component: CheckoutComponent},
@@ -63,7 +61,6 @@ const routes: Routes = [
     AboutUsComponent,
     CheckouthomeComponent,
     CheckoutparcelComponent,
-    CheckouttakeComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -72,7 +69,8 @@ const routes: Routes = [
     MatDialogModule,
     BrowserAnimationsModule,
     FormsModule,
-    MatSidenavModule
+    MatSidenavModule,
+    ReactiveFormsModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

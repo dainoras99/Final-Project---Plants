@@ -4,8 +4,10 @@ import { CartItem } from 'src/app/common/cart-item';
 import { CartSession } from 'src/app/common/cart-session';
 import { Plant } from 'src/app/common/plant';
 import { User } from 'src/app/common/user';
+import { UserItem } from 'src/app/common/user-item';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CartService } from 'src/app/services/cart.service';
+import { UserItemsService } from 'src/app/services/user-items.service';
 import { PlantListComponent } from '../plant-list/plant-list.component';
 
 @Component({
@@ -21,10 +23,13 @@ export class CartComponent implements OnInit {
   cartPlants: Plant[] = [];
   maybeWillWork: CartItem[] = [];
 
+  //cia checkoutui sitas listas
+  useritemsForCheckout: UserItem[] = [];
+  userCartItem!: UserItem
 
 
   constructor(public authenticationService: AuthenticationService,
-    private cartService: CartService) { }
+    private cartService: CartService, private userItemsService: UserItemsService) { }
 
 
    ngOnInit(): void {
@@ -52,6 +57,8 @@ export class CartComponent implements OnInit {
         this.cartItems = data;
         this.cartPlants = [];
         this.maybeWillWork = [];
+        //checkoutui
+        this.useritemsForCheckout = [];
         this.cartItems.forEach(tempCartItem => this.handlePlants(tempCartItem.id, tempCartItem));
       }
     )
@@ -62,6 +69,24 @@ export class CartComponent implements OnInit {
     data => {
       this.cartPlants.push(data);
       this.maybeWillWork.push(tempCartItem);
+      //perkeliam i checkout info
+      this.userCartItem = {id: 0, name: "test", description: "test", price: 0, imageUrl: "", inStock: 0, quantity: 0};
+      console.log("nu tipo id" + data.name)
+      this.userCartItem.id = data.id;
+      this.userCartItem.name = data.name;
+      this.userCartItem.inStock = data.inStock;
+      this.userCartItem.imageUrl = data.imageUrl;
+      this.userCartItem.description = data.description;
+      this.userCartItem.price = data.price;
+      this.userCartItem.quantity = tempCartItem.quantity;
+
+     this.useritemsForCheckout.push(this.userCartItem);
+     this.useritemsForCheckout.forEach(tempUserItem => console.log("Username " + tempUserItem.name));
+     console.log("trecio array element name: " + data.name)
+
+     this.cartPlants.forEach(tempCartPlant => console.log("Cartname " + tempCartPlant.name));
+
+      this.userItemsService.setProducts(this.useritemsForCheckout);
     }
    )
   }

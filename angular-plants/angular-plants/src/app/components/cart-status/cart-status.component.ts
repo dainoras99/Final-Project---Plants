@@ -8,6 +8,7 @@ import { concat, forkJoin, Observable, Subject } from 'rxjs';
 import { User } from 'src/app/common/user';
 import { SidenavService } from 'src/app/services/sidenav.service';
 import { CartComponent } from '../cart/cart.component';
+import { UserItemsService } from 'src/app/services/user-items.service';
 
 @Component({
   selector: 'app-cart-status',
@@ -20,18 +21,13 @@ export class CartStatusComponent implements OnInit {
   cartItems: CartItem[] = [];
   user!: User;
 
-  totalPriceObservable: Subject<number> = new Subject<number>();
-  totalQuantityObservable: Subject<number> = new Subject<number>();
-
-  totalPrice: number = 0.02;
-  totalQuantity: number = 0;
-
   destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(@Inject(AuthenticationService) public authenticationService: AuthenticationService, 
   private cartService: CartService, 
   private route: ActivatedRoute,
-  private sideNavService: SidenavService) { }
+  private sideNavService: SidenavService,
+  private userItemsService: UserItemsService) { }
 
   ngOnInit(): void {
     this.handleUser();
@@ -59,6 +55,7 @@ export class CartStatusComponent implements OnInit {
       data => {
         this.cartSessions = data;
         console.log(data)
+        this.userItemsService.setTotalPrice(this.cartSessions[0].total_price);
         this.handleUserItems(this.cartSessions[0].id)
       }
     );

@@ -8,5 +8,5 @@
     <span *ngIf="cartItems.length==1">augalas</span>
     <span *ngIf="cartItems.length>1 && cartItems.length<10">augalai</span>
     <span *ngIf="cartItems.length>10">augalų</span>
-     krepšelyje | €{{tempSessions.total_price}}
+     krepšelyje | {{tempSessions.total_price | currency:'EUR'}}
 </button>

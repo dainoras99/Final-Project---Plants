@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../common/user';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private router: Router) { }
 
   isUserLoggedIn() {
     let user = localStorage.getItem('username');
@@ -17,6 +18,7 @@ export class AuthenticationService {
 
   logOut() {
     localStorage.removeItem('username');
+    this.router.navigate(['/plants']);
   }
 
   getUserByUsername() : Observable<User> {

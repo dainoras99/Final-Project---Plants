@@ -7,47 +7,50 @@
         <div class="col-md-4 order-md-2 mb-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-muted">Jūsų prekės</span>
-                <span class="badge badge-secondary badge-pill">3</span>
             </h4>
             <ul class="list-group mb-3 sticky-top">
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <li *ngFor="let tempProduct of selectedProducts"
+                    class="list-group-item d-flex justify-content-between lh-condensed">
                     <div>
-                        <h6 class="my-0">Product name</h6>
-                        <small class="text-muted">Brief description</small>
+                        <h3 class="my-0">{{tempProduct.name}}</h3>
+                        <small class="text-muted">Produkto kiekis: {{tempProduct.quantity}}</small>
                     </div>
-                    <span class="text-muted">$12</span>
+                    <span *ngIf="tempProduct.quantity == 1" class="text-muted">{{tempProduct.price | currency:
+                        'EUR'}}</span>
+                    <span *ngIf="tempProduct.quantity > 1" class="text-muted">{{tempProduct.price * tempProduct.quantity
+                        | currency: 'EUR'}}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
-                    <span>Total (USD)</span>
-                    <strong>$20</strong>
+                    <span>Galutinė suma</span>
+                    <strong>{{selectedTotal | currency: 'EUR'}}</strong>
                 </li>
             </ul>
         </div>
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">Įveskite savo duomenis</h4>
-            <form class="needs-validation" novalidate="">
-                <div class="row">
-                    <div class="col-md-12 mb-4">
-                        <label for="country">Pasirinkite užsakymo tipą</label>
-                        <select (change)="selectedType($event)" class="custom-select d-block w-100" id="country" required="">
-                            <option>Pristatyti į paštomatą</option>
-                            <option>Atsiimsiu parduotuvėje</option>
-                            <option>Pristatyti į namus</option>
-                        </select>
-                        <div class="invalid-feedback"> Please select a valid country. </div>
-                    </div>
-                    <div class="col-md-5 mb-3">
-                        <label for="country">Atsiėmimo paštomatas</label>
-                        <select class="custom-select d-block w-100" id="country" required="">
-                            <option value="">Pasirinkite</option>
-                            <option>dpd</option>
-                        </select>
-                        <div class="invalid-feedback">  </div>
-                    </div>
+            <div class="row">
+                <div class="col-md-12 mb-4">
+                    <label for="country">Pasirinkite užsakymo tipą</label>
+                    <select (change)="selectedType($event)" class="custom-select d-block w-100" id="country"
+                        required="">
+                        <option>Pristatyti į paštomatą</option>
+                        <option>Atsiimsiu parduotuvėje</option>
+                        <option>Pristatyti į namus</option>
+                    </select>
+                    <div class="invalid-feedback"> Please select a valid country. </div>
+                </div>
+                <form class="needs-validation" novalidate="">
+                <div class="col-md-8 mb-3">
+                    <label for="country">Atsiėmimo paštomatas</label>
+                    <select class="custom-select d-block w-100" id="country" required="">
+                        <option *ngFor="let parcel of parcelList;">{{parcel.name}} - {{parcel.city}}, {{parcel.address}}, {{parcel.zipCode}}</option>
+                    </select>
+                    <div class="invalid-feedback"> </div>
                 </div>
                 <hr class="mb-4">
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>

@@ -9,6 +9,7 @@ import { CartSession } from 'src/app/common/cart-session';
 import { CartItem } from 'src/app/common/cart-item';
 import { User } from 'src/app/common/user';
 import { CartComponent } from '../cart/cart.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-drawer',

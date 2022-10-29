@@ -27,4 +27,8 @@ public class PlantCategory {
     @OneToMany(cascade = CascadeType.ALL, mappedBy="plantCategory")
     @JsonManagedReference
     private Set<CartItem> cartItems;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="plantCategory")
+    @JsonManagedReference
+    private Set<OrderItem> orderItems;
 }

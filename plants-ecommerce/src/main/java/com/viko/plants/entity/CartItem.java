@@ -1,6 +1,7 @@
 package com.viko.plants.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,21 +25,25 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "plants_id", nullable = false)
-    @JsonBackReference
+   // @JsonBackReference
+    @JsonIgnore
     private Plant plant;
 
     @ManyToOne
     @JoinColumn(name = "plants_plants_category_id", nullable = false)
-    @JsonBackReference
+   // @JsonBackReference
+    @JsonIgnore
     private PlantCategory plantCategory;
 
     @ManyToOne
     @JoinColumn(name="cart_session_id", nullable = false)
-    @JsonBackReference
+    //@JsonBackReference
+    @JsonIgnore
     private CartSession cartSession;
 
     @ManyToOne
     @JoinColumn(name="cart_session_user_id", nullable = false)
-    @JsonBackReference
+   // @JsonBackReference
+    @JsonIgnore
     private User user;
 }

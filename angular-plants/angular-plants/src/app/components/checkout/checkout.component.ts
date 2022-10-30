@@ -66,7 +66,6 @@ export class CheckoutComponent implements OnInit {
       this.cartItem = new CartItem(0, 0);
       this.cartItem.id = element.id;
       this.cartItem.quantity = element.quantity;
-      this.cartItem. zdz cia negerai
       this.cartItems.push(this.cartItem);
     });
     let username = this.authenticationService.getLoggedInUserName();

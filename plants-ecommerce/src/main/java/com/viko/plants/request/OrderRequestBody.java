@@ -14,7 +14,7 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class OrderRequestBody {
-    private final List<CartItem> items;
+    private final List<CartItem> cartItems;
     private final Float total;
     private final String username;
 }

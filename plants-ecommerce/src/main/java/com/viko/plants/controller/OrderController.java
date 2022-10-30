@@ -43,9 +43,23 @@ public class OrderController {
     @Autowired
     private OrderTypeRepository orderTypeRepository;
 
+    @Autowired
+    private CartSessionItemRepository cartSessionItemRepository;
+
+    @Autowired
+    private CartSessionRepository cartSessionRepository;
+
     @PostMapping("api/v1/takefromshop")
     public ResponseEntity<String> addTakeOrderType(@RequestParam Integer id, @RequestBody OrderRequestBody orderRequestBody) {
         try {
+            // debugging
+            System.out.println(orderRequestBody.getCartItems());
+            System.out.println(orderRequestBody.getTotal());
+            System.out.println(orderRequestBody.getUsername());
+            System.out.println(orderRequestBody.getCartItems().size());
+            //
+
+
             OrderType orderType = new OrderType();
             User user = userRepository.findByUsername(orderRequestBody.getUsername());
 
@@ -55,15 +69,16 @@ public class OrderController {
             // reik sutvarkyt, dublikuojanti funkcija cia test ir dadet order items ir pan :).
             Order order = new Order();
             Set<OrderItem> orderItems = new HashSet<>();
-            for (CartItem cartTempItem : orderRequestBody.getItems()) {
+            for (CartItem cartTempItem : orderRequestBody.getCartItems()) {
                 OrderItem orderItem = new OrderItem();
                 //
-                Plant plant = new Plant();
-                plant = plantRepository.findById(cartTempItem.getPlant());
+                Optional optionalCartTempItem = plantRepository.findById(cartTempItem.getId());
+                Plant realPlant = (Plant) optionalCartTempItem.get();
+
                 //
-                orderItem.setPlant(cartTempItem.getPlant());
+                orderItem.setPlant(realPlant);
                 orderItem.setQuantity(cartTempItem.getQuantity());
-                orderItem.setPlantCategory(cartTempItem.getPlant().getCategory());
+                orderItem.setPlantCategory(realPlant.getCategory());
                 orderItem.setOrderType(orderType);
                 orderItems.add(orderItem);
             }
@@ -71,9 +86,20 @@ public class OrderController {
             order.setTotal(orderRequestBody.getTotal());
             order.setUser(user);
             order.setOrderType(orderType);
+
+            for(OrderItem orderItem : orderItems) {
+                orderItem.setOrder(order);
+            }
+
             orderRepository.save(order);
 
-            //
+            // removing cart items and cart orders
+            cartSessionItemRepository.deleteAllSessionCartItems(user.getId());
+            cartSessionRepository.deleteCartSession(user.getId());
+
+
+
+
             return new ResponseEntity<>("Pridetas Order type take", HttpStatus.CREATED);
         }
         catch (Exception exc) {

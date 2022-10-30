@@ -11,10 +11,13 @@
             <div class="collapse navbar-collapse" id="mynav">
                 <ul class="navbar-nav float-left col-lg-4">
                     <li class="nav-item justify-content-center align-self-center">
-                        <a class="nav-link active" href="#">Parduotuvė</a>
+                        <a class="nav-link active" routerLink="plants">Parduotuvė</a>
                     </li>
                     <li class="nav-item justify-content-center align-self-center">
                         <a class="nav-link" routerLink="about-us">Apie mus</a>
+                    </li>
+                    <li *ngIf="authenticationService.isUserLoggedIn()" class="nav-item justify-content-center align-self-center">
+                        <a class="nav-link" routerLink="orders">Mano užsakymai</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav col-lg-7 justify-content-end">

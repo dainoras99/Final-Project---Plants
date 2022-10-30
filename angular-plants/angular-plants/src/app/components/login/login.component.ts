@@ -11,7 +11,6 @@ import { LoginService } from 'src/app/services/login.service';
 export class LoginComponent implements OnInit {
 
   user: User = new User();
-  // @ViewChild('closeLoginModal',{static: false}) closeModal!: ElementRef;
 
   constructor(private loginService: LoginService, public dialogRef: MatDialogRef<LoginComponent>) { }
 

@@ -37,28 +37,28 @@
                         <div class="invalid-feedback"> Please select a valid country. </div>
                     </div>
                 </div>
-                <form class="needs-validation" novalidate="">
+                <form class="needs-validation" (ngSubmit)="postOrder()" novalidate="">
                 <div class="mb-3">
                     <label for="address">Pristatymo adresas</label>
-                    <input type="text" class="form-control" id="address" placeholder="Gedimino pr. 9" required="">
+                    <input type="text" class="form-control" id="address" name="address" placeholder="Gedimino pr. 9-81" required="" [(ngModel)]="delivery.address">
                     <div class="invalid-feedback"> Please enter your shipping address. </div>
                 </div>
                 <div class="mb-3">
-                    <label for="address2">Buto numeris</label>
-                    <input type="text" class="form-control" id="address2" placeholder="81">
+                    <label for="city">Miestas</label>
+                    <input type="text" class="form-control" id="city" name="city" placeholder="Vilnius" [(ngModel)]="delivery.city">
                 </div>
                 <div class="row">
                     <div class="col-md-9 mb-3">
                         <div class="mb-3">
-                            <label for="address2">Specialios instrukcijos kurjeriui <span
+                            <label for="specialInstructions">Specialios instrukcijos kurjeriui <span
                                     class="text-muted">(Nebūtina)</span></label>
-                            <textarea type="text" class="form-control" id="address2"
-                                placeholder="Neskambinkite į durų skambutį"> </textarea>
+                            <textarea type="text" name="specialInstructions" class="form-control" id="specialInstructions"
+                                placeholder="Neskambinkite į durų skambutį" [(ngModel)]="delivery.specialInstructions"> </textarea>
                         </div>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="zip">Zip</label>
-                        <input type="text" class="form-control" id="zip" placeholder="" required="">
+                        <input type="text" class="form-control" id="zip" name="zip" placeholder="" required="" [(ngModel)]="delivery.zipCode">
                         <div class="invalid-feedback"> Zip code required. </div>
                     </div>
                 </div>
@@ -67,21 +67,21 @@
                         <label for="radio" class="m-2">Ar norite palikti arbatpinigių kurjeriui?<span
                             class="text-muted"> (Nebūtina)</span></label>
 
-                        <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked />
+                        <input type="radio" class="btn-check" (change)="radioButtonChecked0($event)" value="0" name="options" id="option1" autocomplete="off" checked />
                         <label class="btn btn-primary" for="option1">0€</label>
 
-                        <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" />
+                        <input type="radio" class="btn-check" (change)="radioButtonChecked05($event)" value="0.5" name="options" id="option2" autocomplete="off" />
                         <label class="btn btn-primary" for="option2">0.5€</label>
 
-                        <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off" />
+                        <input type="radio" class="btn-check" (change)="radioButtonChecked1($event)" value="1" name="options" id="option3" autocomplete="off" />
                         <label class="btn btn-primary" for="option3">1€</label>
                         
-                        <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off" />
+                        <input type="radio" class="btn-check" (change)="radioButtonChecked2($event)" value="2" name="options" id="option4" autocomplete="off" />
                         <label class="btn btn-primary" for="option4">2€</label>
                     </div>
                 </div>
                 <hr class="mb-4">
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Pateikti užsakymą</button>
             </form>
         </div>
     </div>

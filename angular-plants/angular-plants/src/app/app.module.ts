@@ -31,8 +31,10 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { CheckouthomeComponent } from './components/checkouthome/checkouthome.component';
 import { CheckoutparcelComponent } from './components/checkoutparcel/checkoutparcel.component';
+import { OrdersComponent } from './components/orders/orders.component';
 
 const routes: Routes = [
+  {path: 'orders', component: OrdersComponent},
   {path: 'about-us', component: AboutUsComponent},
   {path: 'checkout/home', component: CheckouthomeComponent},
   {path: 'checkout/parcel', component: CheckoutparcelComponent},
@@ -61,6 +63,7 @@ const routes: Routes = [
     AboutUsComponent,
     CheckouthomeComponent,
     CheckoutparcelComponent,
+    OrdersComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

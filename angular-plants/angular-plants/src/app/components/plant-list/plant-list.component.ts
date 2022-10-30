@@ -79,7 +79,7 @@ export class PlantListComponent implements OnInit {
     this.cartService.postCartItem(username!, plant.name!).subscribe(
       {
         next: response => {
-          console.log("zjbs");
+          console.log("pridėtas");
         },
         error: err => {
           console.log(err);

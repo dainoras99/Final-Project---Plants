@@ -39,16 +39,16 @@
                     </select>
                     <div class="invalid-feedback"> Please select a valid country. </div>
                 </div>
-                <form class="needs-validation" novalidate="">
+                <form (ngSubmit)="postOrder()" class="needs-validation" novalidate="">
                 <div class="col-md-8 mb-3">
                     <label for="country">Atsiėmimo paštomatas</label>
-                    <select class="custom-select d-block w-100" id="country" required="">
+                    <select (change)="selectedParcel($event)" class="custom-select d-block w-100" id="country" required="">
                         <option *ngFor="let parcel of parcelList;">{{parcel.name}} - {{parcel.city}}, {{parcel.address}}, {{parcel.zipCode}}</option>
                     </select>
                     <div class="invalid-feedback"> </div>
                 </div>
                 <hr class="mb-4">
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Pateikti užsakymą</button>
                 </form>
             </div>
         </div>

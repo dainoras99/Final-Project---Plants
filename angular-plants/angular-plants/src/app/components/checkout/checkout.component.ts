@@ -18,9 +18,11 @@ import { UserItemsService } from 'src/app/services/user-items.service';
 export class CheckoutComponent implements OnInit {
 
   typeSelected: any;
+  shopSelected: any;
 
   selectedProducts: UserItem[] = [];
   selectedTotal!: number;
+  shopId!:number;
 
   cartItems: CartItem[] = [];
   cartItem!: CartItem
@@ -53,7 +55,9 @@ export class CheckoutComponent implements OnInit {
     if (this.typeSelected === "Atsiimsiu parduotuvėje") this.router.navigate(['/checkout']);
     if (this.typeSelected === "Pristatyti į namus") this.router.navigate(['checkout/home']);
     if (this.typeSelected === "Pristatyti į paštomatą") this.router.navigate(['checkout/parcel']);
-    console.log(this.typeSelected);
+  }
+  selectedShop(event: any) {
+    this.shopSelected = event.target.value;
   }
 
   get getTypeSelected() {
@@ -61,7 +65,6 @@ export class CheckoutComponent implements OnInit {
   }
 
   postOrder() {
-
     this.selectedProducts.forEach(element => {
       this.cartItem = new CartItem(0, 0);
       this.cartItem.id = element.id;
@@ -70,13 +73,22 @@ export class CheckoutComponent implements OnInit {
     });
     let username = this.authenticationService.getLoggedInUserName();
 
+    if (this.shopSelected === undefined) this.shopSelected = "Vilnius, Šeimyniškių g. 31";
+    
+    this.shopsList.forEach(shop => {
+      console.log("cia: " + shop.address);
+      console.log("shop selected: " + this.shopSelected);
+      console.log("shop city address: "+ shop.city + ", " + shop.address)
+        if (this.shopSelected === shop.address + ", " + shop.city) this.shopId = shop.id;
+    });
 
 
-    this.orderService.postCartItem(username!, this.cartItems,
-    this.selectedTotal, 2).subscribe(
+    this.orderService.postCartItemShop(username!, this.cartItems,
+    this.selectedTotal, this.shopId).subscribe(
       {
         next: response => {
-          alert("Sėkmingai pateiktas užsakymas")
+          alert("Sėkmingai pateiktas užsakymas");
+          this.router.navigate(['/plants']);
         },
         error: err => {
           console.log(err);

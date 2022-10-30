@@ -16,10 +16,6 @@ export class ProductService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getProductList(categoryId: number): Observable<Plant[]> {
-    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`;
-    return this.getPlants(searchUrl);
-  }
 
   getPlantCategories(): Observable<PlantCategory[]> {
     return this.httpClient.get<GetResponseCategory>(this.categoryUrl).pipe(
@@ -35,6 +31,11 @@ export class ProductService {
   getPlant(productId: number) : Observable<Plant> {
     const plantUrl = `${this.baseUrl}/${productId}`;
     return this.httpClient.get<Plant>(plantUrl);
+  }
+
+  getProductList(categoryId: number): Observable<Plant[]> {
+    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`;
+    return this.getPlants(searchUrl);
   }
 
   private getPlants(searchUrl: string): Observable<Plant[]> {

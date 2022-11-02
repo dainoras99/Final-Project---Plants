@@ -1,1 +1,25 @@
-<p>orders works!</p>
+<h1 class="text-center m-4"><b>Mano užsakymai</b></h1>
+
+<mat-accordion *ngFor="let order of orders">
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title class="row">
+                <span class="col-5">Užsakymo nr: #{{order.id}}</span>
+                <span class="col-6 text-danger">PATEIKTAS</span>
+                 {{order.total | currency: "EUR"}}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <!--  -->
+        <ul class="list-group mb-3 sticky-top">
+            <li *ngFor="let orderItem of order.orderItems" 
+            class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h3 class="my-0">{{orderItem.plant.name}}</h3>
+                    <small class="text-muted">Produkto kiekis: {{orderItem.quantity}}</small>
+                </div>
+                <img src="../../../{{orderItem.plant.imageUrl}}" class="img-fluid rounded-3" width="80" height="80">
+                <span class="text-muted">{{orderItem.plant.price | currency: "EUR"}}</span>
+            </li>
+        </ul>
+        <!--  -->
+    </mat-expansion-panel>
+</mat-accordion>

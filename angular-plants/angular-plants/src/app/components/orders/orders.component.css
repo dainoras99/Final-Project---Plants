@@ -1,0 +1,10 @@
+.mat-accordion {
+    display: grid;
+    margin: auto;
+    width: 70%;
+    margin-top: 0.5rem;
+}
+span{
+    display: block;
+    float: right;
+  }

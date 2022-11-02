@@ -33,6 +33,8 @@ import { CheckouthomeComponent } from './components/checkouthome/checkouthome.co
 import { CheckoutparcelComponent } from './components/checkoutparcel/checkoutparcel.component';
 import { OrdersComponent } from './components/orders/orders.component';
 
+import {MatExpansionModule} from '@angular/material/expansion';
+
 const routes: Routes = [
   {path: 'orders', component: OrdersComponent},
   {path: 'about-us', component: AboutUsComponent},
@@ -73,7 +75,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     FormsModule,
     MatSidenavModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatExpansionModule,
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

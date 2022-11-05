@@ -2,44 +2,65 @@
 
 <h2 class="text-uppercase text-center mb-5">Susikurkite paskyrą</h2>
 
-<form (ngSubmit)="userRegister()">
+<form [formGroup]="registerForm" (ngSubmit)="userRegister()">
 
     <div class="form-outline mb-4">
         <label class="form-label" for="username">Slapyvardis</label>
-        <input type="text" id="username" name="username" class="form-control form-control-lg" [(ngModel)]="user.username" />
+        <input type="text" id="username" name="username" class="form-control form-control-lg" formControlName="username" [(ngModel)]="user.username" />
+        <div class="form-text text-danger" *ngIf="userName.errors?.['required'] && userName.touched">
+            Slapyvardžio laukelis negali būti tusčias
+        </div>
     </div>
     <div class="row">
      <div class="form-outline mb-4 col-6">
         <label class="form-label" for="firstname">Vardas</label>
-        <input type="text" id="firstname" name="firstName" class="form-control form-control-lg" [(ngModel)]="user.firstname" />
+        <input type="text" id="firstname" name="firstName" class="form-control form-control-lg" formControlName="firstname" [(ngModel)]="user.firstname" />
+        <div class="form-text text-danger" *ngIf="firstName.errors?.['required'] && firstName.touched">
+            Vardo laukelis negali būti tusčias
+        </div>
     </div>
 
     <div class="form-outline mb-4 col-6">
         <label class="form-label" for="lastname">Pavardė</label>
-        <input type="text" id="lastname" name="lastName" class="form-control form-control-lg" [(ngModel)]="user.lastname" />
+        <input type="text" id="lastname" name="lastName" class="form-control form-control-lg" formControlName="lastname" [(ngModel)]="user.lastname" />
+        <div class="form-text text-danger" *ngIf="lastName.errors?.['required'] && lastName.touched">
+            Pavardės laukelis negali būti tusčias
+        </div>
     </div>
     </div>
 
     <div class="form-outline mb-4">
         <label class="form-label" for="email">El. Paštas</label>
-        <input type="email" id="email" name="email" class="form-control form-control-lg" [(ngModel)]="user.email" />
+        <input type="email" id="email" name="email" class="form-control form-control-lg" formControlName="email" [(ngModel)]="user.email" />
+        <div class="form-text text-danger" *ngIf="Email.errors?.['required'] && Email.touched">
+            El. pašto laukelis negali būti tusčias
+        </div>
     </div>
 
     <div class="form-outline mb-4">
         <label class="form-label" for="date">Gimimo data</label>
-        <input type="date" id="date" name="birthdate" class="form-control form-control-lg" [(ngModel)]="user.birthdate" />
+        <input type="date" id="date" name="birthdate" class="form-control form-control-lg" formControlName="birthdate" [(ngModel)]="user.birthdate" />
+        <div class="form-text text-danger" *ngIf="birthDate.errors?.['required'] && birthDate.touched">
+            Gimimo data turi būti pasirinkta
+        </div>
     </div>
 
     <div class="row">
     <div class="form-outline mb-4 col-6">
         <label class="form-label" for="password">Slaptažodis</label>
-        <input type="password" id="password" name="password" class="form-control form-control-lg" [(ngModel)]="user.password" />
+        <input type="password" id="password" name="password" class="form-control form-control-lg" formControlName="password" [(ngModel)]="user.password" />
+        <div class="form-text text-danger" *ngIf="passWord.errors?.['required'] && passWord.touched">
+            Slaptažodžio laukelis negali būti tusčias
+        </div>
     </div>
 
-    <!-- <div class="form-outline mb-4 col-6">
+    <div class="form-outline mb-4 col-6">
         <label class="form-label" for="repeatPassword">Pakartokite slaptažodį</label>
-        <input type="password" id="repeatPassword" class="form-control form-control-lg" />
-    </div> -->
+        <input type="password" id="repeatPassword" formControlName="repeatedPassword" class="form-control form-control-lg" />
+        <div class="form-text text-danger" *ngIf="RepeatedPassword.errors?.['required'] && RepeatedPassword.touched">
+            Pakartotinio slaptažodžio laukelis negali būti tusčias
+        </div>
+    </div>
     </div>
 
     <div class="d-flex justify-content-center">

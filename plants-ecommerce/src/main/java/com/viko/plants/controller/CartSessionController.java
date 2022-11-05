@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -83,7 +84,13 @@ public class CartSessionController {
     @DeleteMapping("api/v1/deleteCartItem")
     public ResponseEntity<?> deleteCartItem(@RequestParam(value="id", required=true) int id) {
         try {
+            Optional<CartItem> optionalCartItem = cartSessionItemRepository.findById(id);
+            CartItem cartItem = optionalCartItem.get();
+            CartSession cartSession = cartItem.getCartSession();
+            cartSession.setTotal_price(
+                    cartItem.getCartSession().getTotal_price() - (cartItem.getPlant().getPrice() * cartItem.getQuantity()));
             cartSessionItemRepository.deleteById(id);
+            cartRepository.save(cartSession);
             return new ResponseEntity<>("Augalas pašalintas iš krepšelio", HttpStatus.OK);
         }
         catch(Exception exc) {

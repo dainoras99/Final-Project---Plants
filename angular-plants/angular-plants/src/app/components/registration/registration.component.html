@@ -6,24 +6,27 @@
 
     <div class="form-outline mb-4">
         <label class="form-label" for="username">Slapyvardis</label>
-        <input type="text" id="username" name="username" class="form-control form-control-lg" formControlName="username" [(ngModel)]="user.username" />
-        <div class="form-text text-danger" *ngIf="userName.errors?.['required'] && userName.touched">
+        <input type="text" id="username" name="username" maxlength="20" class="form-control form-control-lg" formControlName="username" [(ngModel)]="user.username" />
+        <div class="form-text text-danger" *ngIf="userName.errors?.['required'] && (userName.touched || errors)">
+            Slapyvardžio laukelis negali būti tusčias
+        </div>
+        <div class="form-text text-danger" [ngStyle]="{'display': repeatedPass}">
             Slapyvardžio laukelis negali būti tusčias
         </div>
     </div>
     <div class="row">
      <div class="form-outline mb-4 col-6">
         <label class="form-label" for="firstname">Vardas</label>
-        <input type="text" id="firstname" name="firstName" class="form-control form-control-lg" formControlName="firstname" [(ngModel)]="user.firstname" />
-        <div class="form-text text-danger" *ngIf="firstName.errors?.['required'] && firstName.touched">
+        <input type="text" id="firstname" name="firstName" maxlength="20" class="form-control form-control-lg" formControlName="firstname" [(ngModel)]="user.firstname" />
+        <div class="form-text text-danger" *ngIf="firstName.errors?.['required'] && (firstName.touched || errors)">
             Vardo laukelis negali būti tusčias
         </div>
     </div>
 
     <div class="form-outline mb-4 col-6">
         <label class="form-label" for="lastname">Pavardė</label>
-        <input type="text" id="lastname" name="lastName" class="form-control form-control-lg" formControlName="lastname" [(ngModel)]="user.lastname" />
-        <div class="form-text text-danger" *ngIf="lastName.errors?.['required'] && lastName.touched">
+        <input type="text" id="lastname" name="lastName" maxlength="20" class="form-control form-control-lg" formControlName="lastname" [(ngModel)]="user.lastname" />
+        <div class="form-text text-danger" *ngIf="lastName.errors?.['required'] && (lastName.touched || errors)">
             Pavardės laukelis negali būti tusčias
         </div>
     </div>
@@ -31,16 +34,19 @@
 
     <div class="form-outline mb-4">
         <label class="form-label" for="email">El. Paštas</label>
-        <input type="email" id="email" name="email" class="form-control form-control-lg" formControlName="email" [(ngModel)]="user.email" />
-        <div class="form-text text-danger" *ngIf="Email.errors?.['required'] && Email.touched">
+        <input type="email" id="email" name="email" maxlength="50" class="form-control form-control-lg" formControlName="email" [(ngModel)]="user.email" />
+        <div class="form-text text-danger" *ngIf="Email.errors?.['required'] && (Email.touched || errors)">
             El. pašto laukelis negali būti tusčias
+        </div>
+        <div class="form-text text-danger" *ngIf="Email.errors?.['email'] && (Email.dirty || errors)">
+            El. paštas netinkamas
         </div>
     </div>
 
     <div class="form-outline mb-4">
         <label class="form-label" for="date">Gimimo data</label>
-        <input type="date" id="date" name="birthdate" class="form-control form-control-lg" formControlName="birthdate" [(ngModel)]="user.birthdate" />
-        <div class="form-text text-danger" *ngIf="birthDate.errors?.['required'] && birthDate.touched">
+        <input type="date" id="date" name="birthdate" min="1910-01-01" max="2023-02-01" class="form-control form-control-lg" formControlName="birthdate" [(ngModel)]="user.birthdate" />
+        <div class="form-text text-danger" *ngIf="birthDate.errors?.['required'] && (birthDate.touched || errors)">
             Gimimo data turi būti pasirinkta
         </div>
     </div>
@@ -49,7 +55,7 @@
     <div class="form-outline mb-4 col-6">
         <label class="form-label" for="password">Slaptažodis</label>
         <input type="password" id="password" name="password" class="form-control form-control-lg" formControlName="password" [(ngModel)]="user.password" />
-        <div class="form-text text-danger" *ngIf="passWord.errors?.['required'] && passWord.touched">
+        <div class="form-text text-danger" *ngIf="passWord.errors?.['required'] && (passWord.touched || errors)">
             Slaptažodžio laukelis negali būti tusčias
         </div>
     </div>
@@ -57,8 +63,11 @@
     <div class="form-outline mb-4 col-6">
         <label class="form-label" for="repeatPassword">Pakartokite slaptažodį</label>
         <input type="password" id="repeatPassword" formControlName="repeatedPassword" class="form-control form-control-lg" />
-        <div class="form-text text-danger" *ngIf="RepeatedPassword.errors?.['required'] && RepeatedPassword.touched">
+        <div class="form-text text-danger" *ngIf="RepeatedPassword.errors?.['required'] && (RepeatedPassword.touched || errors)">
             Pakartotinio slaptažodžio laukelis negali būti tusčias
+        </div>
+        <div class="form-text text-danger" [ngStyle]="{'display': repeatedPass}">
+            Slaptažodžiai nesutampa, mėginkite dar kartą
         </div>
     </div>
     </div>

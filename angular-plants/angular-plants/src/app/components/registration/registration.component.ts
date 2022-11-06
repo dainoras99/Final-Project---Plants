@@ -5,6 +5,7 @@ import { RegisterService } from 'src/app/services/register.service';
 import { MatDialog } from '@angular/material/dialog'
 import { LoginComponent } from '../login/login.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-registration',
@@ -14,7 +15,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class RegistrationComponent implements OnInit {
 
   user: User = new User();
-  constructor(private registerService: RegisterService, private router: Router, private dialogRef: MatDialog) { }
+  repeatedPass: string = "none";
+  errors: boolean = false;
+  userExistError: string = "none";
+  constructor(private registerService: RegisterService, private router: Router, 
+    private dialogRef: MatDialog, private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
   }
@@ -23,7 +28,7 @@ export class RegistrationComponent implements OnInit {
     username: new FormControl("", [Validators.required]),
     firstname: new FormControl("", [Validators.required]),
     lastname: new FormControl("", [Validators.required]),
-    email: new FormControl("", [Validators.required]),
+    email: new FormControl("", [Validators.required, Validators.email]),
     birthdate: new FormControl("", [Validators.required]),
     password: new FormControl("", [Validators.required]),
     repeatedPassword: new FormControl("", [Validators.required])
@@ -58,19 +63,41 @@ export class RegistrationComponent implements OnInit {
   }
 
   userRegister() {
-    if (this.registerForm.invalid) return;
-    console.log(this.registerForm.get("username"));
-    this.registerService.registerUser(this.user).subscribe(
-      {
-        next: response => {
-          alert("Registracija sėkminga")
-        },
-        error: err => {
-          console.log(err);
-          alert("negerai");
-        }
+    if (this.registerForm.invalid) {
+      console.log(this.registerForm);
+      this.errors = true;
+      return;
+    }
+    if (this.passWord.value == this.RepeatedPassword.value) {
+      this.userExistError = "none";
+      console.log("cia: " + this.checkIfUserExist(this.userName.value));
+      if (this.checkIfUserExist(this.userName.value)) {
+        this.userExistError = "display";
+        return;
       }
-    )
+      this.repeatedPass = 'none';
+      this.errors = false;
+      console.log(this.registerForm.get("username"));
+      this.registerService.registerUser(this.user).subscribe(
+        {
+          next: response => {
+            alert("Registracija sėkminga")
+          },
+          error: err => {
+            console.log(err);
+            alert("negerai");
+          }
+        }
+      )
+    }
+    else {
+      this.repeatedPass = 'inline';
+      this.errors = true;
+    }
+  }
+
+  checkIfUserExist(newUsername: string) : boolean {
+     return this.authenticationService.searchForUserByUsername(newUsername);
   }
 
   openLoginDialog() {

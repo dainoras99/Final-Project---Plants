@@ -27,7 +27,7 @@ export class AuthenticationService {
     return this.httpClient.get<User>(searchUrl);
   }
 
-  searchForUserByUsername(username: string): boolean {
+  searchForUserByUsername(username: string): boolean { //cia reik iskviest ta endpointa, nes jis neiskvieciamnas.
     const searchUrl = `http://localhost:8080/api/users/search/findByUsername?name=${username}`
     const statusCode = this.httpClient.get<HttpStatusCode>(searchUrl);
     this.httpClient.get(searchUrl,{responseType:'text', observe: 'response'}).pipe(map(data => {

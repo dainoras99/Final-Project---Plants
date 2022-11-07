@@ -6,7 +6,10 @@ import { CartItem } from '../common/cart-item';
 import { Delivery } from '../common/delivery';
 import { Order } from '../common/order';
 import { OrderItem } from '../common/order-item';
+import { OrderType } from '../common/order-type';
+import { Parcel } from '../common/parcel';
 import { Plant } from '../common/plant';
+import { Shop } from '../common/shop';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +48,27 @@ export class OrderService {
       map(response => response._embedded.orderItems)
     );
   }
+
+  public getOrderType(orderId: number) : Observable<OrderType> {
+    const orderTypeUrl = `${this.baseUrl}/orders/${orderId}/orderType`
+    return this.httpClient.get<OrderType>(orderTypeUrl);
+  }
+
+  public getOrderTypeShop(orderTypeId: number): Observable<Shop> {
+    const orderTypeShopUrl = `${this.baseUrl}/orderTypes/${orderTypeId}/shop`
+    return this.httpClient.get<Shop>(orderTypeShopUrl);
+  }
+
+  public getOrderTypeParcel(orderTypeId: number): Observable<Parcel> {
+    const orderTypeParcelUrl = `${this.baseUrl}/orderTypes/${orderTypeId}/Parcel`
+    return this.httpClient.get<Parcel>(orderTypeParcelUrl);
+  }
+
+  public getOrderTypeDelivery(orderTypeId: number): Observable<Delivery> {
+    const orderTypeDeliveryUrl = `${this.baseUrl}/orderTypes/${orderTypeId}/delivery`
+    return this.httpClient.get<Delivery>(orderTypeDeliveryUrl);
+  }
+   
 
   public getOrderItemPlant(orderItemId: number): Observable<Plant> {
     const orderItemPlantUrl = `${this.baseUrl}/orderItems/${orderItemId}/plant`;

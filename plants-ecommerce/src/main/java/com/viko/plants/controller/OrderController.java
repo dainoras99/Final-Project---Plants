@@ -56,6 +56,7 @@ public class OrderController {
             OrderType orderType = new OrderType();
             Optional<Shop> optionalShop = shopRepository.findById(id);
             orderType.setShop(optionalShop.get());
+            orderType.setOrderTypeName("shop");
             orderTypeRepository.save(orderType);
 
             createOrder(orderRequestBody, orderType);
@@ -74,6 +75,7 @@ public class OrderController {
             OrderType orderType = new OrderType();
             Optional<Parcel> optionalParcel = parcelRepository.findById(id);
             orderType.setParcel(optionalParcel.get());
+            orderType.setOrderTypeName("parcel");
             orderTypeRepository.save(orderType);
 
             createOrder(orderRequestBody, orderType);
@@ -90,6 +92,7 @@ public class OrderController {
         try {
             OrderType orderType = new OrderType();
             orderType.setDelivery(orderRequestDeliveryBody.getDelivery());
+            orderType.setOrderTypeName("delivery");
             deliveryRepository.save(orderRequestDeliveryBody.getDelivery());
             orderTypeRepository.save(orderType);
             createOrderDelivery(orderRequestDeliveryBody, orderType);

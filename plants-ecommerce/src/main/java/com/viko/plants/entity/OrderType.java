@@ -18,6 +18,9 @@ public class OrderType {
     @Column(name = "id")
     private Integer id;
 
+    @Column(name = "order_type_name")
+    private String orderTypeName;
+
     @ManyToOne
     @JoinColumn(name = "parcel_locker_order_type_id", nullable = true)
     @JsonBackReference

@@ -69,21 +69,25 @@ export class CheckouthomeComponent implements OnInit {
     if (this.radioButtonSelected != undefined)this.userItemsService.setTotalPrice(this.selectedTotal - +this.radioButtonSelected);
     this.userItemsService.setTotalPrice(this.selectedTotal + 0);
     this.radioButtonSelected = event.target.value;
+    this.tips = 'none';
   }
   radioButtonChecked05(event: any) {
     if (this.radioButtonSelected != undefined) this.userItemsService.setTotalPrice(this.selectedTotal - +this.radioButtonSelected);
     this.userItemsService.setTotalPrice(this.selectedTotal + 0.5);
     this.radioButtonSelected = event.target.value;
+    this.tips = 'inline';
   }
   radioButtonChecked1(event: any) {
     if (this.radioButtonSelected != undefined) this.userItemsService.setTotalPrice(this.selectedTotal - +this.radioButtonSelected);
     this.userItemsService.setTotalPrice(this.selectedTotal + 1);
     this.radioButtonSelected = event.target.value;
+    this.tips = 'inline';
   }
   radioButtonChecked2(event: any) {
     if (this.radioButtonSelected != undefined) this.userItemsService.setTotalPrice(this.selectedTotal - +this.radioButtonSelected);
     this.userItemsService.setTotalPrice(this.selectedTotal + 2);
     this.radioButtonSelected = event.target.value;
+    this.tips = 'inline';
   }
 
   get getTypeSelected() {

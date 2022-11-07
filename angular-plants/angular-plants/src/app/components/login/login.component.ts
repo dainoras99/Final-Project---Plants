@@ -11,10 +11,12 @@ import { LoginService } from 'src/app/services/login.service';
 export class LoginComponent implements OnInit {
 
   user: User = new User();
+  loginError: string = "none";
 
   constructor(private loginService: LoginService, public dialogRef: MatDialogRef<LoginComponent>) { }
 
   ngOnInit(): void {
+    this.loginError = "none";
   }
 
   
@@ -23,16 +25,13 @@ export class LoginComponent implements OnInit {
     this.loginService.loginUser(this.user).subscribe(
       {
         next: response => {
-          
+          this.loginError = "none";
           alert("Prisijungimas sėkmingas")
           localStorage.setItem("username", this.user.username);
           this.dialogRef.close();
-          // console.log(this.closeModal.nativeElement);
-          // this.closeModal.nativeElement.click()
         },
         error: err => {
-          console.log(err);
-          alert("negerai");
+          this.loginError = "inline";
         }
       }
     )

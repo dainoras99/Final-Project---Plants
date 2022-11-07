@@ -1,5 +1,6 @@
 package com.viko.plants.controller;
 
+import com.viko.plants.entity.CartItem;
 import com.viko.plants.entity.User;
 import com.viko.plants.repository.UserRepository;
 import com.viko.plants.request.RegistrationRequest;
@@ -8,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @AllArgsConstructor
@@ -29,6 +34,12 @@ public class RegistrationController {
     @PostMapping("api/v1/registration")
     public ResponseEntity<String> register(@RequestBody User user) {
         try {
+            List<User> users = repository.findAll();
+            for (User tempUser: users) {
+                if (tempUser.getUsername().equals(user.getUsername())) {
+                    return new ResponseEntity<>("Naudotojas su tokiu slapyvardžiu jau egzistuoja", HttpStatus.CONFLICT);
+                }
+            }
             repository.save(user);
             return new ResponseEntity<>("Successful Registration", HttpStatus.CREATED);
         }

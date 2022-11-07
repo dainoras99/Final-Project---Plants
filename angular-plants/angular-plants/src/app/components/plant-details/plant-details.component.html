@@ -1,6 +1,6 @@
 <div *ngIf="authenticationService.isUserLoggedIn()"
-                        class="navbar navbar-expand-xl navbar-dark bg-success sticky-top">
-                        <div class="btn-group col-xl-2 col-lg-6 px-xl-5">
+                        class="navbar navbar-expand-xl navbar-dark bg-success">
+                        <!-- <div class="btn-group col-xl-2 col-lg-6 px-xl-5">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                 <svg width="20" height="20" fill="currentColor" class="bi bi-house-fill"
                                     viewBox="0 0 20 20">
@@ -32,14 +32,14 @@
                                 <a class="dropdown-item" href="#">Kuo greičiau</a>
                                 <a class="dropdown-item" href="#">Pasirinkti kitokį laiką</a>
                             </div>
-                        </div>
+                        </div> -->
+                        <div class="col-xl-2"></div>
                         <div class="col-xl-5 col-lg-6 px-5">
                             <app-search></app-search>
                         </div>
+                        <div class="col-xl-2"></div>
                         <div class="col-xl-3 col-lg-6">
-                            <ng-container>
-                                <app-cart-status #cartStatusComponent></app-cart-status>
-                            </ng-container>
+                                <app-cart-status></app-cart-status>
 
                         </div>
                     </div>
@@ -53,7 +53,7 @@
             <p class="text-left">{{plant.description}}</p>
             <p class="alignRightBold">Likutis: {{plant.inStock}}</p>
             <div class="mt-5">
-                <button class="btn btn-success alignLeft mb-3" type="button">
+                <button (click)="addToCart(plant)" *ngIf="authenticationService.isUserLoggedIn()" class="btn btn-success alignLeft mb-3" type="button">
                     Pridėti į krepšelį
                 </button>
                 <p class="alignRightBold">Kaina: {{plant.price | currency:'EUR'}} </p>

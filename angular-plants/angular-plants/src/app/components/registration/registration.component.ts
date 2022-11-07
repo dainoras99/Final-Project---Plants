@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/common/user';
 import { RegisterService } from 'src/app/services/register.service';
-import { MatDialog } from '@angular/material/dialog'
+import { MatDialog, MatDialogRef } from '@angular/material/dialog'
 import { LoginComponent } from '../login/login.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -19,7 +19,7 @@ export class RegistrationComponent implements OnInit {
   errors: boolean = false;
   userExistError: string = "none";
   constructor(private registerService: RegisterService, private router: Router, 
-    private dialogRef: MatDialog, private authenticationService: AuthenticationService) { }
+    private dialogRef: MatDialog, private dialogRefRegistration: MatDialogRef<RegistrationComponent>, private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
   }
@@ -64,28 +64,21 @@ export class RegistrationComponent implements OnInit {
 
   userRegister() {
     if (this.registerForm.invalid) {
-      console.log(this.registerForm);
       this.errors = true;
       return;
     }
     if (this.passWord.value == this.RepeatedPassword.value) {
-      this.userExistError = "none";
-      console.log("cia: " + this.checkIfUserExist(this.userName.value));
-      if (this.checkIfUserExist(this.userName.value)) {
-        this.userExistError = "display";
-        return;
-      }
+      this.userExistError = 'none';
       this.repeatedPass = 'none';
       this.errors = false;
-      console.log(this.registerForm.get("username"));
       this.registerService.registerUser(this.user).subscribe(
         {
           next: response => {
-            alert("Registracija sėkminga")
+            alert("Registracija sėkminga!")
+            this.openLoginDialog();
           },
           error: err => {
-            console.log(err);
-            alert("negerai");
+            this.userExistError = "inline";
           }
         }
       )
@@ -96,11 +89,8 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
-  checkIfUserExist(newUsername: string) : boolean {
-     return this.authenticationService.searchForUserByUsername(newUsername);
-  }
-
   openLoginDialog() {
+    this.dialogRefRegistration.close();
     this.dialogRef.open(LoginComponent, {
       height: '45%',
       width: '30%'

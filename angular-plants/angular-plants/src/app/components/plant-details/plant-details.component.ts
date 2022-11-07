@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Plant } from 'src/app/common/plant';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class PlantDetailsComponent implements OnInit {
 
   plant!: Plant;
 
-  constructor(private productService: ProductService, private route: ActivatedRoute, public authenticationService: AuthenticationService) { }
+  constructor(private productService: ProductService, private route: ActivatedRoute, 
+    public authenticationService: AuthenticationService, private cartService: CartService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
@@ -32,5 +34,19 @@ export class PlantDetailsComponent implements OnInit {
       }
     )
   }
+
+  addToCart(plant: Plant) {
+    let username = this.authenticationService.getLoggedInUserName();
+    this.cartService.postCartItem(username!, plant.name!).subscribe(
+      {
+        next: response => {
+          console.log("pridėtas");
+        },
+        error: err => {
+          console.log(err);
+        }
+      }
+    )
+    }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CartItem } from 'src/app/common/cart-item';
 import { Delivery } from 'src/app/common/delivery';
@@ -20,6 +21,8 @@ export class CheckouthomeComponent implements OnInit {
   radioButtonSelected: any;
   cartItems: CartItem[] = [];
   cartItem!: CartItem
+  errors: boolean = false;
+  tips = "none";
 
   selectedProducts: UserItem[] = [];
   selectedTotal!: number;
@@ -33,6 +36,24 @@ export class CheckouthomeComponent implements OnInit {
     this.userItemsService.selectedTotalPrice.subscribe((data) => {
       this.selectedTotal = data;
     });
+  }
+
+  deliveryForm = new FormGroup({
+    address: new FormControl("", [Validators.required]),
+    city: new FormControl("", [Validators.required]),
+    zip: new FormControl("", [Validators.required])
+  });
+
+  get Address(): FormControl {
+    return this.deliveryForm.get("address") as FormControl;
+  }
+
+  get City(): FormControl {
+    return this.deliveryForm.get("city") as FormControl;
+  }
+
+  get Zip(): FormControl {
+    return this.deliveryForm.get("zip") as FormControl;
   }
 
   selectedType(event: any) {
@@ -70,8 +91,13 @@ export class CheckouthomeComponent implements OnInit {
   }
 
   postOrder() {
+    if (this.deliveryForm.invalid) {
+      this.errors = true;
+      return;
+    }
+    this.errors = false;
     this.selectedProducts.forEach(element => {
-      this.cartItem = new CartItem(0, 0);
+      this.cartItem = new CartItem(0, 0, null!);
       this.cartItem.id = element.id;
       this.cartItem.quantity = element.quantity;
       this.cartItems.push(this.cartItem);
@@ -91,6 +117,7 @@ export class CheckouthomeComponent implements OnInit {
           error: err => {
             console.log(err);
             alert("negerai");
+            this.errors = true;
           }
         }
       )

@@ -17,6 +17,14 @@
                     <span *ngIf="tempProduct.quantity == 1" class="text-muted">{{tempProduct.price | currency: 'EUR'}}</span>
                     <span *ngIf="tempProduct.quantity > 1" class="text-muted">{{tempProduct.price * tempProduct.quantity | currency: 'EUR'}}</span>
                 </li>
+                <!--  none displayina bet vistiek matos sitas s -->
+                <li class="list-group-item d-flex justify-content-between lh-condensed" [ngStyle]="{'display': tips}">
+                    <div>
+                        <small class="text-muted">Arbatpinigiai kurjeriui</small>
+                    </div>
+                    <span class="text-muted">{{1 | currency: 'EUR'}}</span>
+                </li>
+                <!--  -->
                 <li class="list-group-item d-flex justify-content-between">
                     <span>Galutinė suma</span>
                     <strong>{{selectedTotal | currency: 'EUR'}}</strong>
@@ -37,15 +45,21 @@
                         <div class="invalid-feedback"> Please select a valid country. </div>
                     </div>
                 </div>
-                <form class="needs-validation" (ngSubmit)="postOrder()" novalidate="">
+                <form [formGroup]="deliveryForm" class="needs-validation" (ngSubmit)="postOrder()" novalidate="">
                 <div class="mb-3">
-                    <label for="address">Pristatymo adresas</label>
-                    <input type="text" class="form-control" id="address" name="address" placeholder="Gedimino pr. 9-81" required="" [(ngModel)]="delivery.address">
+                    <label for="address">Pristatymo adresas*</label>
+                    <input type="text" class="form-control" id="address" name="address" placeholder="Gedimino pr. 9-81" required="" formControlName="address" [(ngModel)]="delivery.address">
                     <div class="invalid-feedback"> Please enter your shipping address. </div>
+                    <div class="form-text text-danger" *ngIf="Address.errors?.['required'] && (Address.touched || errors)">
+                        Pristatymo adreso laukelis negali būti tuščias
+                    </div>
                 </div>
                 <div class="mb-3">
-                    <label for="city">Miestas</label>
-                    <input type="text" class="form-control" id="city" name="city" placeholder="Vilnius" [(ngModel)]="delivery.city">
+                    <label for="city">Miestas*</label>
+                    <input type="text" class="form-control" id="city" name="city" placeholder="Vilnius" formControlName="city" [(ngModel)]="delivery.city">
+                    <div class="form-text text-danger" *ngIf="City.errors?.['required'] && (City.touched || errors)">
+                        Miesto laukelis negali būti tuščias
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-9 mb-3">
@@ -53,13 +67,15 @@
                             <label for="specialInstructions">Specialios instrukcijos kurjeriui <span
                                     class="text-muted">(Nebūtina)</span></label>
                             <textarea type="text" name="specialInstructions" class="form-control" id="specialInstructions"
-                                placeholder="Neskambinkite į durų skambutį" [(ngModel)]="delivery.specialInstructions"> </textarea>
+                                placeholder="Neskambinkite į durų skambutį" [(ngModel)]="delivery.specialInstructions" [ngModelOptions]="{standalone: true}"> </textarea>
                         </div>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <label for="zip">Zip</label>
-                        <input type="text" class="form-control" id="zip" name="zip" placeholder="" required="" [(ngModel)]="delivery.zipCode">
-                        <div class="invalid-feedback"> Zip code required. </div>
+                        <label for="zip">Pašto kodas*</label>
+                        <input type="text" class="form-control" id="zip" name="zip" placeholder="08303" required="" formControlName="zip" [(ngModel)]="delivery.zipCode">
+                        <div class="form-text text-danger" *ngIf="Zip.errors?.['required'] && (Zip.touched || errors)">
+                            Pašto kodas negali būti tuščias
+                        </div>
                     </div>
                 </div>
                 <div class="row">

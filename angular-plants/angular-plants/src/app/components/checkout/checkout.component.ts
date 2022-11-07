@@ -66,7 +66,7 @@ export class CheckoutComponent implements OnInit {
 
   postOrder() {
     this.selectedProducts.forEach(element => {
-      this.cartItem = new CartItem(0, 0);
+      this.cartItem = new CartItem(0, 0, null!);
       this.cartItem.id = element.id;
       this.cartItem.quantity = element.quantity;
       this.cartItems.push(this.cartItem);

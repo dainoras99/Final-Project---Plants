@@ -97,6 +97,28 @@ public class CartSessionController {
             return new ResponseEntity<>("an error has occured", HttpStatus.BAD_REQUEST);
         }
     }
+    @PutMapping("api/v1/updateCartItem")
+    public ResponseEntity<?> updateCartItem(@RequestParam(value="id", required=true) int id, @RequestBody Boolean quantityPlus) {
+        Optional<CartItem> optionalCartItem = cartSessionItemRepository.findById(id);
+        CartItem cartItem = optionalCartItem.get();
+        CartSession cartSession = cartItem.getCartSession();
+        if (quantityPlus) {
+            if (cartItem.getQuantity() == 50) return new ResponseEntity<>("Didžiausias kiekis jau pasiektas", HttpStatus.BAD_REQUEST);
+            cartItem.setQuantity(cartItem.getQuantity() + 1);
+            cartSessionItemRepository.save(cartItem);
+            cartSession.setTotal_price(cartSession.getTotal_price() + cartItem.getPlant().getPrice());
+            cartRepository.save(cartSession);
+            return new ResponseEntity<>("Produkto kiekis padidintas", HttpStatus.OK);
+        }
+        else {
+            if (cartItem.getQuantity() == 1) return new ResponseEntity<>("Mažiausias kiekis jau pasiektas", HttpStatus.BAD_REQUEST);
+            cartItem.setQuantity(cartItem.getQuantity() - 1);
+            cartSessionItemRepository.save(cartItem);
+            cartSession.setTotal_price(cartSession.getTotal_price() - cartItem.getPlant().getPrice());
+            cartRepository.save(cartSession);
+            return new ResponseEntity<>("Produkto kiekis sumažintas", HttpStatus.OK);
+        }
+    }
 
     @DeleteMapping("api/v1/deleteCartSession")
     public ResponseEntity<?> deleteCartSession(@RequestParam(value="id", required = true) int id) {

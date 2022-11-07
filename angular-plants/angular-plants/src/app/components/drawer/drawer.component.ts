@@ -10,6 +10,8 @@ import { CartItem } from 'src/app/common/cart-item';
 import { User } from 'src/app/common/user';
 import { CartComponent } from '../cart/cart.component';
 import { Router } from '@angular/router';
+import { OrderService } from 'src/app/services/order.service';
+import { Order } from 'src/app/common/order';
 
 @Component({
   selector: 'app-drawer',
@@ -23,14 +25,14 @@ export class DrawerComponent implements OnInit {
   showSearchResults = true;
 
   opened: any = false;
+
+  user: User = null!;
   
   ngOnInit(): void {
     this.sideNavService.sideNavToggleSubject.subscribe(()=> {
       this.sidenav.toggle();
     });
-
   } 
-
   
   openDialog() {
     this.dialogRef.open(RegistrationComponent, {

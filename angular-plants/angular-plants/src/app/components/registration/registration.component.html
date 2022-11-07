@@ -10,8 +10,8 @@
         <div class="form-text text-danger" *ngIf="userName.errors?.['required'] && (userName.touched || errors)">
             Slapyvardžio laukelis negali būti tusčias
         </div>
-        <div class="form-text text-danger" [ngStyle]="{'display': repeatedPass}">
-            Slapyvardžio laukelis negali būti tusčias
+        <div class="form-text text-danger" [ngStyle]="{'display': userExistError}">
+            Atleiskite, toks slapyvardis jau egzistuoja
         </div>
     </div>
     <div class="row">

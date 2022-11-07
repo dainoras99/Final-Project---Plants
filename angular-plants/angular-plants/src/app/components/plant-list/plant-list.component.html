@@ -54,7 +54,7 @@
             <a routerLink="/plants/{{ tempPlant.id }}">
                 <p>{{ tempPlant.name }}</p>
             </a>
-            <button (click)="addToCart(tempPlant)" class="btn btn-success alignLeft mb-3" type="button">
+            <button (click)="addToCart(tempPlant)" *ngIf="authenticationService.isUserLoggedIn()" class="btn btn-success alignLeft mb-3" type="button">
                 Pridėti į krepšelį
             </button>
             <p class="alignRightBold">Kaina: {{tempPlant.price | currency:'EUR'}}</p>

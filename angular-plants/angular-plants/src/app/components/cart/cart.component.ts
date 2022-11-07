@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 import { BehaviorSubject, Subscription, switchMap } from 'rxjs';
 import { CartItem } from 'src/app/common/cart-item';
 import { CartSession } from 'src/app/common/cart-session';
@@ -7,6 +8,7 @@ import { User } from 'src/app/common/user';
 import { UserItem } from 'src/app/common/user-item';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CartService } from 'src/app/services/cart.service';
+import { SidenavService } from 'src/app/services/sidenav.service';
 import { UserItemsService } from 'src/app/services/user-items.service';
 import { PlantListComponent } from '../plant-list/plant-list.component';
 
@@ -16,6 +18,8 @@ import { PlantListComponent } from '../plant-list/plant-list.component';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
+
+  @ViewChild('sidenav') public sidenav!: MatSidenav;
 
   cartSessions: CartSession[] = [];
   cartItems: CartItem[] = [];
@@ -67,8 +71,8 @@ export class CartComponent implements OnInit {
   handlePlants(cartItemId: number, tempCartItem: CartItem) {
    this.cartService.getPlantsByCartItems(cartItemId).subscribe(
     data => {
-      this.cartPlants.push(data);
-      this.maybeWillWork.push(tempCartItem);
+      tempCartItem.plant = data;
+      this.cartItems = this.cartItems.sort((a,b)=> a.id-b.id);
       //perkeliam i checkout info
       this.userCartItem = {id: 0, name: "test", description: "test", price: 0, imageUrl: "", inStock: 0, quantity: 0};
       console.log("nu tipo id" + data.name)
@@ -117,6 +121,21 @@ export class CartComponent implements OnInit {
         {
           next: response => {
             
+          },
+          error: err => {
+            console.log(err);
+          }
+        }
+      )
+    }
+
+    updateCartItem(cartItem: CartItem, quantityChange: boolean) {
+      this.cartService.updateCartItem(cartItem.id, quantityChange).subscribe(
+        {
+          next: response => {
+            // cartItems.forEach(element => {
+              
+            // });
           },
           error: err => {
             console.log(err);

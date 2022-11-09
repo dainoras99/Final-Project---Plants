@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { Plant } from '../common/plant';
 import { map } from 'rxjs/operators';
 import { PlantCategory } from '../common/plant-category';
-import { User } from '../common/user';
 
 @Injectable({
   providedIn: 'root'

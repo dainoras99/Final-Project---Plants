@@ -37,9 +37,7 @@ export class PlantListComponent implements OnInit {
   }
 
   listPlants() {
-
     this.isSearch = this.route.snapshot.paramMap.has('keyword');
-
     if (this.isSearch) this.handleSearchPlants();
     else this.handleListPlants();
   }
@@ -55,15 +53,12 @@ export class PlantListComponent implements OnInit {
   }
 
   handleListPlants() {
-    //patikrint ar id available 
     const categoryIdValid: boolean = this.route.snapshot.paramMap.has('id');
 
     if (categoryIdValid) {
-      // paimt id param string ir konvertint string i numberi su "+" simboliu
       this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
     }
     else {
-      //jeigu ner category id tokio padarom default 3
       this.currentCategoryId = 3;
     }
 

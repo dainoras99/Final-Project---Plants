@@ -22,7 +22,7 @@ export class CheckoutComponent implements OnInit {
 
   selectedProducts: UserItem[] = [];
   selectedTotal!: number;
-  shopId!:number;
+  shopId!: number;
 
   cartItems: CartItem[] = [];
   cartItem!: CartItem
@@ -56,6 +56,7 @@ export class CheckoutComponent implements OnInit {
     if (this.typeSelected === "Pristatyti į namus") this.router.navigate(['checkout/home']);
     if (this.typeSelected === "Pristatyti į paštomatą") this.router.navigate(['checkout/parcel']);
   }
+
   selectedShop(event: any) {
     this.shopSelected = event.target.value;
   }
@@ -74,27 +75,27 @@ export class CheckoutComponent implements OnInit {
     let username = this.authenticationService.getLoggedInUserName();
 
     if (this.shopSelected === undefined) this.shopSelected = "Vilnius, Šeimyniškių g. 31";
-    
+
     this.shopsList.forEach(shop => {
       console.log("cia: " + shop.address);
       console.log("shop selected: " + this.shopSelected);
-      console.log("shop city address: "+ shop.city + ", " + shop.address)
-        if (this.shopSelected === shop.address + ", " + shop.city) this.shopId = shop.id;
+      console.log("shop city address: " + shop.city + ", " + shop.address)
+      if (this.shopSelected === shop.address + ", " + shop.city) this.shopId = shop.id;
     });
 
 
     this.orderService.postCartItemShop(username!, this.cartItems,
-    this.selectedTotal, this.shopId).subscribe(
-      {
-        next: response => {
-          alert("Sėkmingai pateiktas užsakymas");
-          this.router.navigate(['/plants']);
-        },
-        error: err => {
-          console.log(err);
-          alert("negerai");
+      this.selectedTotal, this.shopId).subscribe(
+        {
+          next: response => {
+            alert("Sėkmingai pateiktas užsakymas");
+            this.router.navigate(['/plants']);
+          },
+          error: err => {
+            console.log(err);
+            alert("negerai");
+          }
         }
-      }
-    )
+      )
   }
 }

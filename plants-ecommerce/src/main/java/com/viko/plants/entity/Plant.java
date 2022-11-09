@@ -42,5 +42,4 @@ public class Plant {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "plant")
     @JsonManagedReference
     private Set<OrderItem> orderItems;
-
 }

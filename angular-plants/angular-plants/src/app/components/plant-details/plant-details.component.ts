@@ -12,10 +12,9 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class PlantDetailsComponent implements OnInit {
 
-
   plant!: Plant;
 
-  constructor(private productService: ProductService, private route: ActivatedRoute, 
+  constructor(private productService: ProductService, private route: ActivatedRoute,
     public authenticationService: AuthenticationService, private cartService: CartService) { }
 
   ngOnInit(): void {
@@ -25,7 +24,6 @@ export class PlantDetailsComponent implements OnInit {
   }
 
   handlePlantDetails() {
-    // gauti id param string ir convertuot is stringo i numberi naujoant +;
     const productId: number = +this.route.snapshot.paramMap.get('id')!;
 
     this.productService.getPlant(productId).subscribe(
@@ -37,6 +35,7 @@ export class PlantDetailsComponent implements OnInit {
 
   addToCart(plant: Plant) {
     let username = this.authenticationService.getLoggedInUserName();
+    
     this.cartService.postCartItem(username!, plant.name!).subscribe(
       {
         next: response => {
@@ -47,6 +46,5 @@ export class PlantDetailsComponent implements OnInit {
         }
       }
     )
-    }
-
+  }
 }

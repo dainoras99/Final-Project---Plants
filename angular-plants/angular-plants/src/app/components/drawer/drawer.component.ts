@@ -1,17 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog'
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { SidenavService } from 'src/app/services/sidenav.service';
 import { LoginComponent } from '../login/login.component';
 import { RegistrationComponent } from '../registration/registration.component';
-import { CartSession } from 'src/app/common/cart-session';
-import { CartItem } from 'src/app/common/cart-item';
-import { User } from 'src/app/common/user';
-import { CartComponent } from '../cart/cart.component';
-import { Router } from '@angular/router';
-import { OrderService } from 'src/app/services/order.service';
-import { Order } from 'src/app/common/order';
 
 @Component({
   selector: 'app-drawer',
@@ -19,21 +12,20 @@ import { Order } from 'src/app/common/order';
   styleUrls: ['./drawer.component.css']
 })
 export class DrawerComponent implements OnInit {
-  @ViewChild('sidenav') public sidenav!: MatSidenav;
-  constructor(private sideNavService: SidenavService, private dialogRef: MatDialog, public authenticationService: AuthenticationService,
-    private changeDetectorRefs: ChangeDetectorRef) { }
-  showSearchResults = true;
 
+  @ViewChild('sidenav') public sidenav!: MatSidenav;
+  showSearchResults = true;
   opened: any = false;
 
-  user: User = null!;
-  
+  constructor(private sideNavService: SidenavService, private dialogRef: MatDialog,
+    public authenticationService: AuthenticationService) { }
+
   ngOnInit(): void {
-    this.sideNavService.sideNavToggleSubject.subscribe(()=> {
+    this.sideNavService.sideNavToggleSubject.subscribe(() => {
       this.sidenav.toggle();
     });
-  } 
-  
+  }
+
   openDialog() {
     this.dialogRef.open(RegistrationComponent, {
       height: '80%',
@@ -53,7 +45,5 @@ export class DrawerComponent implements OnInit {
     setTimeout(() => this.showSearchResults = true);
   }
 
-  onOpen(): void {
-    console.log(this.opened);
-  }
+  onOpen(): void {}
 }

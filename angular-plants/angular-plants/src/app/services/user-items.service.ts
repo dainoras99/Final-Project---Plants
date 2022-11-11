@@ -9,8 +9,6 @@ export class UserItemsService {
 
   private userItems = new BehaviorSubject<any>([])
   selectedProducts = this.userItems.asObservable();
-
-  //quantity
   private totalPrice = new BehaviorSubject<number>(0)
   selectedTotalPrice = this.totalPrice.asObservable();
 

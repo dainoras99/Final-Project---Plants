@@ -42,7 +42,8 @@
                 <form (ngSubmit)="postOrder()" class="needs-validation" novalidate="">
                     <div class="col-md-5 mb-3">
                         <label for="country">Atsiėmimo parduotuvė</label>
-                        <select (change)="selectedShop($event)" class="custom-select d-block w-100" id="country" required="">
+                        <select (change)="selectedShop($event)" class="custom-select d-block w-100" id="country"
+                            required="">
                             <option *ngFor="let shop of shopsList;">{{shop.address}}, {{shop.city}}</option>
                         </select>
                         <div class="invalid-feedback"> </div>

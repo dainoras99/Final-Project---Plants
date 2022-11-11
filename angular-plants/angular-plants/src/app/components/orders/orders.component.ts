@@ -17,7 +17,6 @@ export class OrdersComponent implements OnInit {
   orders: Order[] = [];
   orderItems: OrderItem[] = [];
 
-
   constructor(public authenticationService: AuthenticationService, public orderService: OrderService) { }
 
   ngOnInit(): void {
@@ -68,6 +67,7 @@ export class OrdersComponent implements OnInit {
       }
     )
   }
+
   handleOrderTypeDelivery(orderType: OrderType, order: Order) {
     this.orderService.getOrderTypeDelivery(orderType.id).subscribe(
       data => {
@@ -75,6 +75,7 @@ export class OrdersComponent implements OnInit {
       }
     )
   }
+
   handleOrderTypeParcel(orderType: OrderType, order: Order) {
     this.orderService.getOrderTypeParcel(orderType.id).subscribe(
       data => {
@@ -103,5 +104,4 @@ export class OrdersComponent implements OnInit {
       }
     )
   }
-
 }

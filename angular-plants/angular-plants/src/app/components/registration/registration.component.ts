@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { User } from 'src/app/common/user';
 import { RegisterService } from 'src/app/services/register.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog'
 import { LoginComponent } from '../login/login.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-registration',
@@ -18,11 +16,12 @@ export class RegistrationComponent implements OnInit {
   repeatedPass: string = "none";
   errors: boolean = false;
   userExistError: string = "none";
-  constructor(private registerService: RegisterService, private router: Router, 
-    private dialogRef: MatDialog, private dialogRefRegistration: MatDialogRef<RegistrationComponent>, private authenticationService: AuthenticationService) { }
 
-  ngOnInit(): void {
-  }
+  constructor(private registerService: RegisterService,
+    private dialogRef: MatDialog, 
+    private dialogRefRegistration: MatDialogRef<RegistrationComponent>) { }
+
+  ngOnInit(): void {}
 
   registerForm = new FormGroup({
     username: new FormControl("", [Validators.required]),

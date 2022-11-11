@@ -9,22 +9,24 @@
                 <span class="text-muted">Jūsų prekės</span>
             </h4>
             <ul class="list-group mb-3 sticky-top">
-                <li *ngFor="let tempProduct of selectedProducts" class="list-group-item d-flex justify-content-between lh-condensed">
+                <li *ngFor="let tempProduct of selectedProducts"
+                    class="list-group-item d-flex justify-content-between lh-condensed">
                     <div>
                         <h3 class="my-0">{{tempProduct.name}}</h3>
                         <small class="text-muted">Produkto kiekis: {{tempProduct.quantity}}</small>
                     </div>
-                    <span *ngIf="tempProduct.quantity == 1" class="text-muted">{{tempProduct.price | currency: 'EUR'}}</span>
-                    <span *ngIf="tempProduct.quantity > 1" class="text-muted">{{tempProduct.price * tempProduct.quantity | currency: 'EUR'}}</span>
+                    <span *ngIf="tempProduct.quantity == 1" class="text-muted">{{tempProduct.price | currency:
+                        'EUR'}}</span>
+                    <span *ngIf="tempProduct.quantity > 1" class="text-muted">{{tempProduct.price * tempProduct.quantity
+                        | currency: 'EUR'}}</span>
                 </li>
-                <!--  none displayina bet vistiek matos sitas s -->
                 <li class="list-group-item lh-condensed" [ngStyle]="{'display': tips}">
                     <div [ngStyle]="{'display': tips}">
                         <small class="text-muted" [ngStyle]="{'display': tips}">Arbatpinigiai kurjeriui</small>
                     </div>
-                    <span class="text-muted float-end" [ngStyle]="{'display': tips}">{{radioButtonSelected | currency: 'EUR'}}</span>
+                    <span class="text-muted float-end" [ngStyle]="{'display': tips}">{{radioButtonSelected | currency:
+                        'EUR'}}</span>
                 </li>
-                <!--  -->
                 <li class="list-group-item d-flex justify-content-between">
                     <span>Galutinė suma</span>
                     <strong>{{selectedTotal | currency: 'EUR'}}</strong>
@@ -33,30 +35,33 @@
         </div>
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">Įveskite savo duomenis</h4>
-                <div class="row">
-                    <div class="col-md-12 mb-4">
-                        <label for="country">Pasirinkite užsakymo tipą</label>
-                        <select (change)="selectedType($event)" class="custom-select d-block w-100" id="country"
-                            required="">
-                            <option>Pristatyti į namus</option>
-                            <option>Pristatyti į paštomatą</option>
-                            <option>Atsiimsiu parduotuvėje</option>
-                        </select>
-                        <div class="invalid-feedback"> Please select a valid country. </div>
-                    </div>
+            <div class="row">
+                <div class="col-md-12 mb-4">
+                    <label for="country">Pasirinkite užsakymo tipą</label>
+                    <select (change)="selectedType($event)" class="custom-select d-block w-100" id="country"
+                        required="">
+                        <option>Pristatyti į namus</option>
+                        <option>Pristatyti į paštomatą</option>
+                        <option>Atsiimsiu parduotuvėje</option>
+                    </select>
+                    <div class="invalid-feedback"> Please select a valid country. </div>
                 </div>
-                <form [formGroup]="deliveryForm" class="needs-validation" (ngSubmit)="postOrder()" novalidate="">
+            </div>
+            <form [formGroup]="deliveryForm" class="needs-validation" (ngSubmit)="postOrder()" novalidate="">
                 <div class="mb-3">
                     <label for="address">Pristatymo adresas*</label>
-                    <input type="text" class="form-control" id="address" name="address" placeholder="Gedimino pr. 9-81" required="" formControlName="address" [(ngModel)]="delivery.address">
+                    <input type="text" class="form-control" id="address" name="address" placeholder="Gedimino pr. 9-81"
+                        required="" formControlName="address" [(ngModel)]="delivery.address">
                     <div class="invalid-feedback"> Please enter your shipping address. </div>
-                    <div class="form-text text-danger" *ngIf="Address.errors?.['required'] && (Address.touched || errors)">
+                    <div class="form-text text-danger"
+                        *ngIf="Address.errors?.['required'] && (Address.touched || errors)">
                         Pristatymo adreso laukelis negali būti tuščias
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="city">Miestas*</label>
-                    <input type="text" class="form-control" id="city" name="city" placeholder="Vilnius" formControlName="city" [(ngModel)]="delivery.city">
+                    <input type="text" class="form-control" id="city" name="city" placeholder="Vilnius"
+                        formControlName="city" [(ngModel)]="delivery.city">
                     <div class="form-text text-danger" *ngIf="City.errors?.['required'] && (City.touched || errors)">
                         Miesto laukelis negali būti tuščias
                     </div>
@@ -66,13 +71,16 @@
                         <div class="mb-3">
                             <label for="specialInstructions">Specialios instrukcijos kurjeriui <span
                                     class="text-muted">(Nebūtina)</span></label>
-                            <textarea type="text" name="specialInstructions" class="form-control" id="specialInstructions"
-                                placeholder="Neskambinkite į durų skambutį" [(ngModel)]="delivery.specialInstructions" [ngModelOptions]="{standalone: true}"> </textarea>
+                            <textarea type="text" name="specialInstructions" class="form-control"
+                                id="specialInstructions" placeholder="Neskambinkite į durų skambutį"
+                                [(ngModel)]="delivery.specialInstructions"
+                                [ngModelOptions]="{standalone: true}"> </textarea>
                         </div>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="zip">Pašto kodas*</label>
-                        <input type="text" class="form-control" id="zip" name="zip" placeholder="08303" required="" formControlName="zip" [(ngModel)]="delivery.zipCode">
+                        <input type="text" class="form-control" id="zip" name="zip" placeholder="08303" required=""
+                            formControlName="zip" [(ngModel)]="delivery.zipCode">
                         <div class="form-text text-danger" *ngIf="Zip.errors?.['required'] && (Zip.touched || errors)">
                             Pašto kodas negali būti tuščias
                         </div>
@@ -81,18 +89,22 @@
                 <div class="row">
                     <div class="col-md-12 mb-4 btn-group">
                         <label for="radio" class="m-2">Ar norite palikti arbatpinigių kurjeriui?<span
-                            class="text-muted"> (Nebūtina)</span></label>
+                                class="text-muted"> (Nebūtina)</span></label>
 
-                        <input type="radio" class="btn-check" (change)="radioButtonChecked0($event)" value="0" name="options" id="option1" autocomplete="off" checked />
+                        <input type="radio" class="btn-check" (change)="radioButtonChecked0($event)" value="0"
+                            name="options" id="option1" autocomplete="off" checked />
                         <label class="btn btn-primary" for="option1">0€</label>
 
-                        <input type="radio" class="btn-check" (change)="radioButtonChecked05($event)" value="0.5" name="options" id="option2" autocomplete="off" />
+                        <input type="radio" class="btn-check" (change)="radioButtonChecked05($event)" value="0.5"
+                            name="options" id="option2" autocomplete="off" />
                         <label class="btn btn-primary" for="option2">0.5€</label>
 
-                        <input type="radio" class="btn-check" (change)="radioButtonChecked1($event)" value="1" name="options" id="option3" autocomplete="off" />
+                        <input type="radio" class="btn-check" (change)="radioButtonChecked1($event)" value="1"
+                            name="options" id="option3" autocomplete="off" />
                         <label class="btn btn-primary" for="option3">1€</label>
-                        
-                        <input type="radio" class="btn-check" (change)="radioButtonChecked2($event)" value="2" name="options" id="option4" autocomplete="off" />
+
+                        <input type="radio" class="btn-check" (change)="radioButtonChecked2($event)" value="2"
+                            name="options" id="option4" autocomplete="off" />
                         <label class="btn btn-primary" for="option4">2€</label>
                     </div>
                 </div>

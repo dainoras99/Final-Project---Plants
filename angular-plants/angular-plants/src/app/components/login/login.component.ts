@@ -1,5 +1,5 @@
-import { Component, ElementRef, EventEmitter, Inject, OnInit, ViewChild} from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { User } from 'src/app/common/user';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -19,9 +19,7 @@ export class LoginComponent implements OnInit {
     this.loginError = "none";
   }
 
-  
   userLogin() {
-    console.log(this.user);
     this.loginService.loginUser(this.user).subscribe(
       {
         next: response => {
@@ -40,9 +38,4 @@ export class LoginComponent implements OnInit {
   closeModal() {
     this.dialogRef.close();
   }
-
-  // ngAfterViewInit() {
-  //   console.log(this.closeModal.nativeElement); // throws an error
-  // }
-
 }

@@ -13,21 +13,19 @@ export class OrderTypesService {
   private shopsUrl = "http://localhost:8080/api/shops";
   private parcelsUrl = "http://localhost:8080/api/parcels";
 
-  constructor(private httpClient: HttpClient) { 
-
-  }
+  constructor(private httpClient: HttpClient) { }
 
   getShopsList(): Observable<Shop[]> {
-      return this.httpClient.get<GetResponseShops>(this.shopsUrl).pipe(
+    return this.httpClient.get<GetResponseShops>(this.shopsUrl).pipe(
       map(response => response._embedded.shops)
     );
   }
 
   getParcelsList(): Observable<Parcel[]> {
     return this.httpClient.get<GetResponseParcels>(this.parcelsUrl).pipe(
-    map(response => response._embedded.parcels)
-  );
-}
+      map(response => response._embedded.parcels)
+    );
+  }
 }
 
 interface GetResponseShops {

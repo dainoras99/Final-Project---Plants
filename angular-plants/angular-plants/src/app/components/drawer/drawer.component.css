@@ -14,8 +14,3 @@ mat-sidenav {
     padding-left: .75em;
     padding-right: .75em;
 }
-
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }

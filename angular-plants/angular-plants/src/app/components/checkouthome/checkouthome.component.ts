@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CartItem } from 'src/app/common/cart-item';
 import { Delivery } from 'src/app/common/delivery';
 import { UserItem } from 'src/app/common/user-item';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { OrderTypesService } from 'src/app/services/order-types.service';
 import { OrderService } from 'src/app/services/order.service';
 import { UserItemsService } from 'src/app/services/user-items.service';
 
@@ -23,11 +22,13 @@ export class CheckouthomeComponent implements OnInit {
   cartItem!: CartItem
   errors: boolean = false;
   tips = "none";
-
   selectedProducts: UserItem[] = [];
   selectedTotal!: number;
-  constructor(private router: Router, private userItemsService: UserItemsService, private authenticationService: AuthenticationService,
-    private orderTypesService: OrderTypesService, private orderService: OrderService) { }
+
+  constructor(private router: Router,
+    private userItemsService: UserItemsService,
+    private authenticationService: AuthenticationService,
+    private orderService: OrderService) { }
 
   ngOnInit(): void {
     this.userItemsService.selectedProducts.subscribe((data) => {
@@ -61,28 +62,29 @@ export class CheckouthomeComponent implements OnInit {
     if (this.typeSelected === "Atsiimsiu parduotuvėje") this.router.navigate(['/checkout']);
     if (this.typeSelected === "Pristatyti į namus") this.router.navigate(['checkout/home']);
     if (this.typeSelected === "Pristatyti į paštomatą") this.router.navigate(['checkout/parcel']);
-    console.log(this.typeSelected);
   }
 
   radioButtonChecked0(event: any) {
-    
-    if (this.radioButtonSelected != undefined)this.userItemsService.setTotalPrice(this.selectedTotal - +this.radioButtonSelected);
+    if (this.radioButtonSelected != undefined) this.userItemsService.setTotalPrice(this.selectedTotal - +this.radioButtonSelected);
     this.userItemsService.setTotalPrice(this.selectedTotal + 0);
     this.radioButtonSelected = event.target.value;
     this.tips = 'none';
   }
+
   radioButtonChecked05(event: any) {
     if (this.radioButtonSelected != undefined) this.userItemsService.setTotalPrice(this.selectedTotal - +this.radioButtonSelected);
     this.userItemsService.setTotalPrice(this.selectedTotal + 0.5);
     this.radioButtonSelected = event.target.value;
     this.tips = 'inline';
   }
+
   radioButtonChecked1(event: any) {
     if (this.radioButtonSelected != undefined) this.userItemsService.setTotalPrice(this.selectedTotal - +this.radioButtonSelected);
     this.userItemsService.setTotalPrice(this.selectedTotal + 1);
     this.radioButtonSelected = event.target.value;
     this.tips = 'inline';
   }
+
   radioButtonChecked2(event: any) {
     if (this.radioButtonSelected != undefined) this.userItemsService.setTotalPrice(this.selectedTotal - +this.radioButtonSelected);
     this.userItemsService.setTotalPrice(this.selectedTotal + 2);
@@ -107,10 +109,8 @@ export class CheckouthomeComponent implements OnInit {
       this.cartItems.push(this.cartItem);
     });
     let username = this.authenticationService.getLoggedInUserName();
-    
     if (this.radioButtonSelected === undefined) this.radioButtonSelected = "0";
     this.delivery.courierTips = +this.radioButtonSelected;
-
     this.orderService.postCartItemDelivery(username!, this.cartItems,
       this.selectedTotal, this.delivery).subscribe(
         {
@@ -126,5 +126,4 @@ export class CheckouthomeComponent implements OnInit {
         }
       )
   }
-
 }

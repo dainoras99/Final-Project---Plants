@@ -1,0 +1,48 @@
+<h1 class="text-center m-4"><b>Mano užsakymai</b></h1>
+
+<div class="container">
+<div class="alert alert-warning col-md-12 m-4" *ngIf="orders.length == 0">
+    <h3 class="m-4">Užsakymų dar nepateikiatė</h3>
+</div>
+</div>
+
+<mat-accordion *ngFor="let order of orders">
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title class="row">
+                <span class="col-5">Užsakymo nr: #{{order.id}}</span>
+                <span class="col-6 text-danger">PATEIKTAS</span>
+                 {{order.total | currency: "EUR"}}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <!--  -->
+        <ul class="list-group mb-3 sticky-top">
+            <li *ngFor="let orderItem of order.orderItems" 
+            class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h3 class="my-0">{{orderItem.plant.name}}</h3>
+                    <small class="text-muted">Produkto kiekis: {{orderItem.quantity}}</small>
+                </div>
+                <img src="../../../{{orderItem.plant.imageUrl}}" class="img-fluid rounded-3" width="80" height="80">
+                <span class="text-muted">{{orderItem.plant.price | currency: "EUR"}}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div *ngIf="order.orderType.orderTypeName == 'shop'">
+                    <h3 class="my-0">Užsakymo tipas:  <b>Atsiėmimas parduotuvėje</b></h3>
+                    <h4 class="my-0">Parduotuvės adresas: <b>{{order.orderType.shop.address}}, {{order.orderType.shop.city}}</b></h4>
+                </div>
+                <div *ngIf="order.orderType.orderTypeName == 'parcel'">
+                    <h3 class="my-0">Užsakymo tipas:  <b>Pristatymas į paštomatą</b></h3>
+                    <h4 class="my-0">Paštomato adresas: <b>{{order.orderType.parcel.name}}, {{order.orderType.parcel.address}}, {{order.orderType.parcel.city}}, {{order.orderType.parcel.zipCode}}</b></h4>
+                </div>
+
+                <div *ngIf="order.orderType.orderTypeName == 'delivery'">
+                    <h3 class="my-0" *ngIf="order.orderType.orderTypeName == 'delivery'">Užsakymo tipas:  <b>Pristatymas į namus</b></h3>
+                    <h4 class="my-0">Pristatymo adresas: <b>{{order.orderType.delivery.address}}, {{order.orderType.delivery.city}}, {{order.orderType.delivery.zipCode}}</b></h4>
+                    <h5 class="my-0" *ngIf="order.orderType.delivery.specialInstructions != null">Specialios instrukcijos kurjeriui: <b>{{order.orderType.delivery.specialInstructions}}</b></h5>
+                    <h5 class="my-0" *ngIf="order.orderType.delivery.courierTips != 0">Papildomi arbatpinigiai kurjeriui: <b>{{order.orderType.delivery.courierTips | currency: 'EUR'}}</b></h5>
+                </div>
+            </li>
+        </ul>
+        <!--  -->
+    </mat-expansion-panel>
+</mat-accordion>

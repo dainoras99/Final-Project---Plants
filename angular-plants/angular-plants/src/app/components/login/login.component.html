@@ -1,0 +1,21 @@
+<button class="btn btn-outline-primary float-end" (click)="closeModal()">X</button>
+
+<h2 class="text-uppercase text-center mb-5">Prisijunkite</h2>
+
+
+<form (ngSubmit)="userLogin()">
+    <div class="form-outline mb-4">
+        <label class="form-label" for="username">Slapyvardis</label>
+        <input type="text" id="username" name="username" [(ngModel)]="user.username" class="form-control form-control-lg" />
+    </div>
+    <div class="form-outline mb-4">
+        <label class="form-label" for="password">Slaptažodis</label>
+        <input type="password" id="password" name="password" [(ngModel)]="user.password" class="form-control form-control-lg" />
+    </div>
+    <div class="form-text text-danger" [ngStyle]="{'display': loginError}">
+        Slapyvardis arba slaptažodis yra neteisingas, bandykite dar kartą
+    </div>
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Prisijungimas</button>
+    </div>
+</form>

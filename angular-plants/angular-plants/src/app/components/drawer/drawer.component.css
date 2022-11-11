@@ -1,0 +1,21 @@
+.removeScrollBar {
+    overflow: hidden;
+    opacity: 0.5;
+}
+
+mat-sidenav {
+    background-color: #8d9e2b3e;
+    width:900px ;
+}
+
+.mainly .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: .75em;
+    padding-right: .75em;
+}
+
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }

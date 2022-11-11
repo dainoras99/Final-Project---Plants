@@ -1,3 +1,4 @@
+/* You can add global styles to this file, and also import other style files */
 .logo {
     margin-left: 20px;
     width: 200px;
@@ -41,7 +42,6 @@ header hr {
     border-radius: 50%;
     vertical-align: middle;
     border: 1px solid #ddd;
-    -webkit-appearance: none;
     cursor: pointer;
 }
 
@@ -91,12 +91,33 @@ header hr {
 
 .cardStyle {
     background-color: #86f70d3e;
-    padding: 10px;
     border-style: solid;
     border-color: rgb(243, 243, 149);
-    height: 100%;
     text-align: center;
     margin-left: 1em;
-    border-radius: 25px;
-    
+    border-radius: 25px;   
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.ad img {
+    width: 100%;
+    height: 100%;
+}
+
+.blockAd {
+        background-color: rgb(255, 252, 211);
+        padding: 10px;
+        border-style: ridge;
+        height: 100%;
+}
+
+footer {
+    padding: 10px;
+    background: rgb(255, 252, 211);
+    border: ridge;
+    text-align: center;
+    font-size: 1em;
+    margin-bottom: 3px;
 }

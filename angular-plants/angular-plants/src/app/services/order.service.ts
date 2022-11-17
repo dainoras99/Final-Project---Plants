@@ -18,21 +18,20 @@ export class OrderService {
   private shopsUrl = "http://localhost:8080/api/v1/takefromshop";
   private parcelsUrl = "http://localhost:8080/api/v1/takefromparcel";
   private deliveryUrl = "http://localhost:8080/api/v1/takefromdelivery";
-
   private baseUrl = "http://localhost:8080/api"
 
   constructor(private httpClient: HttpClient) { }
 
-  postCartItemShop(username: string, cartItems: CartItem[], total: number, OrderTypeId: number) : Observable<any> {
-    return this.httpClient.post(`${this.shopsUrl}?id=${OrderTypeId}`, {username, cartItems, total}, {responseType: 'text'});
+  postCartItemShop(username: string, cartItems: CartItem[], total: number, OrderTypeId: number): Observable<any> {
+    return this.httpClient.post(`${this.shopsUrl}?id=${OrderTypeId}`, { username, cartItems, total }, { responseType: 'text' });
   }
 
-  postCartItemParcel(username: string, cartItems: CartItem[], total: number, OrderTypeId: number) : Observable<any> {
-    return this.httpClient.post(`${this.parcelsUrl}?id=${OrderTypeId}`, {username, cartItems, total}, {responseType: 'text'});
+  postCartItemParcel(username: string, cartItems: CartItem[], total: number, OrderTypeId: number): Observable<any> {
+    return this.httpClient.post(`${this.parcelsUrl}?id=${OrderTypeId}`, { username, cartItems, total }, { responseType: 'text' });
   }
 
-  postCartItemDelivery(username: string, cartItems: CartItem[], total: number, delivery: Delivery) : Observable<any> {
-    return this.httpClient.post(this.deliveryUrl, {username, cartItems, total, delivery}, {responseType: 'text'});
+  postCartItemDelivery(username: string, cartItems: CartItem[], total: number, delivery: Delivery): Observable<any> {
+    return this.httpClient.post(this.deliveryUrl, { username, cartItems, total, delivery }, { responseType: 'text' });
   }
 
   public getOrders(userId: number): Observable<Order[]> {
@@ -49,7 +48,7 @@ export class OrderService {
     );
   }
 
-  public getOrderType(orderId: number) : Observable<OrderType> {
+  public getOrderType(orderId: number): Observable<OrderType> {
     const orderTypeUrl = `${this.baseUrl}/orders/${orderId}/orderType`
     return this.httpClient.get<OrderType>(orderTypeUrl);
   }
@@ -68,7 +67,6 @@ export class OrderService {
     const orderTypeDeliveryUrl = `${this.baseUrl}/orderTypes/${orderTypeId}/delivery`
     return this.httpClient.get<Delivery>(orderTypeDeliveryUrl);
   }
-   
 
   public getOrderItemPlant(orderItemId: number): Observable<Plant> {
     const orderItemPlantUrl = `${this.baseUrl}/orderItems/${orderItemId}/plant`;

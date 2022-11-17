@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { BehaviorSubject, Subscription, switchMap } from 'rxjs';
 import { CartItem } from 'src/app/common/cart-item';
 import { CartSession } from 'src/app/common/cart-session';
 import { Plant } from 'src/app/common/plant';
@@ -8,9 +7,7 @@ import { User } from 'src/app/common/user';
 import { UserItem } from 'src/app/common/user-item';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CartService } from 'src/app/services/cart.service';
-import { SidenavService } from 'src/app/services/sidenav.service';
 import { UserItemsService } from 'src/app/services/user-items.service';
-import { PlantListComponent } from '../plant-list/plant-list.component';
 
 @Component({
   selector: 'app-cart',
@@ -20,21 +17,17 @@ import { PlantListComponent } from '../plant-list/plant-list.component';
 export class CartComponent implements OnInit {
 
   @ViewChild('sidenav') public sidenav!: MatSidenav;
-
   cartSessions: CartSession[] = [];
   cartItems: CartItem[] = [];
   user!: User;
   cartPlants: Plant[] = [];
   maybeWillWork: CartItem[] = [];
-
-  //cia checkoutui sitas listas
   useritemsForCheckout: UserItem[] = [];
   userCartItem!: UserItem
 
-
   constructor(public authenticationService: AuthenticationService,
-    private cartService: CartService, private userItemsService: UserItemsService) { }
-
+    private cartService: CartService, 
+    private userItemsService: UserItemsService) { }
 
    ngOnInit(): void {
     this.handleUser();
@@ -42,7 +35,6 @@ export class CartComponent implements OnInit {
       this.handleUser();
     });
    }
-
 
   handleUser() {
     this.authenticationService.getUserByUsername().subscribe(
@@ -61,7 +53,6 @@ export class CartComponent implements OnInit {
         this.cartItems = data;
         this.cartPlants = [];
         this.maybeWillWork = [];
-        //checkoutui
         this.useritemsForCheckout = [];
         this.cartItems.forEach(tempCartItem => this.handlePlants(tempCartItem.id, tempCartItem));
       }
@@ -83,13 +74,7 @@ export class CartComponent implements OnInit {
       this.userCartItem.description = data.description;
       this.userCartItem.price = data.price;
       this.userCartItem.quantity = tempCartItem.quantity;
-
-     this.useritemsForCheckout.push(this.userCartItem);
-     this.useritemsForCheckout.forEach(tempUserItem => console.log("Username " + tempUserItem.name));
-     console.log("trecio array element name: " + data.name)
-
-     this.cartPlants.forEach(tempCartPlant => console.log("Cartname " + tempCartPlant.name));
-
+      this.useritemsForCheckout.push(this.userCartItem);
       this.userItemsService.setProducts(this.useritemsForCheckout);
     }
    )
@@ -99,7 +84,6 @@ export class CartComponent implements OnInit {
     this.cartService.deleteCartItem(cartItemId!).subscribe(
       {
         next: response => {
-          console.log("cia: " + this.user.id);
           if (cartPlantLength == 1) {
             this.cartService.getCartSession(this.user.id).subscribe(
               data => {
@@ -119,9 +103,7 @@ export class CartComponent implements OnInit {
     deleteUserSession(cartItemId: number) {
       this.cartService.removeSession(cartItemId).subscribe(
         {
-          next: response => {
-            
-          },
+          next: response => {},
           error: err => {
             console.log(err);
           }
@@ -132,11 +114,7 @@ export class CartComponent implements OnInit {
     updateCartItem(cartItem: CartItem, quantityChange: boolean) {
       this.cartService.updateCartItem(cartItem.id, quantityChange).subscribe(
         {
-          next: response => {
-            // cartItems.forEach(element => {
-              
-            // });
-          },
+          next: response => {},
           error: err => {
             console.log(err);
           }

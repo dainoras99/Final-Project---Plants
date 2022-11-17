@@ -16,7 +16,6 @@ import { BehaviorSubject } from 'rxjs';
 export class CartService {
 
   private baseUrl=`http://localhost:8080/api`;
-  
   private refreshRequired = new Subject<void>();
   private refreshCartComponent= new BehaviorSubject<boolean>(true);
 
@@ -26,7 +25,6 @@ export class CartService {
   get getRefreshRequired() {
     return this.refreshRequired;
   }
-
 
   constructor(private httpClient: HttpClient) { }
 
@@ -70,6 +68,7 @@ export class CartService {
       })
     );
   }
+  
   deleteCartItem(cartItemId: number) : Observable<any> {
     return this.httpClient.delete(`${this.baseUrl}/v1/deleteCartItem?id=${cartItemId}`, {responseType: 'text'}).pipe(
       tap(()=>{
@@ -77,6 +76,7 @@ export class CartService {
       })
     );
   }
+
   removeSession(sessionId: number) : Observable<any> {
     return this.httpClient.delete(`${this.baseUrl}/v1/deleteCartSession?id=${sessionId}`, {responseType: 'text'});
   }

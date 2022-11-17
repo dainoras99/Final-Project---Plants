@@ -17,17 +17,16 @@ export class CheckoutparcelComponent implements OnInit {
   typeSelected: any;
   selectedProducts: UserItem[] = [];
   selectedTotal!: number;
-
   parcelList: Parcel[] = [];
-
   parcelSelected: any;
-  parcelId!:number;
-
+  parcelId!: number;
   cartItems: CartItem[] = [];
   cartItem!: CartItem;
 
-  constructor(private router: Router, private userItemsService: UserItemsService,
-    private orderTypesService: OrderTypesService, private authenticationService: AuthenticationService,
+  constructor(private router: Router, 
+    private userItemsService: UserItemsService,
+    private orderTypesService: OrderTypesService, 
+    private authenticationService: AuthenticationService,
     private orderService: OrderService) { }
 
   ngOnInit(): void {
@@ -53,7 +52,6 @@ export class CheckoutparcelComponent implements OnInit {
     if (this.typeSelected === "Atsiimsiu parduotuvėje") this.router.navigate(['/checkout']);
     if (this.typeSelected === "Pristatyti į namus") this.router.navigate(['checkout/home']);
     if (this.typeSelected === "Pristatyti į paštomatą") this.router.navigate(['checkout/parcel']);
-    console.log(this.typeSelected);
   }
 
   selectedParcel(event: any) {
@@ -65,7 +63,6 @@ export class CheckoutparcelComponent implements OnInit {
   }
 
   postOrder() {
-
     this.selectedProducts.forEach(element => {
       this.cartItem = new CartItem(0, 0, null!);
       this.cartItem.id = element.id;
@@ -73,15 +70,10 @@ export class CheckoutparcelComponent implements OnInit {
       this.cartItems.push(this.cartItem);
     });
     let username = this.authenticationService.getLoggedInUserName();
-
     if (this.parcelSelected === undefined) this.parcelSelected = "Akropolis - Vilnius, Ozo g. 25, 07150";
-    
     this.parcelList.forEach(parcel => {
-      //{{parcel.name}} - {{parcel.city}}, {{parcel.address}}, {{parcel.zipCode}}
         if (this.parcelSelected === parcel.name + " - " + parcel.city + ", " + parcel.address + ", " + parcel.zipCode) this.parcelId = parcel.id;
     });
-
-
     this.orderService.postCartItemParcel(username!, this.cartItems,
     this.selectedTotal, this.parcelId).subscribe(
       {
@@ -91,7 +83,7 @@ export class CheckoutparcelComponent implements OnInit {
         },
         error: err => {
           console.log(err);
-          alert("negerai");
+          alert("Sistemos klaida");
         }
       }
     )

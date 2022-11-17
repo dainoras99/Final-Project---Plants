@@ -1,8 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { CartItem } from 'src/app/common/cart-item';
-import { Plant } from 'src/app/common/plant';
 import { Shop } from 'src/app/common/shop';
 import { UserItem } from 'src/app/common/user-item';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -19,18 +18,19 @@ export class CheckoutComponent implements OnInit {
 
   typeSelected: any;
   shopSelected: any;
-
   selectedProducts: UserItem[] = [];
   selectedTotal!: number;
   shopId!: number;
-
   cartItems: CartItem[] = [];
   cartItem!: CartItem
   shopsList: Shop[] = [];
 
   checkoutFormGroup!: FormGroup;
-  constructor(private router: Router, private formBuilder: FormBuilder, private userItemsService: UserItemsService,
-    private orderTypesService: OrderTypesService, private orderService: OrderService, private authenticationService: AuthenticationService) { }
+  constructor(private router: Router,
+    private userItemsService: UserItemsService,
+    private orderTypesService: OrderTypesService,
+    private orderService: OrderService,
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.handleShops();
@@ -73,7 +73,6 @@ export class CheckoutComponent implements OnInit {
       this.cartItems.push(this.cartItem);
     });
     let username = this.authenticationService.getLoggedInUserName();
-
     if (this.shopSelected === undefined) this.shopSelected = "Vilnius, Šeimyniškių g. 31";
 
     this.shopsList.forEach(shop => {
@@ -82,7 +81,6 @@ export class CheckoutComponent implements OnInit {
       console.log("shop city address: " + shop.city + ", " + shop.address)
       if (this.shopSelected === shop.address + ", " + shop.city) this.shopId = shop.id;
     });
-
 
     this.orderService.postCartItemShop(username!, this.cartItems,
       this.selectedTotal, this.shopId).subscribe(

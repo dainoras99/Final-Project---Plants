@@ -10,6 +10,7 @@ import { ProductService } from 'src/app/services/product.service';
 export class PlantCategoryMenuComponent implements OnInit {
 
   plantCategory: PlantCategory[] = [];
+
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
@@ -23,5 +24,4 @@ export class PlantCategoryMenuComponent implements OnInit {
       }
     );
   }
-
 }

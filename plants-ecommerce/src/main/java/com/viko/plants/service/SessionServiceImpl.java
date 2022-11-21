@@ -5,6 +5,7 @@ import com.viko.plants.entity.CartItem;
 import com.viko.plants.entity.CartSession;
 import com.viko.plants.entity.Plant;
 import com.viko.plants.entity.User;
+import com.viko.plants.repository.CartSessionItemRepository;
 import com.viko.plants.repository.CartSessionRepository;
 import com.viko.plants.repository.PlantRepository;
 import com.viko.plants.repository.UserRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -22,13 +24,16 @@ public class SessionServiceImpl implements SessionService {
     private CartSessionRepository sessionRepository;
     private UserRepository userRepository;
     private PlantRepository plantRepository;
+    private CartSessionItemRepository cartSessionItemRepository;;
 
     public SessionServiceImpl(CartSessionRepository sessionRepository,
                               UserRepository userRepository,
-                              PlantRepository plantRepository) {
+                              PlantRepository plantRepository,
+                              CartSessionItemRepository cartSessionItemRepository) {
         this.sessionRepository = sessionRepository;
         this.userRepository = userRepository;
         this.plantRepository = plantRepository;
+        this.cartSessionItemRepository = cartSessionItemRepository;
     }
 
     @Override
@@ -37,7 +42,7 @@ public class SessionServiceImpl implements SessionService {
 
         User user = findUserByUsername(request.getUsername());
         CartSession cartSession = new CartSession();
-        Set<CartItem> cartItems = new HashSet<>();
+        Set<CartItem> cartItems = new LinkedHashSet<>();
         CartItem cartItem = new CartItem();
 
         if (sessionRepository.UserSessionExist(user.getId()) > 0) {
@@ -60,7 +65,9 @@ public class SessionServiceImpl implements SessionService {
         cartItems.add(cartItem);
 
         cartSession.setCartItems(cartItems);
-        cartSession.setTotal_price(cartSession.getTotal_price() + plant.getPrice());
+
+        if (cartSession.getTotal_price() == null) cartSession.setTotal_price(plant.getPrice());
+        else cartSession.setTotal_price(cartSession.getTotal_price() + plant.getPrice());
         cartSession.setUser(user);
 
         sessionRepository.save(cartSession);
@@ -85,12 +92,13 @@ public class SessionServiceImpl implements SessionService {
 
     private CartSession updateCartItemQuantity(CartSession cartSession, CartSessionRequest request) {
 
-        cartSession.getCartItems().forEach(cartItem -> {
-            if (cartItem.getPlant().getName() == request.getPlantName()) {
+        for (CartItem cartItem : cartSession.getCartItems()) {
+            if (cartItem.getPlant().getName().equals(request.getPlantName())) {
                 cartItem.setQuantity(cartItem.getQuantity() + 1);
                 cartSession.setTotal_price(cartSession.getTotal_price() + cartItem.getPlant().getPrice());
+                cartSessionItemRepository.save(cartItem);
             }
-        });
+        }
         sessionRepository.save(cartSession);
         return cartSession;
     }

@@ -21,7 +21,9 @@ public class PlantCategory {
     @Column(name = "name")
     private String name;
 
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    @JsonManagedReference
     private Set<Plant> plants;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="plantCategory")

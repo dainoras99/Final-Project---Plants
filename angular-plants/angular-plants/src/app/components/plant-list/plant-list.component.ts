@@ -63,7 +63,7 @@ export class PlantListComponent implements OnInit {
     this.cartService.postCartItem(username!, plant.name!).subscribe(
       {
         next: response => {
-          console.log("pridėtas produktas");
+          console.log("pridėtas produktas"); // cj cia kazka reiks pritrynt
         },
         error: err => {
           console.log(err);

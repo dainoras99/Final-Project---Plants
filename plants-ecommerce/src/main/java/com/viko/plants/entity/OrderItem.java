@@ -1,6 +1,7 @@
 package com.viko.plants.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,7 +24,7 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "plants_id", nullable = false)
-    @JsonBackReference
+    @JsonManagedReference
     private Plant plant;
 
     @ManyToOne

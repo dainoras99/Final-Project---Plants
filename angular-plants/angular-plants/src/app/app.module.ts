@@ -23,6 +23,7 @@ import { CheckouthomeComponent } from './components/checkouthome/checkouthome.co
 import { CheckoutparcelComponent } from './components/checkoutparcel/checkoutparcel.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { CartService } from './services/cart.service';
 
 const routes: Routes = [
   {path: 'orders', component: OrdersComponent},
@@ -68,7 +69,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     MatExpansionModule,
   ],
-  providers: [ProductService],
+  providers: [ProductService, CartService],
   bootstrap: [AppComponent]
 })
 

@@ -38,6 +38,12 @@ public class CartSessionController {
         return response;
     }
 
+    @GetMapping("api/v1/userSession/{username}")
+    public CartSessionResponse userSession(@PathVariable String username) {
+        CartSessionResponse response = sessionService.LoadCartSession(username);
+        return response;
+    }
+
 //    @DeleteMapping("api/v1/deleteCartItem")
 //    public ResponseEntity<?> deleteCartItem(@RequestParam(value="id", required=true) int id) {
 //        try {

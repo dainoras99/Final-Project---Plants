@@ -13,10 +13,8 @@ import com.viko.plants.request.CartSessionRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class SessionServiceImpl implements SessionService {
@@ -38,6 +36,15 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     @Transactional
+    public CartSessionResponse LoadCartSession(String username) {
+        User user = findUserByUsername(username);
+        CartSession cartSession = new CartSession();
+        if (sessionRepository.UserSessionExist(user.getId()) > 0)  cartSession = sessionRepository.findUserSession(user.getId());
+        return new CartSessionResponse(cartSession.getId(), cartSession.getTotal_price(), cartSession.getCartItems());
+    }
+
+    @Override
+    @Transactional
     public CartSessionResponse addCartItem(CartSessionRequest request) {
 
         User user = findUserByUsername(request.getUsername());
@@ -50,7 +57,7 @@ public class SessionServiceImpl implements SessionService {
             cartItems = cartSession.getCartItems();
             if (samePlantExist(cartSession, request)) {
                 cartSession = updateCartItemQuantity(cartSession, request);
-                return new CartSessionResponse(cartSession);
+                return new CartSessionResponse(cartSession.getId(), cartSession.getTotal_price(), cartSession.getCartItems());
             }
         }
 
@@ -72,7 +79,7 @@ public class SessionServiceImpl implements SessionService {
 
         sessionRepository.save(cartSession);
 
-        return new CartSessionResponse(cartSession);
+        return new CartSessionResponse(cartSession.getId(), cartSession.getTotal_price(), cartSession.getCartItems());
     }
 
     private User findUserByUsername(String username) {

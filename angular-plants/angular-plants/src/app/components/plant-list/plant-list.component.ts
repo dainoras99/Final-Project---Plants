@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { CartSession } from 'src/app/common/cart-session';
 import { Plant } from 'src/app/common/plant';
 import { User } from 'src/app/common/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -17,6 +19,8 @@ export class PlantListComponent implements OnInit {
   currentCategoryId: number = 1;
   isSearch: boolean = false;
   user!: User;
+
+  cartSession!: CartSession;
 
   constructor(private productService: ProductService,
               private route: ActivatedRoute,
@@ -63,7 +67,8 @@ export class PlantListComponent implements OnInit {
     this.cartService.postCartItem(username!, plant.name!).subscribe(
       {
         next: response => {
-          console.log("pridėtas produktas"); // cj cia kazka reiks pritrynt
+         this.cartSession = JSON.parse(response);
+         this.cartService.setCartData(this.cartSession);
         },
         error: err => {
           console.log(err);

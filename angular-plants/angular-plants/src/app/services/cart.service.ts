@@ -19,6 +19,9 @@ export class CartService {
   private refreshRequired = new Subject<void>();
   private refreshCartComponent= new BehaviorSubject<boolean>(true);
 
+  private sharedCartData = new BehaviorSubject<CartSession>(<CartSession>{});
+
+
   get getRefreshCartComponent() {
     return this.refreshCartComponent;
   }
@@ -26,13 +29,19 @@ export class CartService {
     return this.refreshRequired;
   }
 
+  setCartData(cartData: CartSession) {
+    this.sharedCartData.next(cartData);
+  }
+
+  getCartData(): Observable<CartSession> {
+    return this.sharedCartData.asObservable();
+  }
+
   constructor(private httpClient: HttpClient) { }
 
-  getCartSession(userId: number) : Observable<CartSession[]> {
-    const cartSessionUrl = `${this.baseUrl}/users/${userId}/cartSessions`;
-    return this.httpClient.get<getResponseSession>(cartSessionUrl).pipe(
-      map(response => response._embedded.cartSessions)
-    );
+  getCartSession(username: string) : Observable<CartSession> {
+    const cartSessionUrl = `${this.baseUrl}/v1/userSession/${username}`;
+    return this.httpClient.get<CartSession>(cartSessionUrl);
   }
 
    getCartItems(cartSessionId: number): Observable<CartItem[]> {
@@ -100,4 +109,8 @@ interface getResponseSession {
   _embedded: {
     cartSessions: CartSession[];
   }
+}
+
+interface GetResponseSession {
+  cartSession: CartSession
 }

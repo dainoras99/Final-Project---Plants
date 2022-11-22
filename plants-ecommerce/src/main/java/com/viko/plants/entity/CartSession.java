@@ -23,7 +23,6 @@ public class CartSession {
     @Column(name = "total_price")
     private Float total_price;
 
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference

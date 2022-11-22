@@ -5,5 +5,6 @@ import com.viko.plants.request.CartSessionRequest;
 
 public interface SessionService {
 
+    CartSessionResponse LoadCartSession(String username);
     CartSessionResponse addCartItem(CartSessionRequest cartSessionRequest);
 }

@@ -40,7 +40,15 @@ public class CartSessionController {
 
     @GetMapping("api/v1/userSession/{username}")
     public CartSessionResponse userSession(@PathVariable String username) {
+
         CartSessionResponse response = sessionService.LoadCartSession(username);
+        return response;
+    }
+
+    @DeleteMapping("api/v1/deleteCartItem")
+    public CartSessionResponse userSession(@RequestParam(value="id", required=true) Integer cartItemId) {
+
+        CartSessionResponse response = sessionService.deleteCartItem(cartItemId);
         return response;
     }
 

@@ -51,24 +51,17 @@ export class CartComponent implements OnInit {
     )
   }
 
-  deleteCartItem(cartItemId: number, cartPlantLength: number) {
-    // this.cartService.deleteCartItem(cartItemId!).subscribe(
-    //   {
-    //     next: response => {
-    //       if (cartPlantLength == 1) {
-    //         this.cartService.getCartSession(this.user.username).subscribe(
-    //           data => {
-    //             this.cartSessions = data;
-    //             this.deleteUserSession(this.cartSessions[0].id);
-    //           }
-    //         )
-    //       }  
-    //     },
-    //     error: err => {
-    //       console.log(err);
-    //     }
-    //   }
-    // )
+  deleteCartItem(cartItemId: number) {
+    this.cartService.deleteCartItem(cartItemId!).subscribe(
+      {
+        next: response => {
+          this.cartService.setCartData(JSON.parse(response));
+        },
+        error: err => {
+          console.log(err);
+        }
+      }
+    )
     }
 
     deleteUserSession(cartItemId: number) {

@@ -7,4 +7,5 @@ public interface SessionService {
 
     CartSessionResponse LoadCartSession(String username);
     CartSessionResponse addCartItem(CartSessionRequest cartSessionRequest);
+    CartSessionResponse deleteCartItem(Integer cartItemId);
 }

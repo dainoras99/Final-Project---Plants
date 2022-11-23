@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.LinkedHashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -81,6 +82,22 @@ public class SessionServiceImpl implements SessionService {
 
         return new CartSessionResponse(cartSession.getId(), cartSession.getTotal_price(), cartSession.getCartItems());
     }
+
+    @Override
+    @Transactional
+    public CartSessionResponse deleteCartItem(Integer cartItemId) {
+
+        Optional<CartItem> optionalCartItem = cartSessionItemRepository.findById(cartItemId);
+        CartItem cartItem = optionalCartItem.get();
+        CartSession cartSession = cartItem.getCartSession();
+        cartSession.setTotal_price(
+                    cartItem.getCartSession().getTotal_price() - (cartItem.getPlant().getPrice() * cartItem.getQuantity()));
+        cartSessionItemRepository.deleteById(cartItemId);
+        sessionRepository.save(cartSession);
+
+        return new CartSessionResponse(cartSession.getId(), cartSession.getTotal_price(), cartSession.getCartItems());
+    }
+
 
     private User findUserByUsername(String username) {
         User user = userRepository.findByUsername(username);

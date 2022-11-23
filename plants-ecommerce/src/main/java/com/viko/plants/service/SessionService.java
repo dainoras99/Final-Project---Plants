@@ -8,4 +8,5 @@ public interface SessionService {
     CartSessionResponse LoadCartSession(String username);
     CartSessionResponse addCartItem(CartSessionRequest cartSessionRequest);
     CartSessionResponse deleteCartItem(Integer cartItemId);
+    CartSessionResponse updateCartItem(Integer cartItemId, Boolean quantityIncrease);
 }

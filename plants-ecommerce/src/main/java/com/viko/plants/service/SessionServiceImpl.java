@@ -98,6 +98,25 @@ public class SessionServiceImpl implements SessionService {
         return new CartSessionResponse(cartSession.getId(), cartSession.getTotal_price(), cartSession.getCartItems());
     }
 
+    @Override
+    @Transactional
+    public CartSessionResponse updateCartItem(Integer cartItemId, Boolean quantityIncrease) {
+        Optional<CartItem> optionalCartItem = cartSessionItemRepository.findById(cartItemId);
+        CartItem cartItem = optionalCartItem.get();
+        CartSession cartSession = cartItem.getCartSession();
+        if (quantityIncrease) {
+            cartItem.setQuantity(cartItem.getQuantity() + 1);
+            cartSession.setTotal_price(cartSession.getTotal_price() + cartItem.getPlant().getPrice());
+        }
+        else {
+            cartItem.setQuantity(cartItem.getQuantity() - 1);
+            cartSession.setTotal_price(cartSession.getTotal_price() - cartItem.getPlant().getPrice());
+        }
+        cartSessionItemRepository.save(cartItem);
+        sessionRepository.save(cartSession);
+        return new CartSessionResponse(cartSession.getId(), cartSession.getTotal_price(), cartSession.getCartItems());
+    }
+
 
     private User findUserByUsername(String username) {
         User user = userRepository.findByUsername(username);

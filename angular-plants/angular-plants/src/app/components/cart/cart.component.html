@@ -11,13 +11,13 @@
                 <p class="lead fw-normal mb-2">{{cartItem.plant.name}}</p>
             </div>
             <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                <button class="btn px-2" (click)="updateCartItem(cartItem, false)"
+                <button *ngIf="cartItem.quantity > 1" class="btn px-2" (click)="updateCartItem(cartItem, false)"
                     onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
 
                 <input id="form1" min="1" max="50" name="quantity" value="{{cartItem.quantity}}" type="number"
                     class="form-control form-control-sm" />
 
-                <button class="btn px-2" (click)="updateCartItem(cartItem, true)"
+                <button *ngIf="cartItem.quantity < 50" class="btn px-2" (click)="updateCartItem(cartItem, true)"
                     onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
             </div>
             <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">

@@ -30,16 +30,15 @@ export class CartComponent implements OnInit {
   realCartSession!: CartSession;
 
   constructor(public authenticationService: AuthenticationService,
-    private cartService: CartService, 
+    private cartService: CartService,
     private loginService: LoginService) { }
 
-   ngOnInit(): void {
-      this.loginService.getUserData().subscribe(data => {
-        if (data != "username") {
-          console.log('hey');
+  ngOnInit(): void {
+    this.loginService.getUserData().subscribe(data => {
+      if (data != "username") {
         this.handleUserSession(data);
         this.cartSession = this.cartService.getCartData();
-        }
+      }
     })
   }
 
@@ -62,28 +61,30 @@ export class CartComponent implements OnInit {
         }
       }
     )
-    }
+  }
 
-    deleteUserSession(cartItemId: number) {
-      // this.cartService.removeSession(cartItemId).subscribe(
-      //   {
-      //     next: response => {},
-      //     error: err => {
-      //       console.log(err);
-      //     }
-      //   }
-      // )
-    }
+  updateCartItem(cartItem: CartItem, quantityChange: boolean) {
+    this.cartService.updateCartItem(cartItem.id, quantityChange).subscribe(
+      {
+        next: response => {
+          this.cartService.setCartData(JSON.parse(response));
+        },
+        error: err => {
+          console.log(err);
+        }
+      }
+    )
+  }
+  // deleteUserSession(cartItemId: number) {
+  //   // this.cartService.removeSession(cartItemId).subscribe(
+  //   //   {
+  //   //     next: response => {},
+  //   //     error: err => {
+  //   //       console.log(err);
+  //   //     }
+  //   //   }
+  //   // )
+  // }
 
-    updateCartItem(cartItem: CartItem, quantityChange: boolean) {
-      // this.cartService.updateCartItem(cartItem.id, quantityChange).subscribe(
-      //   {
-      //     next: response => {},
-      //     error: err => {
-      //       console.log(err);
-      //     }
-      //   }
-      // )
-    }
 }
-  
+

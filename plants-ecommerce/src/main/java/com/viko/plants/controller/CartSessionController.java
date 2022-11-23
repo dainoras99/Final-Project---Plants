@@ -46,12 +46,18 @@ public class CartSessionController {
     }
 
     @DeleteMapping("api/v1/deleteCartItem")
-    public CartSessionResponse userSession(@RequestParam(value="id", required=true) Integer cartItemId) {
+    public CartSessionResponse deleteCartItem(@RequestParam(value="id", required=true) Integer cartItemId) {
 
         CartSessionResponse response = sessionService.deleteCartItem(cartItemId);
         return response;
     }
 
+    @PutMapping("api/v1/updateCartItem")
+    public CartSessionResponse updateCartItem(@RequestParam(value="id", required=true) Integer cartItemId,
+                                              @RequestBody Boolean quantityIncrease) {
+        CartSessionResponse response = sessionService.updateCartItem(cartItemId, quantityIncrease);
+        return response;
+    }
 //    @DeleteMapping("api/v1/deleteCartItem")
 //    public ResponseEntity<?> deleteCartItem(@RequestParam(value="id", required=true) int id) {
 //        try {

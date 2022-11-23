@@ -19,7 +19,7 @@
         {{(cartSession | async)?.cartItems?.length}}
         <span *ngIf="(cartSession | async)?.cartItems?.length==1">augalas</span>
         <span *ngIf="(cartSession | async)?.cartItems!.length>1 && (cartSession | async)?.cartItems!.length<10">augalai</span>
-        <span *ngIf="(cartSession | async)?.cartItems?.length==10">augalų</span>
+        <span *ngIf="(cartSession | async)?.cartItems!.length>10">augalų</span>
         krepšelyje | {{(cartSession | async)?.total_price | currency:'EUR'}}
     </button>
 <!-- </ng-template> -->

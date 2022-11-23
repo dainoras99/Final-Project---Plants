@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Observable } from 'rxjs/internal/Observable';
 import { CartItem } from 'src/app/common/cart-item';
 import { CartSession } from 'src/app/common/cart-session';
 import { Plant } from 'src/app/common/plant';
@@ -18,7 +19,7 @@ import { UserItemsService } from 'src/app/services/user-items.service';
 export class CartComponent implements OnInit {
 
   @ViewChild('sidenav') public sidenav!: MatSidenav;
-  cartSession!: CartSession
+  cartSession!: Observable<CartSession>;
   cartItems: CartItem[] = [];
   user!: User;
   cartPlants: Plant[] = [];
@@ -34,23 +35,18 @@ export class CartComponent implements OnInit {
 
    ngOnInit(): void {
     // this.handleUserSession(string: username);
-    this.loginService.getRefreshRequired.subscribe(response => {
       this.loginService.getUserData().subscribe(data => {
         if (data != "username") {
-        console.log("as jau bbd: " + data);
         this.handleUserSession(data);
+        this.cartSession = this.cartService.getCartData();
         }
-    });
    });
   }
 
   handleUserSession(username: string) {
-    console.log("pasol nx 3");
     this.cartService.getCartSession(username).subscribe(
       data => {
-        this.cartSession = data;
-        this.cartService.setCartData(this.cartSession);
-        console.log("bandom ziuret: " + this.cartSession.cartItems[0].plant.name);
+        this.cartService.setCartData(data);
       }
     )
   }

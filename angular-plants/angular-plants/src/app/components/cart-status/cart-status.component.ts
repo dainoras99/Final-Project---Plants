@@ -1,9 +1,9 @@
-import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { CartSession } from 'src/app/common/cart-session';
 import { CartItem } from 'src/app/common/cart-item';
 import { AuthenticationService } from 'src/app/services/authentication.service'
 import { CartService } from 'src/app/services/cart.service';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { User } from 'src/app/common/user';
 import { SidenavService } from 'src/app/services/sidenav.service';
 import { CartComponent } from '../cart/cart.component';
@@ -18,7 +18,7 @@ import { LoginService } from 'src/app/services/login.service';
 export class CartStatusComponent implements OnInit {
 
   @ViewChild(CartComponent) cartComponent!:CartComponent;
-  cartSession!: CartSession;
+  cartSession!: Observable<CartSession>;
   cartItems: CartItem[] = [];
   user!: User;
 
@@ -30,17 +30,10 @@ export class CartStatusComponent implements OnInit {
   private cartService: CartService,
   private sideNavService: SidenavService,
   private userItemsService: UserItemsService,
-  private loginService: LoginService) { }
+  private loginService: LoginService,) { }
 
   ngOnInit(): void {
-    this.loginService.getRefreshRequired.subscribe(response => {
-      this.loginService.getUserData().subscribe(data => {
-        if (data != "username") {
-        console.log("as jau bbd: " + data);
-        this.handleUserSession(data);
-        }
-      });
-    });
+        this.handleUserSession();
   }
 
   // handleUser() {
@@ -57,14 +50,15 @@ export class CartStatusComponent implements OnInit {
   //   );
   // }
 
-  handleUserSession(username: string) {
-    this.cartService.getCartData().subscribe(
-      data => {
-        this.cartSession = data;
-        console.log("ar cia? " + this.cartSession.total_price)
-        this.userItemsService.setTotalPrice(this.cartSession.total_price);
-      }
-    );
+  handleUserSession() {
+    this.cartSession = this.cartService.getCartData();
+    // this.cartService.getCartData().subscribe(
+    //   data => {
+    //     this.cartSession = data;
+    //     console.log("ar cia? " + this.cartSession.total_price)
+    //     this.userItemsService.setTotalPrice(this.cartSession.total_price);
+    //   }
+    // );
   }
 
   clickSideNav() { 

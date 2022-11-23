@@ -5,6 +5,7 @@ import { HttpClient} from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CartService } from './cart.service';
 import { CartSession } from '../common/cart-session';
+import { LoginService } from './login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthenticationService {
   
   cartSession!: CartSession;
 
-  constructor(private httpClient: HttpClient, private router: Router, private cartService: CartService) { }
+  constructor(private httpClient: HttpClient, private router: Router, private cartService: CartService, private loginService: LoginService) { }
 
   isUserLoggedIn() {
     let user = localStorage.getItem('username');
@@ -23,6 +24,7 @@ export class AuthenticationService {
   logOut() {
     localStorage.removeItem('username');
     this.cartService.setCartData(this.cartSession);
+    this.loginService.setUserData("username");
     this.router.navigate(['/plants']);
   }
 

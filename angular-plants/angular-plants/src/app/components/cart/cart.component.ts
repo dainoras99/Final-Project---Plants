@@ -34,13 +34,13 @@ export class CartComponent implements OnInit {
     private loginService: LoginService) { }
 
    ngOnInit(): void {
-    // this.handleUserSession(string: username);
       this.loginService.getUserData().subscribe(data => {
         if (data != "username") {
+          console.log('hey');
         this.handleUserSession(data);
         this.cartSession = this.cartService.getCartData();
         }
-   });
+    })
   }
 
   handleUserSession(username: string) {

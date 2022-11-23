@@ -32,10 +32,6 @@ export class LoginService {
 
   loginUser(user: User): Observable<Object> {
     console.log(user);
-    return this.httpClient.post(this.baseUrl, user).pipe(
-      tap(()=>{
-        this.getRefreshRequired.next();
-      })
-    );;
+    return this.httpClient.post(this.baseUrl, user);
   }
 }

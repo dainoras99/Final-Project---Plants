@@ -25,11 +25,10 @@ public class CartSession {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value="userCartSession")
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cartSession")
-    @JsonManagedReference
     private Set<CartItem> cartItems;
 
 }

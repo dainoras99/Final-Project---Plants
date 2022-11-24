@@ -63,6 +63,9 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setPlant(cartTempItem.getPlant());
             orderItem.setQuantity(cartTempItem.getQuantity());
             orderItem.setPlantCategory(cartTempItem.getPlant().getCategory());
+            System.out.print("plant: " + cartTempItem.getPlant());
+            System.out.println("zdrw seni: " + cartTempItem.getPlantCategory());
+            System.out.println("zdrw senelyzai: " + cartTempItem.getPlant().getCategory());
             orderItem.setOrderType(orderType);
             orderItems.add(orderItem);
         }

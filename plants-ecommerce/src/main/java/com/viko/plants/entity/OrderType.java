@@ -23,16 +23,16 @@ public class OrderType {
 
     @ManyToOne
     @JoinColumn(name = "parcel_locker_order_type_id", nullable = true)
-    @JsonBackReference
+    @JsonBackReference(value="parcel")
     private Parcel Parcel;
 
     @ManyToOne
     @JoinColumn(name="delivery_order_type_id", nullable = true)
-    @JsonBackReference
+    @JsonBackReference(value="delivery")
     private Delivery delivery;
 
     @ManyToOne
     @JoinColumn(name="take_from_shop_order_type_id", nullable = true)
-    @JsonBackReference
+    @JsonBackReference(value="shop")
     private Shop shop;
 }

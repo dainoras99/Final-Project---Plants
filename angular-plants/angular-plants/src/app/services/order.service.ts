@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
 import { CartItem } from '../common/cart-item';
+import { CartSession } from '../common/cart-session';
 import { Delivery } from '../common/delivery';
 import { Order } from '../common/order';
 import { OrderItem } from '../common/order-item';
@@ -15,6 +16,7 @@ import { Shop } from '../common/shop';
   providedIn: 'root'
 })
 export class OrderService {
+  private postOrderUrl = "http://localhost:8080/api/v1/postOrder"
   private shopsUrl = "http://localhost:8080/api/v1/takefromshop";
   private parcelsUrl = "http://localhost:8080/api/v1/takefromparcel";
   private deliveryUrl = "http://localhost:8080/api/v1/takefromdelivery";
@@ -22,17 +24,21 @@ export class OrderService {
 
   constructor(private httpClient: HttpClient) { }
 
-  postCartItemShop(username: string, cartItems: CartItem[], total: number, OrderTypeId: number): Observable<any> {
-    return this.httpClient.post(`${this.shopsUrl}?id=${OrderTypeId}`, { username, cartItems, total }, { responseType: 'text' });
+  postOrder(cartSession: CartSession, username: string, orderType: string, orderTypeId: number, delivery: Delivery) {
+    return this.httpClient.post(this.postOrderUrl, {cartSession, username, orderType, orderTypeId, delivery}, {responseType: 'text'});
   }
 
-  postCartItemParcel(username: string, cartItems: CartItem[], total: number, OrderTypeId: number): Observable<any> {
-    return this.httpClient.post(`${this.parcelsUrl}?id=${OrderTypeId}`, { username, cartItems, total }, { responseType: 'text' });
-  }
+  // postCartItemShop(username: string, cartItems: CartItem[], total: number, OrderTypeId: number): Observable<any> {
+  //   return this.httpClient.post(`${this.shopsUrl}?id=${OrderTypeId}`, { username, cartItems, total }, { responseType: 'text' });
+  // }
 
-  postCartItemDelivery(username: string, cartItems: CartItem[], total: number, delivery: Delivery): Observable<any> {
-    return this.httpClient.post(this.deliveryUrl, { username, cartItems, total, delivery }, { responseType: 'text' });
-  }
+  // postCartItemParcel(username: string, cartItems: CartItem[], total: number, OrderTypeId: number): Observable<any> {
+  //   return this.httpClient.post(`${this.parcelsUrl}?id=${OrderTypeId}`, { username, cartItems, total }, { responseType: 'text' });
+  // }
+
+  // postCartItemDelivery(username: string, cartItems: CartItem[], total: number, delivery: Delivery): Observable<any> {
+  //   return this.httpClient.post(this.deliveryUrl, { username, cartItems, total, delivery }, { responseType: 'text' });
+  // }
 
   public getOrders(userId: number): Observable<Order[]> {
     const userOrdersUrl = `${this.baseUrl}/users/${userId}/orders`;

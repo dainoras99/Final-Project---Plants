@@ -71,6 +71,25 @@ export class CheckoutComponent implements OnInit {
   }
 
   postOrder() {
+  if (this.shopSelected === undefined) this.shopSelected = "Vilnius, Šeimyniškių g. 31";
+
+  this.orderService.postOrder(this.cartSession, this.authenticationService.getLoggedInUserName()!, "shop",  this.shopId, null!)
+    .subscribe(
+      {
+        next: response => {
+          alert(response);
+          this.router.navigate(['/plants']);
+        },
+        error: err => {
+          alert("Svetainės klaida, kreipkitės į administratorių");
+          this.router.navigate(['/plants']);
+        }
+      }
+    );
+
+  }
+
+
   //   this.selectedProducts.forEach(element => {
   //     this.cartItem = new CartItem(0, 0, null!);
   //     this.cartItem.id = element.id;
@@ -100,5 +119,4 @@ export class CheckoutComponent implements OnInit {
   //         }
   //       }
   //     )
-  }
 }

@@ -90,6 +90,8 @@ public class OrderServiceImpl implements OrderService {
 
         OrderType orderType = new OrderType();
 
+        System.out.println("orderTypeName: " + orderTypeName);
+
         if (orderTypeName == "shop") {
 
             Optional<Shop> optionalShop = shopRepository.findById(id);

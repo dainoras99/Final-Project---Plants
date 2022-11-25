@@ -139,6 +139,7 @@ export class CheckouthomeComponent implements OnInit {
       {
         next: response => {
           alert(response);
+          this.cartService.setCartData(null!);
           this.router.navigate(['/plants']);
         },
         error: err => {

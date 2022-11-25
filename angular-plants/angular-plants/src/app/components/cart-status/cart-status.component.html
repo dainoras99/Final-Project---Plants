@@ -1,4 +1,4 @@
-<button *ngIf="(cartSession | async)?.total_price == null || (cartSession | async)?.total_price == 0" disabled type="button"
+<button *ngIf="(cartSession | async)?.total_price == null" disabled type="button"
     class="btn rounded btn-primary">
     <svg width="16" height="16" fill="currentColor" class="bi bi-cart-check-fill" viewBox="0 0 16 16">
         <path
@@ -10,7 +10,7 @@
 </button> 
 
 <!-- (cartSession | async)?.total_price != null -->
-    <button (click)="clickSideNav()" *ngIf=" (cartSession | async)?.total_price != 0" type="button"
+    <button (click)="clickSideNav()" *ngIf="(cartSession | async)?.total_price != null" type="button"
         class="btn rounded btn-primary">
         <svg width="16" height="16" fill="currentColor" class="bi bi-cart-check-fill" viewBox="0 0 16 16">
             <path

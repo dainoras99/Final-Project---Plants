@@ -71,21 +71,29 @@ export class CheckoutComponent implements OnInit {
   }
 
   postOrder() {
-  if (this.shopSelected === undefined) this.shopSelected = "Vilnius, Šeimyniškių g. 31";
+    if (this.shopSelected === undefined) this.shopSelected = "Vilnius, Šeimyniškių g. 31";
 
-  this.orderService.postOrder(this.cartSession, this.authenticationService.getLoggedInUserName()!, "shop",  this.shopId, null!)
-    .subscribe(
-      {
-        next: response => {
-          alert(response);
-          this.router.navigate(['/plants']);
-        },
-        error: err => {
-          alert("Svetainės klaida, kreipkitės į administratorių");
-          this.router.navigate(['/plants']);
+    // 
+    this.shopsList.forEach(shop => {
+      if (this.shopSelected === shop.address + ", " + shop.city) this.shopId = shop.id;
+    });
+    // 
+
+
+    this.orderService.postOrder(this.cartSession, this.authenticationService.getLoggedInUserName()!, "shop", this.shopId, null!)
+      .subscribe(
+        {
+          next: response => {
+            alert(response);
+            this.cartService.setCartData(null!);
+            this.router.navigate(['/plants']);
+          },
+          error: err => {
+            alert("Svetainės klaida, kreipkitės į administratorių");
+            this.router.navigate(['/plants']);
+          }
         }
-      }
-    );
+      );
 
   }
 
@@ -99,12 +107,6 @@ export class CheckoutComponent implements OnInit {
   //   let username = this.authenticationService.getLoggedInUserName();
   //   if (this.shopSelected === undefined) this.shopSelected = "Vilnius, Šeimyniškių g. 31";
 
-  //   this.shopsList.forEach(shop => {
-  //     console.log("cia: " + shop.address);
-  //     console.log("shop selected: " + this.shopSelected);
-  //     console.log("shop city address: " + shop.city + ", " + shop.address)
-  //     if (this.shopSelected === shop.address + ", " + shop.city) this.shopId = shop.id;
-  //   });
 
   //   this.orderService.postCartItemShop(username!, this.cartItems,
   //     this.selectedTotal, this.shopId).subscribe(

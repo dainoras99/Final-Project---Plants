@@ -63,9 +63,6 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setPlant(cartTempItem.getPlant());
             orderItem.setQuantity(cartTempItem.getQuantity());
             orderItem.setPlantCategory(cartTempItem.getPlant().getCategory());
-            System.out.print("plant: " + cartTempItem.getPlant());
-            System.out.println("zdrw seni: " + cartTempItem.getPlantCategory());
-            System.out.println("zdrw senelyzai: " + cartTempItem.getPlant().getCategory());
             orderItem.setOrderType(orderType);
             orderItems.add(orderItem);
         }
@@ -91,27 +88,28 @@ public class OrderServiceImpl implements OrderService {
         OrderType orderType = new OrderType();
 
         System.out.println("orderTypeName: " + orderTypeName);
+        System.out.println("id: " + id);
 
-        if (orderTypeName == "shop") {
+        if (orderTypeName.equals("shop")) {
 
             Optional<Shop> optionalShop = shopRepository.findById(id);
             orderType.setShop(optionalShop.get());
-            orderType.setOrderTypeName("shop");
+            System.out.println("cia1: " + orderType.getOrderTypeName());
         }
 
-        if (orderTypeName == "parcel") {
+        if (orderTypeName.equals("parcel")) {
 
             Optional<Parcel> optionalParcel = parcelRepository.findById(id);
             orderType.setParcel(optionalParcel.get());
-            orderType.setOrderTypeName("parcel");
         }
 
-        if (orderTypeName == "delivery") {
+        if (orderTypeName.equals("delivery")) {
             orderType.setDelivery(delivery);
-            orderType.setOrderTypeName("delivery");
             deliveryRepository.save(delivery);
         }
+        orderType.setOrderTypeName(orderTypeName);
 
+        System.out.println("cia: " + orderType.getOrderTypeName());
         orderTypeRepository.save(orderType);
 
         return orderType;

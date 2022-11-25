@@ -63,11 +63,18 @@ export class CheckoutparcelComponent implements OnInit {
   postOrder() {
   if (this.parcelSelected === undefined) this.parcelSelected = "Akropolis - Vilnius, Ozo g. 25, 07150";
 
+  // 
+  this.parcelList.forEach(parcel => {
+    if (this.parcelSelected === parcel.name + " - " + parcel.city + ", " + parcel.address + ", " + parcel.zipCode) this.parcelId = parcel.id;
+  });
+  // 
+
   this.orderService.postOrder(this.cartSession, this.authenticationService.getLoggedInUserName()!, "parcel",  this.parcelId, null!)
     .subscribe(
       {
         next: response => {
           alert(response);
+          this.cartService.setCartData(null!);
           this.router.navigate(['/plants']);
         },
         error: err => {

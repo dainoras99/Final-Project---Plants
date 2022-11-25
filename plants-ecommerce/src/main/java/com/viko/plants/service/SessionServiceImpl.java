@@ -93,7 +93,11 @@ public class SessionServiceImpl implements SessionService {
         cartSession.setTotal_price(
                     cartItem.getCartSession().getTotal_price() - (cartItem.getPlant().getPrice() * cartItem.getQuantity()));
         cartSessionItemRepository.deleteById(cartItemId);
-        sessionRepository.save(cartSession);
+        if (cartSession.getTotal_price() == 0) {
+            deleteCartSession(cartSession.getUser().getId());
+            cartSession = new CartSession();
+        }
+        else sessionRepository.save(cartSession);
 
         return new CartSessionResponse(cartSession.getId(), cartSession.getTotal_price(), cartSession.getCartItems());
     }
@@ -144,6 +148,10 @@ public class SessionServiceImpl implements SessionService {
         }
         sessionRepository.save(cartSession);
         return cartSession;
+    }
+
+    private void deleteCartSession(Integer id) {
+        sessionRepository.deleteCartSession(id);
     }
 }
 

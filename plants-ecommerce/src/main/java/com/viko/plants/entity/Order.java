@@ -26,15 +26,15 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value="userOrder")
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
-    @JsonManagedReference
+    @JsonManagedReference(value="orderOrderItems")
     private Set<OrderItem> orderItems;
 
     @ManyToOne
     @JoinColumn(name = "order_type_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value="orderOrderType")
     private OrderType orderType;
 }

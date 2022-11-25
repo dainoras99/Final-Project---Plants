@@ -87,26 +87,29 @@ public class OrderServiceImpl implements OrderService {
 
         OrderType orderType = new OrderType();
 
-        if (orderTypeName == "shop") {
+        System.out.println("orderTypeName: " + orderTypeName);
+        System.out.println("id: " + id);
+
+        if (orderTypeName.equals("shop")) {
 
             Optional<Shop> optionalShop = shopRepository.findById(id);
             orderType.setShop(optionalShop.get());
-            orderType.setOrderTypeName("shop");
+            System.out.println("cia1: " + orderType.getOrderTypeName());
         }
 
-        if (orderTypeName == "parcel") {
+        if (orderTypeName.equals("parcel")) {
 
             Optional<Parcel> optionalParcel = parcelRepository.findById(id);
             orderType.setParcel(optionalParcel.get());
-            orderType.setOrderTypeName("parcel");
         }
 
-        if (orderTypeName == "delivery") {
+        if (orderTypeName.equals("delivery")) {
             orderType.setDelivery(delivery);
-            orderType.setOrderTypeName("delivery");
             deliveryRepository.save(delivery);
         }
+        orderType.setOrderTypeName(orderTypeName);
 
+        System.out.println("cia: " + orderType.getOrderTypeName());
         orderTypeRepository.save(orderType);
 
         return orderType;

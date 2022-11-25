@@ -19,7 +19,6 @@ public class Plant {
 
     @ManyToOne
     @JoinColumn(name = "plants_category_id", nullable = false)
-    @JsonBackReference
     private PlantCategory category;
 
     @Column(name = "name")
@@ -38,10 +37,10 @@ public class Plant {
     private Integer inStock;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "plant")
-    @JsonBackReference
+    @JsonBackReference(value="plantCartItem")
     private Set<CartItem> cartItems;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "plant")
-    @JsonBackReference
+    @JsonBackReference(value="plantOrderItems")
     private Set<OrderItem> orderItems;
 }

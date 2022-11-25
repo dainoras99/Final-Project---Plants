@@ -26,7 +26,6 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "plants_id", nullable = false)
-    @JsonManagedReference
     //@JsonIgnore
     private Plant plant;
 

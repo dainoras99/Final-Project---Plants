@@ -1,6 +1,7 @@
 package com.viko.plants.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,21 +25,20 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "plants_id", nullable = false)
-    @JsonManagedReference
     private Plant plant;
 
     @ManyToOne
-    @JoinColumn(name = "plants_plants_category_id", nullable = false)
-    @JsonBackReference
+    @JoinColumn(name = "plants_plants_category_id", nullable = true)
+    @JsonIgnore
     private PlantCategory plantCategory;
 
     @ManyToOne
     @JoinColumn(name="order_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value="orderOrderItems")
     private Order order;
 
     @ManyToOne
     @JoinColumn(name="order_order_type_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value="orderItemOrderType")
     private OrderType orderType;
 }

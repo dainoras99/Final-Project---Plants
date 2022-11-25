@@ -29,6 +29,7 @@ public class CartSession {
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cartSession")
+    @OrderBy
     private Set<CartItem> cartItems;
 
 }

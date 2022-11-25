@@ -31,6 +31,7 @@ public class Order {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
     @JsonManagedReference(value="orderOrderItems")
+    @OrderBy
     private Set<OrderItem> orderItems;
 
     @ManyToOne

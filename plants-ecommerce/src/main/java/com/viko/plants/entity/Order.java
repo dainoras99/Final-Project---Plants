@@ -35,6 +35,5 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "order_type_id", nullable = false)
-    @JsonBackReference(value="orderOrderType")
     private OrderType orderType;
 }

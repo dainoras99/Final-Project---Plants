@@ -1,6 +1,7 @@
 package com.viko.plants.service;
 
 import com.viko.plants.dto.CartSessionResponse;
+import com.viko.plants.dto.OrdersResponse;
 import com.viko.plants.entity.*;
 import com.viko.plants.repository.*;
 import com.viko.plants.request.OrderRequestBody;
@@ -45,6 +46,14 @@ public class OrderServiceImpl implements OrderService {
         this.orderRepository = orderRepository;
         this.cartSessionRepository = cartSessionRepositry;
         this.cartSessionItemRepository = cartSessionItemRepository;
+    }
+
+    @Override
+    @Transactional
+    public OrdersResponse LoadOrders(String username) {
+        User user = findUserByUsername(username);
+        Set<Order> orders = orderRepository.findUserOrders(user.getId());
+        return new OrdersResponse(orders);
     }
 
     @Override
@@ -113,5 +122,10 @@ public class OrderServiceImpl implements OrderService {
         orderTypeRepository.save(orderType);
 
         return orderType;
+    }
+
+    private User findUserByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        return user;
     }
 }

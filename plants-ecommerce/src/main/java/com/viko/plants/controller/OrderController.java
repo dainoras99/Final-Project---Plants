@@ -1,6 +1,7 @@
 package com.viko.plants.controller;
 
 import com.viko.plants.dto.CartSessionResponse;
+import com.viko.plants.dto.OrdersResponse;
 import com.viko.plants.entity.*;
 import com.viko.plants.repository.*;
 import com.viko.plants.request.CartSessionRequest;
@@ -31,6 +32,13 @@ public class OrderController {
     @PostMapping("api/v1/postOrder")
     public ResponseEntity<String> postOrder(@RequestBody OrderRequestBody request) {
         ResponseEntity<String> response = orderService.postOrder(request);
+        return response;
+    }
+
+    @GetMapping("api/v1/{username}/orders")
+    public OrdersResponse userSession(@PathVariable String username) {
+
+        OrdersResponse response = orderService.LoadOrders(username);
         return response;
     }
 

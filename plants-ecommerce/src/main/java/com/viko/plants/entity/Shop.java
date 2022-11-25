@@ -1,8 +1,10 @@
 package com.viko.plants.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="take_from_shop_order_type")
@@ -18,4 +20,5 @@ public class Shop {
 
     @Column(name = "city")
     private String city;
+
 }

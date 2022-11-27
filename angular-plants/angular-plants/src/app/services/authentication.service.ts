@@ -38,4 +38,8 @@ export class AuthenticationService {
     let username = localStorage.getItem('username');
     return username;
   }
+
+  isAdmin() {
+    
+  }
 }

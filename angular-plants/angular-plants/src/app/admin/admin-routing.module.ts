@@ -1,18 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminGuardGuard } from '../guards/admin-guard.guard';
 import { AdminComponent } from './components/admin/admin.component';
+import { PanelComponent } from './components/panel/panel.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: AdminComponent,
-    children: [
-      {
-        path: 'admin',
-        component: AdminComponent
-      }
-    ]
-  }
+    {path: 'admin', component: AdminComponent},
+    {path: 'panel', component: PanelComponent, canActivate: [AdminGuardGuard]},
+    {path: '', redirectTo: '/admin', pathMatch: 'full'}
 ];
 
 @NgModule({

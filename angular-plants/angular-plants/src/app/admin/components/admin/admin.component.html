@@ -14,12 +14,16 @@
   
                     <div class="form-outline form-white mb-4">
                     <label class="form-label" for="username">Slapyvardis</label>
-                      <input type="text" id="username" class="form-control form-control-lg" />
+                      <input type="text" id="username" name="username" class="form-control form-control-lg" [(ngModel)]="user.username" />
                     </div>
   
                     <div class="form-outline form-white mb-4">
                       <label class="form-label" for="password">Slaptažodis</label>
-                      <input type="password" id="password" class="form-control form-control-lg" />
+                      <input type="password" id="password" name="password" class="form-control form-control-lg" [(ngModel)]="user.password" />
+                    </div>
+
+                    <div class="form-text text-danger fw-bold fs-6" [ngStyle]="{'display': loginError}">
+                        Slapyvardis arba slaptažodis yra neteisingas
                     </div>
   
                     <div class="text-center py-5">

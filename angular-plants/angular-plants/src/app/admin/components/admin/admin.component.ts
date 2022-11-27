@@ -10,6 +10,7 @@ import { LoginService } from 'src/app/services/login.service';
 export class AdminComponent implements OnInit {
 
   user: User = new User();
+  loginError: string = "none";
   constructor(private loginService: LoginService) { }
 
   ngOnInit(): void {
@@ -21,13 +22,14 @@ export class AdminComponent implements OnInit {
     this.loginService.loginAdmin(this.user).subscribe(
       {
         next: response => {
+          this.loginError = "none";
           localStorage.setItem("username", this.user.username);
           alert("Prisijungimas sėkmingas")
           response = this.user;
           this.loginService.setUserData(this.user.username);
         },
         error: err => {
-          alert("ne");
+          this.loginError = "inline";
         }
       }
     )

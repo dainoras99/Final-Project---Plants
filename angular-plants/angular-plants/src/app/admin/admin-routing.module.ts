@@ -6,7 +6,7 @@ const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
-    children [
+    children: [
       {
         path: 'admin',
         component: AdminComponent

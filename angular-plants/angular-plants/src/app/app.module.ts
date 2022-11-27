@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { PlantListComponent } from './components/plant-list/plant-list.component';
 import { HttpClientModule } from "@angular/common/http"
 import { ProductService } from './services/product.service';
-import { Routes, RouterModule} from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { PlantCategoryMenuComponent } from './components/plant-category-menu/plant-category-menu.component';
 import { SearchComponent } from './components/search/search.component'
 import { MatDialogModule } from '@angular/material/dialog';
@@ -24,20 +24,35 @@ import { CheckoutparcelComponent } from './components/checkoutparcel/checkoutpar
 import { OrdersComponent } from './components/orders/orders.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CartService } from './services/cart.service';
+import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 
 const routes: Routes = [
-  {path: 'orders', component: OrdersComponent},
-  {path: 'about-us', component: AboutUsComponent},
-  {path: 'checkout/home', component: CheckouthomeComponent},
-  {path: 'checkout/parcel', component: CheckoutparcelComponent},
-  {path: 'checkout', component: CheckoutComponent},
-  {path: 'plants/:id', component: PlantDetailsComponent},
-  {path: 'search/:keyword', component: PlantListComponent},
-  {path: 'category/:id', component: PlantListComponent},
-  {path: 'category', component: PlantListComponent},
-  {path: 'plants', component: PlantListComponent},
-  {path: '', redirectTo: '/plants', pathMatch: 'full'},
-  {path: '**', redirectTo: '/plants', pathMatch: 'full'},
+  {
+    path: '',
+    component: MainLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./main/main.module').then(m => m.MainModule)
+      },
+    ]
+  },
+  {
+    path: '',
+    component: AdminLayoutComponent,
+    children: [
+      {
+        path: 'admin',
+        loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+      }
+    ]
+  },
+  {
+    path: '**',
+    redirectTo: '/plants',
+    pathMatch: 'full'
+  }
 ]
 
 @NgModule({
@@ -57,6 +72,8 @@ const routes: Routes = [
     CheckouthomeComponent,
     CheckoutparcelComponent,
     OrdersComponent,
+    MainLayoutComponent,
+    AdminLayoutComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

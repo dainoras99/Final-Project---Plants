@@ -1,0 +1,26 @@
+html,
+body,
+.intro {
+  height: 100%;
+}
+
+@media (min-width: 560px) and (max-width: 750px) {
+  html,
+  body,
+  .intro {
+    height: 830px;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 850px) {
+  html,
+  body,
+  .intro {
+    height: 830px;
+  }
+}
+
+.gradient-custom {
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to bottom, rgb(1, 160, 80), rgb(45, 48, 1))
+}

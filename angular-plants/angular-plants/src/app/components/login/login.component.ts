@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit {
           alert("Prisijungimas sėkmingas")
           response = this.user;
           this.loginService.setUserData(this.user.username);
-          console.log("BBD PIRMAS: " + this.user.username);
           this.dialogRef.close();
         },
         error: err => {

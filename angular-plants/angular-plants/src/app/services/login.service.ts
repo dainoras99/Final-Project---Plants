@@ -9,6 +9,7 @@ import { User } from '../common/user';
 export class LoginService {
 
   private baseUrl="http://localhost:8080/api/v1/login";
+  private adminUrl = "http://localhost:8080/api/v1/admin"
 
   private refreshRequired = new Subject<void>();
   
@@ -31,7 +32,10 @@ export class LoginService {
   constructor(private httpClient: HttpClient) { }
 
   loginUser(user: User): Observable<Object> {
-    console.log(user);
     return this.httpClient.post(this.baseUrl, user);
+  }
+
+  loginAdmin(user: User): Observable<Object> {
+    return this.httpClient.post(this.adminUrl, user);
   }
 }

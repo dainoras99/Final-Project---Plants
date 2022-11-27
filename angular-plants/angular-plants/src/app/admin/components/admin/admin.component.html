@@ -1,1 +1,35 @@
-<p>admin works!</p>
+<section class="intro">
+    <div class="h-100" style="background-image: url('../../../../assets/images/Photos/plants-background.jpg');">
+      <div class="d-flex align-items-center h-100">
+        <form class="container" (ngSubmit)="adminLogin()">
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+              <div class="card gradient-custom">
+                <div class="card-body p-5 text-white">
+
+  
+                    <div class="text-center pt-1">
+                      <h1 class="fw-bold my-5 text-uppercase">Administratoriaus valdymo panelė</h1>
+                    </div>
+  
+                    <div class="form-outline form-white mb-4">
+                    <label class="form-label" for="username">Slapyvardis</label>
+                      <input type="text" id="username" class="form-control form-control-lg" />
+                    </div>
+  
+                    <div class="form-outline form-white mb-4">
+                      <label class="form-label" for="password">Slaptažodis</label>
+                      <input type="password" id="password" class="form-control form-control-lg" />
+                    </div>
+  
+                    <div class="text-center py-5">
+                      <button class="btn btn-light btn-lg btn-rounded px-5" type="submit" >Prisijungti</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </form>
+        </div>
+    </div>
+  </section>

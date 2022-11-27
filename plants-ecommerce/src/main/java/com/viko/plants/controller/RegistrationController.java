@@ -24,9 +24,16 @@ public class RegistrationController {
 
     @PostMapping("api/v1/login")
     public ResponseEntity<?> login (@RequestBody RegistrationRequest registrationRequest) {
-        System.out.println(registrationRequest.getUsername() + " " + registrationRequest.getPassword());
         User user = repository.findByUsername(registrationRequest.getUsername());
         if (user.getPassword().equals(registrationRequest.getPassword())) return ResponseEntity.ok(user);
+        return (ResponseEntity<?>) ResponseEntity.internalServerError();
+    }
+
+    @PostMapping("api/v1/admin")
+    public ResponseEntity<?> adminLogin (@RequestBody RegistrationRequest registrationRequest) {
+        User user = repository.findByUsername(registrationRequest.getUsername());
+        System.out.println("cia: " + user.getUserRole());
+        if (user.getPassword().equals(registrationRequest.getPassword()) && user.getUserRole().equals(user.getUserRole().ADMIN)) return ResponseEntity.ok(user);
         return (ResponseEntity<?>) ResponseEntity.internalServerError();
     }
 

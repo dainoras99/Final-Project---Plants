@@ -16,7 +16,7 @@ export class AdminGuardGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,): boolean {
-    this.authService.
+    // this.authService.
     return false;
   }
   

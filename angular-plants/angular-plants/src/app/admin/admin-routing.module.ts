@@ -5,8 +5,8 @@ import { AdminComponent } from './components/admin/admin.component';
 import { PanelComponent } from './components/panel/panel.component';
 
 const routes: Routes = [
-    {path: 'admin', component: AdminComponent},
-    {path: 'panel', component: PanelComponent, canActivate: [AdminGuardGuard]},
+    {path: 'admin', component: AdminComponent, children: []},
+    {path: 'panel', component: PanelComponent},
     {path: '', redirectTo: '/admin', pathMatch: 'full'}
 ];
 

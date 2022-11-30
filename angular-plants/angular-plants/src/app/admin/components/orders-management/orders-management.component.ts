@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Order } from 'src/app/common/order';
 import { OrderService } from 'src/app/services/order.service';
@@ -11,9 +10,9 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class OrdersManagementComponent implements OnInit {
 
-  orders : Order[] = [];
-
-
+  selectedStatusValue: any;
+  orders: Order[] = [];
+  selectedOrdersList: Order[] = [];
 
   newOrdersToggle: boolean = true;
   acceptedOrdersToggle: boolean = false;
@@ -21,8 +20,7 @@ export class OrdersManagementComponent implements OnInit {
   cancelledOrdersToggle: boolean = false;
   finishedOrdersToggle: boolean = false;
 
-  constructor(private ordersService: OrderService, private dialogRef: MatDialog) { 
-
+  constructor(private ordersService: OrderService, private dialogRef: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -65,11 +63,24 @@ export class OrdersManagementComponent implements OnInit {
     this.cancelledOrdersToggle = true;
   }
 
+  selectedOrders(order: any, event: any) {
+    var index = this.selectedOrdersList.indexOf(order);
+    if (event.target.checked)
+        this.selectedOrdersList.push(order);
+      else
+          this.selectedOrdersList.splice(index, 1)
+    console.log(this.selectedOrdersList);
+  }
+
+  selectedStatus(event: any) {
+    this.selectedStatusValue = event.target.value;
+    console.log(this.selectedStatusValue)
+  }
 
   changeStatus() {
-    throw new Error('Method not implemented.');
+    
   }
-  
+
 
   private changeToggles() {
     this.newOrdersToggle = false;

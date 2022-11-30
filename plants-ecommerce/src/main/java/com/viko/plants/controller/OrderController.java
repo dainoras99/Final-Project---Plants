@@ -7,6 +7,7 @@ import com.viko.plants.repository.*;
 import com.viko.plants.request.CartSessionRequest;
 import com.viko.plants.request.OrderRequestBody;
 import com.viko.plants.request.OrderRequestDeliveryBody;
+import com.viko.plants.request.OrdersStatusChangeRequest;
 import com.viko.plants.service.OrderService;
 import com.viko.plants.service.SessionService;
 import lombok.AllArgsConstructor;
@@ -45,6 +46,12 @@ public class OrderController {
     @GetMapping("api/v1/orders/{status}")
     public Set<Order> getOrdersByStatus(@PathVariable String status) {
         Set<Order> orders = orderService.loadOrdersByStatus(status);
+        return orders;
+    }
+
+    @PutMapping("api/v1/updateOrdersStatuses")
+    public Set<Order> updateOrdersStatuses(@RequestBody OrdersStatusChangeRequest request) {
+        Set<Order> orders = orderService.setNewOrdersStatus(request);
         return orders;
     }
 

@@ -5,6 +5,7 @@ import com.viko.plants.dto.OrdersResponse;
 import com.viko.plants.entity.*;
 import com.viko.plants.repository.*;
 import com.viko.plants.request.OrderRequestBody;
+import com.viko.plants.request.OrdersStatusChangeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -99,18 +100,26 @@ public class OrderServiceImpl implements OrderService {
         return new ResponseEntity<>("Užsakymas pateiktas!", HttpStatus.CREATED);
     }
 
+    @Override
+    @Transactional
+    public Set<Order> setNewOrdersStatus(OrdersStatusChangeRequest ordersStatusChangeRequest) {
+        for (Order order : ordersStatusChangeRequest.getOrders()) {
+            System.out.println("orderis: " + order);
+            System.out.println("user: " + order.getId());
+            orderRepository.updateOrderStatusById(ordersStatusChangeRequest.getStatus(), order.getId());
+        }
+        Set<Order> orders = orderRepository.getOrdersByStatus(ordersStatusChangeRequest.getStatus());
+        return orders;
+    }
+
     private OrderType setOrderType(String orderTypeName, Integer id, Delivery delivery) {
 
         OrderType orderType = new OrderType();
-
-        System.out.println("orderTypeName: " + orderTypeName);
-        System.out.println("id: " + id);
 
         if (orderTypeName.equals("shop")) {
 
             Optional<Shop> optionalShop = shopRepository.findById(id);
             orderType.setShop(optionalShop.get());
-            System.out.println("cia1: " + orderType.getOrderTypeName());
         }
 
         if (orderTypeName.equals("parcel")) {
@@ -124,8 +133,6 @@ public class OrderServiceImpl implements OrderService {
             deliveryRepository.save(delivery);
         }
         orderType.setOrderTypeName(orderTypeName);
-
-        System.out.println("cia: " + orderType.getOrderTypeName());
         orderTypeRepository.save(orderType);
 
         return orderType;

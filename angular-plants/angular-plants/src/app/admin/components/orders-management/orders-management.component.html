@@ -30,7 +30,6 @@
 </div>
 <div class="mb-3"></div>
 <hr />
-<form (ngSubmit)="changeStatus()">
     <div class="container scrollable">
         <div class="row py-1" *ngFor="let order of orders">
             <div class="col-1 py-2">
@@ -100,27 +99,26 @@
 
         
         <div>
-            <input id="new" type="radio" value="new" (change)="selectedStatus($event)" name="statusRadio">
+            <input id="new" type="radio" value="Pateiktas" (change)="selectedStatus($event)" name="statusRadio">
             <label for="new"> Naujas (-i)</label>
         </div>
         <div>
-            <input id="accepted" type="radio" value="accepted" (change)="selectedStatus($event)" checked name="statusRadio">
+            <input id="accepted" type="radio" value="Priimtas" (change)="selectedStatus($event)" checked name="statusRadio">
             <label for="accepted"> Priimtas (-i)</label>
         </div>
         <div>
-            <input id="ready" type="radio" value="ready" (change)="selectedStatus($event)" name="statusRadio">
+            <input id="ready" type="radio" value="Paruoštas" (change)="selectedStatus($event)" name="statusRadio">
             <label for="ready"> Paruoštas (-i)</label>
         </div>
         <div>
-            <input id="finished" type="radio" value="finished" (change)="selectedStatus($event)" name="statusRadio">
+            <input id="finished" type="radio" value="Baigtas" (change)="selectedStatus($event)" name="statusRadio">
             <label for="finished"> Baigtas (-i)</label>
         </div>
         <div>
-            <input id="cancelled" type="radio" value="cancelled" (change)="selectedStatus($event)" name="statusRadio">
+            <input id="cancelled" type="radio" value="Atšauktas" (change)="selectedStatus($event)" name="statusRadio">
             <label for="cancelled"> Atšauktas (-i)</label>
         </div>
     </div>
     <div class="d-flex justify-content-center mt-2">
         <button (click)="changeStatus()" class="btn btn-primary text-center px-1">Keisti užsakymo (-ų) būseną (-as)</button>
     </div>
-</form>

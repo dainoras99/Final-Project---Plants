@@ -28,7 +28,6 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonManagedReference(value="userOrder")
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")

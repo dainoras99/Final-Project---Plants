@@ -17,11 +17,8 @@ import { Shop } from '../common/shop';
 })
 export class OrderService {
   private postOrderUrl = 'http://localhost:8080/api/v1/postOrder';
-  private getOrdersUrl = 'http://localhost:8080/api/v1/alah/orders';
-  private shopsUrl = 'http://localhost:8080/api/v1/takefromshop';
-  private parcelsUrl = 'http://localhost:8080/api/v1/takefromparcel';
-  private deliveryUrl = 'http://localhost:8080/api/v1/takefromdelivery';
   private baseUrl = 'http://localhost:8080/api/v1';
+
 
   constructor(private httpClient: HttpClient) { }
 
@@ -49,6 +46,10 @@ export class OrderService {
   public getOrdersByStatus(status: string) {
     const orderByStatusUrl = `${this.baseUrl}/orders/${status}`;
     return this.httpClient.get<Order[]>(orderByStatusUrl);
+  }
+
+  updateOrdersStatuses(orders: Order[], status: string) {
+    return this.httpClient.put(`${this.baseUrl}/updateOrdersStatuses`, {orders, status}, {responseType: 'text'});
   }
 
 }

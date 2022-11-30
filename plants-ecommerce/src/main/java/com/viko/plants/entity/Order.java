@@ -23,10 +23,12 @@ public class Order {
     @Column(name = "total")
     private Float total;
 
+    @Column(name = "status")
+    private String status;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference(value="userOrder")
+    @JsonManagedReference(value="userOrder")
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")

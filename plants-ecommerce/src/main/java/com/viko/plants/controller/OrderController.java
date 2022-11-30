@@ -42,6 +42,12 @@ public class OrderController {
         return response;
     }
 
+    @GetMapping("api/v1/orders/{status}")
+    public Set<Order> getOrdersByStatus(@PathVariable String status) {
+        Set<Order> orders = orderService.loadOrdersByStatus(status);
+        return orders;
+    }
+
 }
 //    @Autowired
 //    private OrderRepository orderRepository;

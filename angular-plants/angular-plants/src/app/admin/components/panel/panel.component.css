@@ -23,3 +23,7 @@ body,
     height: 830px;
   }
 }
+
+.card {
+  min-height: 800px;
+}

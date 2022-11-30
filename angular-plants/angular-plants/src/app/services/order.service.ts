@@ -39,72 +39,20 @@ export class OrderService {
     );
   }
 
-  // postCartItemShop(username: string, cartItems: CartItem[], total: number, OrderTypeId: number): Observable<any> {
-  //   return this.httpClient.post(`${this.shopsUrl}?id=${OrderTypeId}`, { username, cartItems, total }, { responseType: 'text' });
-  // }
-
-  // postCartItemParcel(username: string, cartItems: CartItem[], total: number, OrderTypeId: number): Observable<any> {
-  //   return this.httpClient.post(`${this.parcelsUrl}?id=${OrderTypeId}`, { username, cartItems, total }, { responseType: 'text' });
-  // }
-
-  // postCartItemDelivery(username: string, cartItems: CartItem[], total: number, delivery: Delivery): Observable<any> {
-  //   return this.httpClient.post(this.deliveryUrl, { username, cartItems, total, delivery }, { responseType: 'text' });
-  // }
-
   public getOrders(username: string): Observable<Order[]> {
     const userOrdersUrl = `${this.baseUrl}/${username}/orders`;
     return this.httpClient.get<GetResponseOrders>(userOrdersUrl).pipe(
       map(response => response.orders)
     );
   }
-}
 
+  public getOrdersByStatus(status: string) {
+    const orderByStatusUrl = `${this.baseUrl}/orders/${status}`;
+    return this.httpClient.get<Order[]>(orderByStatusUrl);
+  }
+
+}
 interface GetResponseOrders {
   orders: Order[];
 }
 
-// public getOrders(userId: number): Observable<Order[]> {
-//   const userOrdersUrl = `${this.baseUrl}/users/${userId}/orders`;
-//   return this.httpClient.get<GetResponseOrders>(userOrdersUrl).pipe(
-//     map(response => response._embedded.orders)
-//   );
-// }
-
-//   public getOrderItems(orderId: number): Observable<OrderItem[]> {
-//     const orderItemsUrl = `${this.baseUrl}/orders/${orderId}/orderItems`;
-//     return this.httpClient.get<GetResponseOrderItems>(orderItemsUrl).pipe(
-//       map(response => response._embedded.orderItems)
-//     );
-//   }
-
-//   public getOrderType(orderId: number): Observable<OrderType> {
-//     const orderTypeUrl = `${this.baseUrl}/orders/${orderId}/orderType`
-//     return this.httpClient.get<OrderType>(orderTypeUrl);
-//   }
-
-//   public getOrderTypeShop(orderTypeId: number): Observable<Shop> {
-//     const orderTypeShopUrl = `${this.baseUrl}/orderTypes/${orderTypeId}/shop`
-//     return this.httpClient.get<Shop>(orderTypeShopUrl);
-//   }
-
-//   public getOrderTypeParcel(orderTypeId: number): Observable<Parcel> {
-//     const orderTypeParcelUrl = `${this.baseUrl}/orderTypes/${orderTypeId}/Parcel`
-//     return this.httpClient.get<Parcel>(orderTypeParcelUrl);
-//   }
-
-//   public getOrderTypeDelivery(orderTypeId: number): Observable<Delivery> {
-//     const orderTypeDeliveryUrl = `${this.baseUrl}/orderTypes/${orderTypeId}/delivery`
-//     return this.httpClient.get<Delivery>(orderTypeDeliveryUrl);
-//   }
-
-//   public getOrderItemPlant(orderItemId: number): Observable<Plant> {
-//     const orderItemPlantUrl = `${this.baseUrl}/orderItems/${orderItemId}/plant`;
-//     return this.httpClient.get<Plant>(orderItemPlantUrl);
-//   }
-// }
-
-// interface GetResponseOrders {
-//   _embedded: {
-//     orders: Order[];
-//   }
-// }

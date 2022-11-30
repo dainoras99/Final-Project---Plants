@@ -58,6 +58,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
+    public Set<Order> loadOrdersByStatus(String status) {
+        Set<Order> orders = orderRepository.getOrdersByStatus(status);
+        return orders;
+    }
+
+    @Override
+    @Transactional
     public ResponseEntity<String> postOrder(OrderRequestBody request) {
 
         OrderType orderType = setOrderType(request.getOrderType(),

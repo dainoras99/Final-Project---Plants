@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'src/app/common/user';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -11,7 +12,7 @@ export class AdminComponent implements OnInit {
 
   user: User = new User();
   loginError: string = "none";
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService, private router: Router) { }
 
   ngOnInit(): void {
     
@@ -24,9 +25,9 @@ export class AdminComponent implements OnInit {
         next: response => {
           this.loginError = "none";
           localStorage.setItem("username", this.user.username);
-          alert("Prisijungimas sėkmingas")
           response = this.user;
           this.loginService.setUserData(this.user.username);
+          this.router.navigateByUrl('/panel');
         },
         error: err => {
           this.loginError = "inline";

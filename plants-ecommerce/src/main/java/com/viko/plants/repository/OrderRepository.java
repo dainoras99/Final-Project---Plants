@@ -15,4 +15,9 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
             value ="SELECT * FROM order_table where user_id=?1",
             nativeQuery = true)
     Set<Order> findUserOrders(Integer userId);
+
+    @Query(
+            value="SELECT * FROM order_table where status=?1",
+            nativeQuery = true)
+    Set<Order> getOrdersByStatus(String status);
 }

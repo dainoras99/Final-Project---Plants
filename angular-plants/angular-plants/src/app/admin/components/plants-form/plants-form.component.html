@@ -1,4 +1,4 @@
-<form class="container">
+<form class="container" [formGroup]="newPlantForm" (ngSubmit)="addPlant()">
     <fieldset class="border border-success p-2 mt-3"> 
     <legend class="w-auto">Pridėkite Augalą</legend>
     <div class="row">
@@ -6,44 +6,70 @@
             <label for="category" class="form-label">Pasirinkite kategoriją</label>
             <select class="custom-select d-block w-100" size="3" id="category" required="" (change)="selectedCategory($event)">
                 <option value="new">Nauja kategorija</option>
-                <option>Atsiimsiu parduotuvėje</option>
-                <option>Pristatyti į namus</option>
-                <option>Pristatyti į paštomatą</option>
+                <option *ngFor="let plantCategory of plantCategories">{{plantCategory.name}}</option>
             </select>
+            <div class="form-text text-danger mb-2"
+                            *ngIf="errors">
+                            Turite pasirinkti augalų kategoriją
+            </div>
         </div>
         <div *ngIf="chosenCategory == 'new'" class="form-outline mb-4 col-6">
-            <label class="form-label" for="newCategory">Naujos kategorijos pavadinimas</label>
+            <label class="form-label" for="newCategory" >Naujos kategorijos pavadinimas</label>
             <input type="text" id="newCategory" name="newCategory" maxlength="255"
-                class="form-control form-control-lg" />
+                class="form-control form-control-lg" [(ngModel)]="newCategory" [ngModelOptions]="{standalone: true}" />
+            <div class="form-text text-danger mb-2"
+                            *ngIf="errorNewCategory">
+                            Naujos kategorijos laukelis negali būti tuščias
+            </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="form-outline mb-4 col-8">
+        <div class="form-outline col-8">
             <label class="form-label" for="name">Pavadinimas</label>
-            <input type="text" id="name" name="name" maxlength="255" class="form-control form-control-lg" />
+            <input type="text" id="name" name="name" formControlName="name" [(ngModel)]="plant.name" maxlength="255" class="form-control form-control-lg" />
+            <div class="form-text text-danger mb-2"
+                            *ngIf="Name.errors?.['required'] && (Name.touched || errors)">
+                            Pavadinimo laukelis negali būti tuščias
+            </div>
         </div>
 
         <div class="form-outline mb-4 col-4">
             <label class="form-label" for="price">Kaina</label>
-            <input type="text" id="price" name="price" maxlength="10" class="form-control form-control-lg" />
+            <input type="number" id="price" name="price" formControlName="price" [(ngModel)]="plant.price" maxlength="10" class="form-control form-control-lg" />
+            <div class="form-text text-danger mb-2"
+                            *ngIf="Price.errors?.['required'] && (Price.touched || errors)">
+                            Kainos laukelis negali būti tuščias
+            </div>
         </div>
     </div>
 
     <div class="mb-3">
         <label class="form-label" for="description">Aprašymas</label>
-        <textarea rows="8" type="text" id="description" name="description" class="form-control"> </textarea>
+        <textarea rows="8" type="text" id="description" formControlName="description" [(ngModel)]="plant.description" name="description" class="form-control"> </textarea>
+        <div class="form-text text-danger mb-2"
+                            *ngIf="Description.errors?.['required'] && (Description.touched || errors)">
+                            Aprašymo laukelis negali būti tuščias
+            </div>
     </div>
 
     <div class="row">
         <div class="form-outline mb-4 col-8">
             <label class="form-label" for="fileUpload">Nuotraukos įkėlimas</label>
-            <input class="form-control" id="fileUpload" type="file">
+            <input class="form-control" id="fileUpload" formControlName="fileUpload" type="file" (change)="onFileSelection($event)">
+            <div class="form-text text-danger mb-2"
+                            *ngIf="FileUpload.errors?.['required'] && (errors)">
+                            Nuotrauką yra būtina įkelti
+            </div>
         </div>
 
         <div class="form-outline mb-4 col-4">
             <label class="form-label" for="stock">Likutis</label>
-            <input type="text" id="stock" name="stock" maxlength="10" class="form-control form-control-lg" />
+            <input type="number" id="stock" name="stock" formControlName="stock" maxlength="10" [(ngModel)]="plant.inStock" class="form-control form-control-lg" />
+            <div class="form-text text-danger mb-2"
+                            *ngIf="Stock.errors?.['required'] && (Stock.touched || errors)">
+                            Likutis negali būti tuščias
+            </div>
         </div>
     </div>
 

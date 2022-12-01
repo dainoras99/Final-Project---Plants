@@ -6,6 +6,7 @@ import { OrdersManagementComponent } from './components/orders-management/orders
 import { PanelComponent } from './components/panel/panel.component';
 import { PlantsFormComponent } from './components/plants-form/plants-form.component';
 import { PlantsManagementComponent } from './components/plants-management/plants-management.component';
+import { PlantsRemovalComponent } from './components/plants-removal/plants-removal.component';
 import { UsersManagementComponent } from './components/users-management/users-management.component';
 
 const routes: Routes = [
@@ -16,7 +17,9 @@ const routes: Routes = [
       { path: 'users', component: UsersManagementComponent },
       { path: 'orders', component: OrdersManagementComponent },
       { path: 'plants', component: PlantsManagementComponent, children: [
-        { path: 'form', component: PlantsFormComponent}
+        { path: '', redirectTo: '/panel/plants/removePlants', pathMatch: 'full'},
+        { path: 'form', component: PlantsFormComponent},
+        { path: 'removePlants', component: PlantsRemovalComponent}
       ] }
     ]},
     {path: '', redirectTo: '/admin', pathMatch: 'full'}

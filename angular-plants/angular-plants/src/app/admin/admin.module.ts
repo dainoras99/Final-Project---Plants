@@ -10,6 +10,7 @@ import { OrdersManagementComponent } from './components/orders-management/orders
 import { PlantsManagementComponent } from './components/plants-management/plants-management.component';
 import { UsersManagementComponent } from './components/users-management/users-management.component';
 import { PlantsFormComponent } from './components/plants-form/plants-form.component';
+import { PlantsRemovalComponent } from './components/plants-removal/plants-removal.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { PlantsFormComponent } from './components/plants-form/plants-form.compon
     OrdersManagementComponent,
     PlantsManagementComponent,
     UsersManagementComponent,
-    PlantsFormComponent
+    PlantsFormComponent,
+    PlantsRemovalComponent
   ],
   imports: [
     CommonModule,

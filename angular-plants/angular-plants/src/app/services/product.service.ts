@@ -37,13 +37,17 @@ export class ProductService {
     return this.getPlants(searchUrl);
   }
 
+  addPlant(plant: Plant, categoryName: string) {
+    const addPlantUrl = "http://localhost:8080/api/v1/plants/addPlant";
+    return this.httpClient.post(addPlantUrl, {plant, categoryName}, {responseType: 'text'});
+  }
+
   private getPlants(searchUrl: string): Observable<Plant[]> {
     return this.httpClient.get<GetResponseProduct>(searchUrl).pipe(
       map(response => response._embedded.plants)
     );
   }
 }
-
 interface GetResponseProduct {
   _embedded: {
     plants: Plant[];

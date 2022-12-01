@@ -1,0 +1,56 @@
+<form class="container">
+    <fieldset class="border border-success p-2 mt-3"> 
+    <legend class="w-auto">Pridėkite Augalą</legend>
+    <div class="row">
+        <div class="form-outline mb-4 col-6">
+            <label for="category" class="form-label">Pasirinkite kategoriją</label>
+            <select class="custom-select d-block w-100" size="3" id="category" required="" (change)="selectedCategory($event)">
+                <option value="new">Nauja kategorija</option>
+                <option>Atsiimsiu parduotuvėje</option>
+                <option>Pristatyti į namus</option>
+                <option>Pristatyti į paštomatą</option>
+            </select>
+        </div>
+        <div *ngIf="chosenCategory == 'new'" class="form-outline mb-4 col-6">
+            <label class="form-label" for="newCategory">Naujos kategorijos pavadinimas</label>
+            <input type="text" id="newCategory" name="newCategory" maxlength="255"
+                class="form-control form-control-lg" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-outline mb-4 col-8">
+            <label class="form-label" for="name">Pavadinimas</label>
+            <input type="text" id="name" name="name" maxlength="255" class="form-control form-control-lg" />
+        </div>
+
+        <div class="form-outline mb-4 col-4">
+            <label class="form-label" for="price">Kaina</label>
+            <input type="text" id="price" name="price" maxlength="10" class="form-control form-control-lg" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="description">Aprašymas</label>
+        <textarea rows="8" type="text" id="description" name="description" class="form-control"> </textarea>
+    </div>
+
+    <div class="row">
+        <div class="form-outline mb-4 col-8">
+            <label class="form-label" for="fileUpload">Nuotraukos įkėlimas</label>
+            <input class="form-control" id="fileUpload" type="file">
+        </div>
+
+        <div class="form-outline mb-4 col-4">
+            <label class="form-label" for="stock">Likutis</label>
+            <input type="text" id="stock" name="stock" maxlength="10" class="form-control form-control-lg" />
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Pridėti naują
+            augalą</button>
+    </div>
+    <!-- <a href="" (click)="openLoginDialog()">Cia</button> -->
+    </fieldset>
+</form>

@@ -1,0 +1,8 @@
+.custom-file-label::after {
+    content: "Mygtukas";
+  }
+
+  legend {
+    float: none; 
+    padding: inherit;
+  }

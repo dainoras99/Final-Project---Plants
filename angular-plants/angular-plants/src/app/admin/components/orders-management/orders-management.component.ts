@@ -20,10 +20,13 @@ export class OrdersManagementComponent implements OnInit {
   cancelledOrdersToggle: boolean = false;
   finishedOrdersToggle: boolean = false;
 
+  currentNavStatus = "Pateiktas";
+
   constructor(private ordersService: OrderService, private dialogRef: MatDialog) {
   }
 
   ngOnInit(): void {
+    this.selectedStatusValue = "Priimtas";
     this.loadOrders("pateiktas");
   }
 
@@ -37,30 +40,35 @@ export class OrdersManagementComponent implements OnInit {
     this.loadOrders("pateiktas");
     this.changeToggles();
     this.newOrdersToggle = true;
+    this.currentNavStatus = "Pateiktas";
   }
 
   acceptedOrders() {
     this.loadOrders("priimtas");
     this.changeToggles();
     this.acceptedOrdersToggle = true;
+    this.currentNavStatus = "Priimtas";
   }
 
   readyOrders() {
     this.loadOrders("paruoštas");
     this.changeToggles();
     this.readyOrdersToggle = true;
+    this.currentNavStatus = "Paruoštas";
   }
 
   finishedOrders() {
     this.loadOrders("baigtas");
     this.changeToggles();
     this.finishedOrdersToggle = true;
+    this.currentNavStatus = "Baigtas";
   }
 
   cancelledOrders() {
     this.loadOrders("atšauktas");
     this.changeToggles();
     this.cancelledOrdersToggle = true;
+    this.currentNavStatus = "Atšauktas"
   }
 
   selectedOrders(order: any, event: any) {
@@ -78,10 +86,12 @@ export class OrdersManagementComponent implements OnInit {
   }
 
   changeStatus() {
+    if (this.selectedOrdersList.length == 0 ) alert("Turite pasirinkti bent vieną užsakymą prieš pakeičiant statusą");
+    else if(confirm("Ar tikrai norite keisti užsakymo (-ų) statusą į " + this.selectedStatusValue))
     this.ordersService.updateOrdersStatuses(this.selectedOrdersList, this.selectedStatusValue).subscribe(
       {
         next: response => {
-          this.loadOrders("pateiktas");
+          this.loadOrders(this.currentNavStatus);
           this.selectedOrdersList = [];
         },
         error: err => {
@@ -89,22 +99,6 @@ export class OrdersManagementComponent implements OnInit {
         }
       }
     )
-
-
-    // this.orderService.postOrder(this.cartSession, this.authenticationService.getLoggedInUserName()!, "shop", this.shopId, null!)
-    //   .subscribe(
-    //     {
-    //       next: response => {
-    //         alert(response);
-    //         this.cartService.setCartData(null!);
-    //         this.router.navigate(['/plants']);
-    //       },
-    //       error: err => {
-    //         alert("Svetainės klaida, kreipkitės į administratorių");
-    //         this.router.navigate(['/plants']);
-    //       }
-    //     }
-    //   );
   }
 
 

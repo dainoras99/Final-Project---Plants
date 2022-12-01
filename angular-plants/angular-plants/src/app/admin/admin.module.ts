@@ -9,6 +9,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { OrdersManagementComponent } from './components/orders-management/orders-management.component';
 import { PlantsManagementComponent } from './components/plants-management/plants-management.component';
 import { UsersManagementComponent } from './components/users-management/users-management.component';
+import { PlantsFormComponent } from './components/plants-form/plants-form.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { UsersManagementComponent } from './components/users-management/users-ma
     PanelComponent,
     OrdersManagementComponent,
     PlantsManagementComponent,
-    UsersManagementComponent
+    UsersManagementComponent,
+    PlantsFormComponent
   ],
   imports: [
     CommonModule,

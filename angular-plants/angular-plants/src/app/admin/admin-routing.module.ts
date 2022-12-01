@@ -4,6 +4,7 @@ import { AdminGuardGuard } from '../guards/admin-guard.guard';
 import { AdminComponent } from './components/admin/admin.component';
 import { OrdersManagementComponent } from './components/orders-management/orders-management.component';
 import { PanelComponent } from './components/panel/panel.component';
+import { PlantsFormComponent } from './components/plants-form/plants-form.component';
 import { PlantsManagementComponent } from './components/plants-management/plants-management.component';
 import { UsersManagementComponent } from './components/users-management/users-management.component';
 
@@ -14,7 +15,9 @@ const routes: Routes = [
       { path: '', redirectTo: '/panel/orders', pathMatch: 'full'}, 
       { path: 'users', component: UsersManagementComponent },
       { path: 'orders', component: OrdersManagementComponent },
-      { path: 'plants', component: PlantsManagementComponent }
+      { path: 'plants', component: PlantsManagementComponent, children: [
+        { path: 'form', component: PlantsFormComponent}
+      ] }
     ]},
     {path: '', redirectTo: '/admin', pathMatch: 'full'}
 ];

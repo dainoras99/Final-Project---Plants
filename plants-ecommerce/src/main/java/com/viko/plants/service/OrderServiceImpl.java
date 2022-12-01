@@ -106,6 +106,7 @@ public class OrderServiceImpl implements OrderService {
         for (Order order : ordersStatusChangeRequest.getOrders()) {
             System.out.println("orderis: " + order);
             System.out.println("user: " + order.getId());
+            System.out.println("order: " + ordersStatusChangeRequest.getStatus());
             orderRepository.updateOrderStatusById(ordersStatusChangeRequest.getStatus(), order.getId());
         }
         Set<Order> orders = orderRepository.getOrdersByStatus(ordersStatusChangeRequest.getStatus());

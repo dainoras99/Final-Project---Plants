@@ -77,9 +77,12 @@ public class OrderServiceImpl implements OrderService {
         Set<OrderItem> orderItems = new HashSet<>();
         for (CartItem cartTempItem : request.getCartSession().getCartItems()) {
             OrderItem orderItem = new OrderItem();
-            orderItem.setPlant(cartTempItem.getPlant());
+
+            orderItem.setName(cartTempItem.getPlant().getName());
+            orderItem.setDescription(cartTempItem.getPlant().getDescription());
+            orderItem.setImageUrl(cartTempItem.getPlant().getImageUrl());
+            orderItem.setPrice(cartTempItem.getPlant().getPrice());
             orderItem.setQuantity(cartTempItem.getQuantity());
-            orderItem.setPlantCategory(cartTempItem.getPlant().getCategory());
             orderItem.setOrderType(orderType);
             orderItems.add(orderItem);
         }
@@ -87,6 +90,7 @@ public class OrderServiceImpl implements OrderService {
         order.setTotal(request.getCartSession().getTotal_price());
         order.setUser(user);
         order.setOrderType(orderType);
+        order.setStatus("Pateiktas");
 
         for(OrderItem orderItem : orderItems) {
             orderItem.setOrder(order);

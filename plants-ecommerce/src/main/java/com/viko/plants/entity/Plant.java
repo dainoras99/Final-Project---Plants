@@ -39,8 +39,4 @@ public class Plant {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "plant")
     @JsonBackReference(value="plantCartItem")
     private Set<CartItem> cartItems;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "plant")
-    @JsonBackReference(value="plantOrderItems")
-    private Set<OrderItem> orderItems;
 }

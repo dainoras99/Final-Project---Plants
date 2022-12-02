@@ -14,13 +14,27 @@ export class PlantsRemovalComponent implements OnInit {
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
+    this.loadProducts();
+  }
+
+  loadProducts() {
     this.productService.searchProducts("").subscribe(data => {
       this.plants = data;
     });
   }
 
   deletePlant(id: number) {
-    
+    this.productService.removePlant(id).subscribe(
+      {
+        next: response => {
+          this.loadProducts();
+          alert(response);
+        },
+        error: err => {
+          alert(err);
+        }
+      }
+    )
   }
 
 }

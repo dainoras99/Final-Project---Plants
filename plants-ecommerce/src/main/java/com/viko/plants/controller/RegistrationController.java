@@ -2,6 +2,7 @@ package com.viko.plants.controller;
 
 import com.viko.plants.entity.CartItem;
 import com.viko.plants.entity.User;
+import com.viko.plants.entity.UserRole;
 import com.viko.plants.repository.UserRepository;
 import com.viko.plants.request.RegistrationRequest;
 import lombok.AllArgsConstructor;
@@ -47,6 +48,7 @@ public class RegistrationController {
                     return new ResponseEntity<>("Naudotojas su tokiu slapyvardžiu jau egzistuoja", HttpStatus.CONFLICT);
                 }
             }
+            user.setUserRole(UserRole.USER);
             repository.save(user);
             return new ResponseEntity<>("Successful Registration", HttpStatus.CREATED);
         }

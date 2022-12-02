@@ -23,14 +23,17 @@ public class OrderItem {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "plants_id", nullable = false)
-    private Plant plant;
+    @Column(name = "name")
+    private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "plants_plants_category_id", nullable = true)
-    @JsonIgnore
-    private PlantCategory plantCategory;
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "price")
+    private Float price;
+
+    @Column(name = "image_url")
+    private String imageUrl;
 
     @ManyToOne
     @JoinColumn(name="order_id", nullable = false)

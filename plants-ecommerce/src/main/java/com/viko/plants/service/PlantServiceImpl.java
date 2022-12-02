@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -57,5 +58,13 @@ public class PlantServiceImpl implements PlantService {
         }
        plantRepository.save(plant);
        return new ResponseEntity<>("Naujas augalas pridėtas", HttpStatus.CREATED);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<String> deletePlant(Integer plantId) {
+        Optional<Plant> plant = plantRepository.findById(plantId);
+        plantRepository.delete(plant.get());
+        return new ResponseEntity<>("Augalas pašalintas", HttpStatus.OK);
     }
 }

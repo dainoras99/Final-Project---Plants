@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Plant } from 'src/app/common/plant';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -13,7 +14,13 @@ export class PlantsRemovalComponent implements OnInit {
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
-    this.productService.getProductList();
+    this.productService.searchProducts("").subscribe(data => {
+      this.plants = data;
+    });
+  }
+
+  deletePlant(id: number) {
+    
   }
 
 }

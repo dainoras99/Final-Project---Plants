@@ -9,9 +9,11 @@ import com.viko.plants.repository.PlantCategoryRepository;
 import com.viko.plants.repository.PlantRepository;
 import com.viko.plants.request.PlantUploadRequest;
 import lombok.SneakyThrows;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
@@ -59,6 +61,7 @@ public class PlantServiceImpl implements PlantService {
                 }
             }
         }
+        plant.setImageUrl("assets/images/Photos/plant" + plantUploadRequest.getSelectedFileName());
        plantRepository.save(plant);
        return new ResponseEntity<>("Naujas augalas pridėtas", HttpStatus.CREATED);
     }
@@ -69,5 +72,18 @@ public class PlantServiceImpl implements PlantService {
         Optional<Plant> plant = plantRepository.findById(plantId);
         plantRepository.delete(plant.get());
         return new ResponseEntity<>("Augalas pašalintas", HttpStatus.OK);
+    }
+
+    public ResponseEntity<String> uploadImage (MultipartFile file) {
+        try {
+            InputStream input = new ByteArrayInputStream(file.getBytes());
+            OutputStream output = new FileOutputStream
+                    ("C:/Users/daino/OneDrive/Stalinis kompiuteris/Final-Project---Plants/" +
+                            "angular-plants/angular-plants/src/assets/images/Photos/plant" + file.getOriginalFilename());
+            IOUtils.copy(input, output);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>("Nuotrauka išsaugota", HttpStatus.OK);
     }
 }

@@ -38,9 +38,9 @@ export class ProductService {
     return this.getPlants(searchUrl);
   }
 
-  addPlant(plant: Plant, categoryName: string) {
+  addPlant(plant: Plant, categoryName: string, selectedFileName: string) {
     const addPlantUrl = "http://localhost:8080/api/v1/plants/addPlant";
-    return this.httpClient.post(addPlantUrl, {plant, categoryName}, {responseType: 'text'});
+    return this.httpClient.post(addPlantUrl, {plant, categoryName, selectedFileName}, {responseType: 'text'});
   }
 
   removePlant(productId: number) {

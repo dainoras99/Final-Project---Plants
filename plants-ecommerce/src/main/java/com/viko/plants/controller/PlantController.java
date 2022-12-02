@@ -37,16 +37,8 @@ public class PlantController {
     }
 
     @PostMapping("api/v1/image/upload")
-    public ResponseEntity.BodyBuilder uploadImage(@RequestParam("imageFile") MultipartFile file) {
-        try {
-            System.out.println("Original Image Byte Size - " + file.getBytes().length);
-
-            InputStream input = new ByteArrayInputStream(file.getBytes());
-            OutputStream output = new FileOutputStream("C:/Users/daino/OneDrive/Stalinis kompiuteris/Final-Project---Plants/angular-plants/angular-plants/src/assets/images/Photos/plant/newPlant.png");
-            IOUtils.copy(input, output);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ResponseEntity.status(HttpStatus.OK);
+    public ResponseEntity<String> uploadImage(@RequestParam("imageFile") MultipartFile file) {
+        ResponseEntity<String> response = plantService.uploadImage(file);
+        return response;
     }
 }

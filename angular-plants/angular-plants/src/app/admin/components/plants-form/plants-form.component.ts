@@ -25,11 +25,6 @@ export class PlantsFormComponent implements OnInit {
 
   //
   selectedFile!: File;
-  retrievedImage: any;
-  base64Data: any;
-  retrieveResponse: any;
-  message!: string;
-  imageName: any;
   //
 
   constructor(private productService: ProductService, private domSanitizer: DomSanitizer) {
@@ -113,15 +108,15 @@ export class PlantsFormComponent implements OnInit {
     this.productService.imageUpload(uploadImageData)
       .subscribe((response) => {
         if (response.status === 200) {
-          this.message = 'Image uploaded successfully';
+         
         } else {
-          this.message = 'Image not uploaded successfully';
+
         }
       }
       );
     //
 
-    this.productService.addPlant(this.plant, this.categoryToPass).subscribe(
+    this.productService.addPlant(this.plant, this.categoryToPass, this.selectedFile.name).subscribe(
       {
         next: response => {
           alert(response);

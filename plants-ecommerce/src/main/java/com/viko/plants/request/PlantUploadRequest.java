@@ -14,4 +14,5 @@ import org.springframework.web.multipart.MultipartFile;
 public class PlantUploadRequest {
     private final Plant plant;
     private final String categoryName;
+    private final String selectedFileName;
 }

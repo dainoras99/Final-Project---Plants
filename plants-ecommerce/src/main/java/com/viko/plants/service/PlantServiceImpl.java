@@ -35,23 +35,21 @@ public class PlantServiceImpl implements PlantService {
     public ResponseEntity<String> uploadPlant(PlantUploadRequest plantUploadRequest) {
 
         Plant plant = plantUploadRequest.getPlant();
-       List<PlantCategory> plantCategories = plantCategoryRepository.findAll();
+        List<PlantCategory> plantCategories = plantCategoryRepository.findAll();
         for (PlantCategory tempPlantCategory : plantCategories) {
             if(tempPlantCategory.getName().equals(plantUploadRequest.getCategoryName())) {
                 plant.setCategory(tempPlantCategory);
             }
         }
         if(plant.getCategory() == null) {
+            System.out.println("sveikivel");
             PlantCategory plantCategory = new PlantCategory();
             plantCategory.setName(plantUploadRequest.getCategoryName());
-            Set<Plant> plants = new LinkedHashSet<>();
-            plants.add(plant);
-            plantCategory.setPlants(plants);
-            System.out.println(plantCategory.getName());
             plantCategoryRepository.save(plantCategory);
             List<PlantCategory> searchForPlantCategories = plantCategoryRepository.findAll();
             for (PlantCategory tempPlantCategory : searchForPlantCategories) {
                 if(tempPlantCategory.getName().equals(plantUploadRequest.getCategoryName())) {
+                    System.out.println("sveiki");
                     plant.setCategory(tempPlantCategory);
                 }
             }

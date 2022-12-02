@@ -15,6 +15,7 @@ export class PlantsFormComponent implements OnInit {
   plantCategories: PlantCategory[] = [];
   errors: boolean = false;
   errorNewCategory: boolean = false;
+  errorNoCategory: boolean = false;
   plant: Plant = new Plant();
 
   newCategory!: string;
@@ -61,6 +62,7 @@ export class PlantsFormComponent implements OnInit {
 
   selectedCategory(event: any) {
     this.chosenCategory = event.target.value;
+    this.errorNoCategory = false;
   }
 
   onFileSelection(event: any) {
@@ -71,9 +73,14 @@ export class PlantsFormComponent implements OnInit {
 
   addPlant() {
 
+    if (this.chosenCategory == '') {
+      this.errorNoCategory = true;
+      return;
+    }
     if (this.chosenCategory == "new") {
       this.errorNewCategory = true;
       this.categoryToPass = this.newCategory;
+      if (this.categoryToPass == undefined) return;
     }
     else {
       this.errorNewCategory = false;
@@ -83,6 +90,8 @@ export class PlantsFormComponent implements OnInit {
       this.errors = true;
       return;
     }
+
+
     this.errors = false;
     this.errorNewCategory = false;
 

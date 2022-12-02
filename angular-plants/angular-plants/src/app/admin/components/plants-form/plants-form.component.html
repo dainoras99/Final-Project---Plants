@@ -9,7 +9,7 @@
                 <option *ngFor="let plantCategory of plantCategories">{{plantCategory.name}}</option>
             </select>
             <div class="form-text text-danger mb-2"
-                            *ngIf="errors">
+                            *ngIf="errorNoCategory">
                             Turite pasirinkti augalų kategoriją
             </div>
         </div>

@@ -23,14 +23,13 @@ public class CartSession {
     @Column(name = "total_price")
     private Float total_price;
 
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value="userCartSession")
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cartSession")
-    @JsonManagedReference
+    @OrderBy
     private Set<CartItem> cartItems;
 
 }

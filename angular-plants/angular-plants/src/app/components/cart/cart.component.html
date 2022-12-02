@@ -1,8 +1,7 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="fw-normal mb-0 text-black">Jūsų Krepšelis</h1>
 </div>
-
-<div class="card rounded-3 mb-4" *ngFor="let cartItem of cartItems">
+<div class="card rounded-3 mb-4" *ngFor="let cartItem of (cartSession | async)?.cartItems">
     <div class="card-body p-4">
         <div class="row d-flex justify-content-between align-items-center">
             <div class="col-md-2 col-lg-2 col-xl-2">
@@ -12,20 +11,20 @@
                 <p class="lead fw-normal mb-2">{{cartItem.plant.name}}</p>
             </div>
             <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                <button class="btn px-2" (click)="updateCartItem(cartItem, false)"
+                <button *ngIf="cartItem.quantity > 1" class="btn px-2" (click)="updateCartItem(cartItem, false)"
                     onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
 
                 <input id="form1" min="1" max="50" name="quantity" value="{{cartItem.quantity}}" type="number"
                     class="form-control form-control-sm" />
 
-                <button class="btn px-2" (click)="updateCartItem(cartItem, true)"
+                <button *ngIf="cartItem.quantity < 50" class="btn px-2" (click)="updateCartItem(cartItem, true)"
                     onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
             </div>
             <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                 <h3 class="mb-0">{{cartItem.plant.price * cartItem.quantity | currency:'EUR'}}</h3>
             </div>
             <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                <button (click)="deleteCartItem(cartItem.id, cartItems.length)">
+                <button (click)="deleteCartItem(cartItem.id)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-trash3"
                         viewBox="0 0 16 16">
                         <path

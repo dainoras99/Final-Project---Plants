@@ -1,5 +1,7 @@
 package com.viko.plants.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,14 +23,12 @@ public class PlantCategory {
     @Column(name = "name")
     private String name;
 
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    @JsonBackReference(value="plantPlantCategory")
     private Set<Plant> plants;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="plantCategory")
-    @JsonManagedReference
+    @JsonBackReference(value="plantCategoryCartItems")
     private Set<CartItem> cartItems;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="plantCategory")
-    @JsonManagedReference
-    private Set<OrderItem> orderItems;
 }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Plant } from '../common/plant';
 import { map } from 'rxjs/operators';
 import { PlantCategory } from '../common/plant-category';
+import { FileHandler } from '../common/file-handler';
 
 @Injectable({
   providedIn: 'root'
@@ -37,13 +38,28 @@ export class ProductService {
     return this.getPlants(searchUrl);
   }
 
+  addPlant(plant: Plant, categoryName: string, selectedFileName: string) {
+    const addPlantUrl = "http://localhost:8080/api/v1/plants/addPlant";
+    return this.httpClient.post(addPlantUrl, {plant, categoryName, selectedFileName}, {responseType: 'text'});
+  }
+
+  removePlant(productId: number) {
+    const removePlantUrl = `http://localhost:8080/api/v1/plants/deletePlant/${productId}`;
+    return this.httpClient.delete(removePlantUrl, {responseType: 'text'});
+  }
+
+  imageUpload(uploadImageData: any) {
+    const imageDownloadUrl = "http://localhost:8080/api/v1/image/upload";
+    return this.httpClient.post(imageDownloadUrl, uploadImageData, { observe: 'response' });
+  }
+
+
   private getPlants(searchUrl: string): Observable<Plant[]> {
     return this.httpClient.get<GetResponseProduct>(searchUrl).pipe(
       map(response => response._embedded.plants)
     );
   }
 }
-
 interface GetResponseProduct {
   _embedded: {
     plants: Plant[];
@@ -55,3 +71,4 @@ interface GetResponseCategory {
     plantCategory: PlantCategory[];
   }
 }
+

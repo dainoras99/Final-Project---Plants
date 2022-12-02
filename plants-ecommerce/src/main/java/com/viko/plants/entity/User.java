@@ -64,7 +64,9 @@ public class User {
     private Set<CartItem> cartItems;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @JsonIgnore
+    @JsonBackReference(value="userOrder")
     private Set<Order> orders;
+
+    
 }
 

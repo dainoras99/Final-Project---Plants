@@ -1,0 +1,29 @@
+.cardColor {
+    background: linear-gradient(to bottom, rgb(246, 253, 152), rgb(223, 196, 24))
+}
+
+html,
+body,
+.intro {
+  height: 100%;
+}
+
+@media (min-width: 560px) and (max-width: 750px) {
+  html,
+  body,
+  .intro {
+    height: 830px;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 850px) {
+  html,
+  body,
+  .intro {
+    height: 830px;
+  }
+}
+
+.card {
+  min-height: 800px;
+}

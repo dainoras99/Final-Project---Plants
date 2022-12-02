@@ -24,8 +24,10 @@ export class LoginComponent implements OnInit {
       {
         next: response => {
           this.loginError = "none";
-          alert("Prisijungimas sėkmingas")
           localStorage.setItem("username", this.user.username);
+          alert("Prisijungimas sėkmingas")
+          response = this.user;
+          this.loginService.setUserData(this.user.username);
           this.dialogRef.close();
         },
         error: err => {

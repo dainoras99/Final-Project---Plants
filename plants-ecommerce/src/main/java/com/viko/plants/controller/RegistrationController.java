@@ -2,6 +2,7 @@ package com.viko.plants.controller;
 
 import com.viko.plants.entity.CartItem;
 import com.viko.plants.entity.User;
+import com.viko.plants.entity.UserRole;
 import com.viko.plants.repository.UserRepository;
 import com.viko.plants.request.RegistrationRequest;
 import lombok.AllArgsConstructor;
@@ -24,9 +25,16 @@ public class RegistrationController {
 
     @PostMapping("api/v1/login")
     public ResponseEntity<?> login (@RequestBody RegistrationRequest registrationRequest) {
-        System.out.println(registrationRequest.getUsername() + " " + registrationRequest.getPassword());
         User user = repository.findByUsername(registrationRequest.getUsername());
         if (user.getPassword().equals(registrationRequest.getPassword())) return ResponseEntity.ok(user);
+        return (ResponseEntity<?>) ResponseEntity.internalServerError();
+    }
+
+    @PostMapping("api/v1/admin")
+    public ResponseEntity<?> adminLogin (@RequestBody RegistrationRequest registrationRequest) {
+        User user = repository.findByUsername(registrationRequest.getUsername());
+        System.out.println("cia: " + user.getUserRole());
+        if (user.getPassword().equals(registrationRequest.getPassword()) && user.getUserRole().equals(user.getUserRole().ADMIN)) return ResponseEntity.ok(user);
         return (ResponseEntity<?>) ResponseEntity.internalServerError();
     }
 
@@ -40,6 +48,7 @@ public class RegistrationController {
                     return new ResponseEntity<>("Naudotojas su tokiu slapyvardžiu jau egzistuoja", HttpStatus.CONFLICT);
                 }
             }
+            user.setUserRole(UserRole.USER);
             repository.save(user);
             return new ResponseEntity<>("Successful Registration", HttpStatus.CREATED);
         }

@@ -23,18 +23,19 @@ public class Order {
     @Column(name = "total")
     private Float total;
 
+    @Column(name = "status")
+    private String status;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
-    @JsonManagedReference
+    @JsonManagedReference(value="orderOrderItems")
+    @OrderBy
     private Set<OrderItem> orderItems;
 
     @ManyToOne
     @JoinColumn(name = "order_type_id", nullable = false)
-    @JsonBackReference
     private OrderType orderType;
 }

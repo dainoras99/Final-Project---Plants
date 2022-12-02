@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartItem } from 'src/app/common/cart-item';
+import { CartSession } from 'src/app/common/cart-session';
 import { Parcel } from 'src/app/common/parcel';
 import { UserItem } from 'src/app/common/user-item';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { CartService } from 'src/app/services/cart.service';
 import { OrderTypesService } from 'src/app/services/order-types.service';
 import { OrderService } from 'src/app/services/order.service';
 import { UserItemsService } from 'src/app/services/user-items.service';
@@ -15,8 +17,7 @@ import { UserItemsService } from 'src/app/services/user-items.service';
 })
 export class CheckoutparcelComponent implements OnInit {
   typeSelected: any;
-  selectedProducts: UserItem[] = [];
-  selectedTotal!: number;
+  cartSession!: CartSession;
   parcelList: Parcel[] = [];
   parcelSelected: any;
   parcelId!: number;
@@ -24,18 +25,15 @@ export class CheckoutparcelComponent implements OnInit {
   cartItem!: CartItem;
 
   constructor(private router: Router, 
-    private userItemsService: UserItemsService,
+    private cartService: CartService,
     private orderTypesService: OrderTypesService, 
     private authenticationService: AuthenticationService,
     private orderService: OrderService) { }
 
   ngOnInit(): void {
     this.handleParcels();
-    this.userItemsService.selectedProducts.subscribe((data) => {
-      this.selectedProducts = data;
-    });
-    this.userItemsService.selectedTotalPrice.subscribe((data) => {
-      this.selectedTotal = data;
+    this.cartService.getCartData().subscribe((data) => {
+      this.cartSession = data;
     });
   }
 
@@ -63,29 +61,51 @@ export class CheckoutparcelComponent implements OnInit {
   }
 
   postOrder() {
-    this.selectedProducts.forEach(element => {
-      this.cartItem = new CartItem(0, 0, null!);
-      this.cartItem.id = element.id;
-      this.cartItem.quantity = element.quantity;
-      this.cartItems.push(this.cartItem);
-    });
-    let username = this.authenticationService.getLoggedInUserName();
-    if (this.parcelSelected === undefined) this.parcelSelected = "Akropolis - Vilnius, Ozo g. 25, 07150";
-    this.parcelList.forEach(parcel => {
-        if (this.parcelSelected === parcel.name + " - " + parcel.city + ", " + parcel.address + ", " + parcel.zipCode) this.parcelId = parcel.id;
-    });
-    this.orderService.postCartItemParcel(username!, this.cartItems,
-    this.selectedTotal, this.parcelId).subscribe(
+  if (this.parcelSelected === undefined) this.parcelSelected = "Akropolis - Vilnius, Ozo g. 25, 07150";
+
+  // 
+  this.parcelList.forEach(parcel => {
+    if (this.parcelSelected === parcel.name + " - " + parcel.city + ", " + parcel.address + ", " + parcel.zipCode) this.parcelId = parcel.id;
+  });
+  // 
+
+  this.orderService.postOrder(this.cartSession, this.authenticationService.getLoggedInUserName()!, "parcel",  this.parcelId, null!)
+    .subscribe(
       {
         next: response => {
-          alert("Sėkmingai pateiktas užsakymas");
+          alert(response);
+          this.cartService.setCartData(null!);
           this.router.navigate(['/plants']);
         },
         error: err => {
-          console.log(err);
-          alert("Sistemos klaida");
+          alert("Svetainės klaida, kreipkitės į administratorių");
+          this.router.navigate(['/plants']);
         }
       }
-    )
-  }
+    );
+  //   this.selectedProducts.forEach(element => {
+  //     this.cartItem = new CartItem(0, 0, null!);
+  //     this.cartItem.id = element.id;
+  //     this.cartItem.quantity = element.quantity;
+  //     this.cartItems.push(this.cartItem);
+  //   });
+  //   let username = this.authenticationService.getLoggedInUserName();
+  //   if (this.parcelSelected === undefined) this.parcelSelected = "Akropolis - Vilnius, Ozo g. 25, 07150";
+  //   this.parcelList.forEach(parcel => {
+  //       if (this.parcelSelected === parcel.name + " - " + parcel.city + ", " + parcel.address + ", " + parcel.zipCode) this.parcelId = parcel.id;
+  //   });
+  //   this.orderService.postCartItemParcel(username!, this.cartItems,
+  //   this.selectedTotal, this.parcelId).subscribe(
+  //     {
+  //       next: response => {
+  //         alert("Sėkmingai pateiktas užsakymas");
+  //         this.router.navigate(['/plants']);
+  //       },
+  //       error: err => {
+  //         console.log(err);
+  //         alert("Sistemos klaida");
+  //       }
+  //     }
+  //   )
+   }
 }

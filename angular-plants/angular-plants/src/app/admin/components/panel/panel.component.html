@@ -1,0 +1,33 @@
+<section class="intro">
+    <div class="h-100" style="background-image: url('../../../../assets/images/Photos/plants-background.jpg');">
+        <div class="d-flex align-items-center h-100">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                        <div class="card cardColor">
+                            <div class="card-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <a routerLink="orders" routerLinkActive="active" type="button" class="btn btn-outline-success">Užsakymų
+                                                tvarkymas</a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a routerLink="plants" routerLinkActive="active" type="button" class="btn btn-outline-success">Produktų
+                                                tvarkymas</a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a routerLink="users" routerLinkActive="active" type="button" class="btn btn-outline-success">Naudotojų
+                                                tvarkymas</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <router-outlet></router-outlet>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

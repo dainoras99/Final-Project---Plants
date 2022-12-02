@@ -6,5 +6,5 @@ export class User {
     password!: string;
     email!: string;
     birthdate!: Date;
-
+    userRole!: string;
 }

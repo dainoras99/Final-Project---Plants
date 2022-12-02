@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Observable } from 'rxjs/internal/Observable';
 import { CartItem } from 'src/app/common/cart-item';
 import { CartSession } from 'src/app/common/cart-session';
 import { Plant } from 'src/app/common/plant';
@@ -7,6 +8,7 @@ import { User } from 'src/app/common/user';
 import { UserItem } from 'src/app/common/user-item';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CartService } from 'src/app/services/cart.service';
+import { LoginService } from 'src/app/services/login.service';
 import { UserItemsService } from 'src/app/services/user-items.service';
 
 @Component({
@@ -17,7 +19,7 @@ import { UserItemsService } from 'src/app/services/user-items.service';
 export class CartComponent implements OnInit {
 
   @ViewChild('sidenav') public sidenav!: MatSidenav;
-  cartSessions: CartSession[] = [];
+  cartSession!: Observable<CartSession>;
   cartItems: CartItem[] = [];
   user!: User;
   cartPlants: Plant[] = [];
@@ -25,101 +27,64 @@ export class CartComponent implements OnInit {
   useritemsForCheckout: UserItem[] = [];
   userCartItem!: UserItem
 
+  realCartSession!: CartSession;
+
   constructor(public authenticationService: AuthenticationService,
-    private cartService: CartService, 
-    private userItemsService: UserItemsService) { }
+    private cartService: CartService,
+    private loginService: LoginService) { }
 
-   ngOnInit(): void {
-    this.handleUser();
-    this.cartService.getRefreshRequired.subscribe(response => {
-      this.handleUser();
-    });
-   }
-
-  handleUser() {
-    this.authenticationService.getUserByUsername().subscribe(
-      data => {
-        this.user = new User;
-        this.user = data;
-        this.handleCartItems();
+  ngOnInit(): void {
+    this.loginService.getUserData().subscribe(data => {
+      if (data != "username") {
+        this.handleUserSession(data);
+        this.cartSession = this.cartService.getCartData();
       }
-    );
+    })
   }
 
-  handleCartItems() {
-    this.cartService.getCartItemsByUserId(this.user.id).subscribe(
+  handleUserSession(username: string) {
+    this.cartService.getCartSession(username).subscribe(
       data => {
-        this.cartItems = [];
-        this.cartItems = data;
-        this.cartPlants = [];
-        this.maybeWillWork = [];
-        this.useritemsForCheckout = [];
-        this.cartItems.forEach(tempCartItem => this.handlePlants(tempCartItem.id, tempCartItem));
+        this.cartService.setCartData(data);
       }
     )
   }
 
-  handlePlants(cartItemId: number, tempCartItem: CartItem) {
-   this.cartService.getPlantsByCartItems(cartItemId).subscribe(
-    data => {
-      tempCartItem.plant = data;
-      this.cartItems = this.cartItems.sort((a,b)=> a.id-b.id);
-      //perkeliam i checkout info
-      this.userCartItem = {id: 0, name: "test", description: "test", price: 0, imageUrl: "", inStock: 0, quantity: 0};
-      console.log("nu tipo id" + data.name)
-      this.userCartItem.id = data.id;
-      this.userCartItem.name = data.name;
-      this.userCartItem.inStock = data.inStock;
-      this.userCartItem.imageUrl = data.imageUrl;
-      this.userCartItem.description = data.description;
-      this.userCartItem.price = data.price;
-      this.userCartItem.quantity = tempCartItem.quantity;
-      this.useritemsForCheckout.push(this.userCartItem);
-      this.userItemsService.setProducts(this.useritemsForCheckout);
-    }
-   )
-  }
-
-  deleteCartItem(cartItemId: number, cartPlantLength: number) {
+  deleteCartItem(cartItemId: number) {
     this.cartService.deleteCartItem(cartItemId!).subscribe(
       {
         next: response => {
-          if (cartPlantLength == 1) {
-            this.cartService.getCartSession(this.user.id).subscribe(
-              data => {
-                this.cartSessions = data;
-                this.deleteUserSession(this.cartSessions[0].id);
-              }
-            )
-          }  
+          this.cartService.setCartData(JSON.parse(response));
         },
         error: err => {
           console.log(err);
         }
       }
     )
-    }
+  }
 
-    deleteUserSession(cartItemId: number) {
-      this.cartService.removeSession(cartItemId).subscribe(
-        {
-          next: response => {},
-          error: err => {
-            console.log(err);
-          }
+  updateCartItem(cartItem: CartItem, quantityChange: boolean) {
+    this.cartService.updateCartItem(cartItem.id, quantityChange).subscribe(
+      {
+        next: response => {
+          this.cartService.setCartData(JSON.parse(response));
+        },
+        error: err => {
+          console.log(err);
         }
-      )
-    }
+      }
+    )
+  }
+  // deleteUserSession(cartItemId: number) {
+  //   // this.cartService.removeSession(cartItemId).subscribe(
+  //   //   {
+  //   //     next: response => {},
+  //   //     error: err => {
+  //   //       console.log(err);
+  //   //     }
+  //   //   }
+  //   // )
+  // }
 
-    updateCartItem(cartItem: CartItem, quantityChange: boolean) {
-      this.cartService.updateCartItem(cartItem.id, quantityChange).subscribe(
-        {
-          next: response => {},
-          error: err => {
-            console.log(err);
-          }
-        }
-      )
-    }
 }
-  
+

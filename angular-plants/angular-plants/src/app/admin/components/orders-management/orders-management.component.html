@@ -1,0 +1,125 @@
+<hr />
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-xl-2 col-12">
+            <button type="button" (click)="newOrders()" [ngClass]="{'active': newOrdersToggle}"
+                class="btn btn-outline-success">Nauji
+                užsakymai</button>
+        </div>
+        <div class="col-xl-2 col-12">
+            <button type="button" (click)="acceptedOrders()" [ngClass]="{'active': acceptedOrdersToggle}"
+                class="btn btn-outline-success">Priimti
+                užsakymai</button>
+        </div>
+        <div class="col-xl-2 col-12">
+            <button type="button" (click)="readyOrders()" [ngClass]="{'active': readyOrdersToggle}"
+                class="btn btn-outline-success">Paruošti
+                užsakymai</button>
+        </div>
+        <div class="col-xl-2 col-12">
+            <button type="button" (click)="finishedOrders()" [ngClass]="{'active': finishedOrdersToggle}"
+                class="btn btn-outline-success">Baigti
+                užsakymai</button>
+        </div>
+        <div class="col-xl-2 col-2">
+            <button type="button" (click)="cancelledOrders()" [ngClass]="{'active': cancelledOrdersToggle}"
+                class="btn btn-outline-success">Atšaukti
+                užsakymai</button>
+        </div>
+    </div>
+</div>
+<div class="mb-3"></div>
+<hr />
+    <div class="container scrollable">
+        <div class="row py-1" *ngFor="let order of orders">
+            <div class="col-1 py-2">
+                <input  class="form-check-input" type="checkbox" value={{order}} id="flexCheckDefault" (change)="selectedOrders(order, $event)">
+            </div>
+            <div class="col-10 p-0">
+                <mat-accordion>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <span class="col-3 text-success">Nr. #{{order.id}}</span>
+                                <span class="col-9">Naudotojas:
+                                    <span class="text-primary">{{order.user.username}}</span>
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="list-group mb-3 sticky-top">
+                            <li *ngFor="let orderItem of order.orderItems"
+                                class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h3 class="my-0">{{orderItem.name}}</h3>
+                                    <small class="text-muted">Produkto kiekis: {{orderItem.quantity}}</small>
+                                </div>
+                                <img src="../../../{{orderItem.imageUrl}}" class="img-fluid rounded-3" width="80"
+                                    height="80">
+                                <span class="text-muted">{{orderItem.price | currency: "EUR"}}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div *ngIf="order.orderType.orderTypeName == 'shop'">
+                                    <h3 class="my-0">Užsakymo tipas: <b>Atsiėmimas parduotuvėje</b></h3>
+                                    <h4 class="my-0">Parduotuvės adresas: <b>{{order.orderType.shop.address}},
+                                            {{order.orderType.shop.city}}</b></h4>
+                                </div>
+                                <div *ngIf="order.orderType.orderTypeName == 'parcel'">
+                                    <h3 class="my-0">Užsakymo tipas: <b>Pristatymas į paštomatą</b></h3>
+                                    <h4 class="my-0">Paštomato adresas: <b>{{order.orderType.parcel.name}},
+                                            {{order.orderType.parcel.address}}, {{order.orderType.parcel.city}},
+                                            {{order.orderType.parcel.zipCode}}</b></h4>
+                                </div>
+
+                                <div *ngIf="order.orderType.orderTypeName == 'delivery'">
+                                    <h3 class="my-0" *ngIf="order.orderType.orderTypeName == 'delivery'">Užsakymo tipas:
+                                        <b>Pristatymas
+                                            į namus</b>
+                                    </h3>
+                                    <h4 class="my-0">Pristatymo adresas: <b>{{order.orderType.delivery.address}},
+                                            {{order.orderType.delivery.city}}, {{order.orderType.delivery.zipCode}}</b>
+                                    </h4>
+                                    <h5 class="my-0" *ngIf="order.orderType.delivery.specialInstructions != null">
+                                        Specialios
+                                        instrukcijos kurjeriui: <b>{{order.orderType.delivery.specialInstructions}}</b>
+                                    </h5>
+                                    <h5 class="my-0" *ngIf="order.orderType.delivery.courierTips != 0">Papildomi
+                                        arbatpinigiai
+                                        kurjeriui: <b>{{order.orderType.delivery.courierTips | currency: 'EUR'}}</b>
+                                    </h5>
+                                </div>
+                            </li>
+                        </ul>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center" *ngIf="orders.length == 0"><b>Šiame statuse užsakymų nėra</b></div>
+    </div>
+    <hr />
+    <div class="d-flex justify-content-around">
+
+        
+        <div>
+            <input id="new" type="radio" value="Pateiktas" (change)="selectedStatus($event)" name="statusRadio">
+            <label for="new"> Naujas (-i)</label>
+        </div>
+        <div>
+            <input id="accepted" type="radio" value="Priimtas" (change)="selectedStatus($event)" checked name="statusRadio">
+            <label for="accepted"> Priimtas (-i)</label>
+        </div>
+        <div>
+            <input id="ready" type="radio" value="Paruoštas" (change)="selectedStatus($event)" name="statusRadio">
+            <label for="ready"> Paruoštas (-i)</label>
+        </div>
+        <div>
+            <input id="finished" type="radio" value="Baigtas" (change)="selectedStatus($event)" name="statusRadio">
+            <label for="finished"> Baigtas (-i)</label>
+        </div>
+        <div>
+            <input id="cancelled" type="radio" value="Atšauktas" (change)="selectedStatus($event)" name="statusRadio">
+            <label for="cancelled"> Atšauktas (-i)</label>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mt-2">
+        <button (click)="changeStatus()" class="btn btn-primary text-center px-1">Keisti užsakymo (-ų) būseną (-as)</button>
+    </div>

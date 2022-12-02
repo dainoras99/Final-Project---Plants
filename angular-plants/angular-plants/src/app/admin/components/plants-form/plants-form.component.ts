@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
+import { FileHandler } from 'src/app/common/file-handler';
 import { Plant } from 'src/app/common/plant';
 import { PlantCategory } from 'src/app/common/plant-category';
 import { ProductService } from 'src/app/services/product.service';
@@ -21,7 +23,16 @@ export class PlantsFormComponent implements OnInit {
   newCategory!: string;
   categoryToPass!: string;
 
-  constructor(private productService: ProductService) {
+  //
+  selectedFile!: File;
+  retrievedImage: any;
+  base64Data: any;
+  retrieveResponse: any;
+  message!: string;
+  imageName: any;
+  //
+
+  constructor(private productService: ProductService, private domSanitizer: DomSanitizer) {
 
   }
 
@@ -67,7 +78,7 @@ export class PlantsFormComponent implements OnInit {
 
   onFileSelection(event: any) {
     if (event.target.files) {
-      const fileImage = event.target.files[0];
+      this.selectedFile = event.target.files[0];
     }
   }
 
@@ -95,9 +106,21 @@ export class PlantsFormComponent implements OnInit {
     this.errors = false;
     this.errorNewCategory = false;
 
-    
+    //
+    const uploadImageData = new FormData();
+    uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
 
-  
+    this.productService.imageUpload(uploadImageData)
+      .subscribe((response) => {
+        if (response.status === 200) {
+          this.message = 'Image uploaded successfully';
+        } else {
+          this.message = 'Image not uploaded successfully';
+        }
+      }
+      );
+    //
+
     this.productService.addPlant(this.plant, this.categoryToPass).subscribe(
       {
         next: response => {

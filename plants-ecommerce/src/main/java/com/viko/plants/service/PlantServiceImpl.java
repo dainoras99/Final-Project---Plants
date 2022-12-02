@@ -8,11 +8,16 @@ import com.viko.plants.entity.User;
 import com.viko.plants.repository.PlantCategoryRepository;
 import com.viko.plants.repository.PlantRepository;
 import com.viko.plants.request.PlantUploadRequest;
+import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
+import java.awt.*;
+import java.io.*;
+import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
@@ -30,10 +35,10 @@ public class PlantServiceImpl implements PlantService {
         this.plantCategoryRepository = plantCategoryRepository;
     }
 
+    @SneakyThrows
     @Override
     @Transactional
     public ResponseEntity<String> uploadPlant(PlantUploadRequest plantUploadRequest) {
-
         Plant plant = plantUploadRequest.getPlant();
         List<PlantCategory> plantCategories = plantCategoryRepository.findAll();
         for (PlantCategory tempPlantCategory : plantCategories) {

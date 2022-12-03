@@ -4,12 +4,14 @@ import { AboutUsComponent } from '../components/about-us/about-us.component';
 import { CheckoutComponent } from '../components/checkout/checkout.component';
 import { CheckouthomeComponent } from '../components/checkouthome/checkouthome.component';
 import { CheckoutparcelComponent } from '../components/checkoutparcel/checkoutparcel.component';
+import { GiftCardComponent } from '../components/gift-card/gift-card.component';
 import { OrdersComponent } from '../components/orders/orders.component';
 import { PlantDetailsComponent } from '../components/plant-details/plant-details.component';
 import { PlantListComponent } from '../components/plant-list/plant-list.component';
 
 const routes: Routes = [
   {path: 'orders', component: OrdersComponent},
+  {path: 'gift-card', component: GiftCardComponent},
   {path: 'about-us', component: AboutUsComponent},
   {path: 'checkout/home', component: CheckouthomeComponent},
   {path: 'checkout/parcel', component: CheckoutparcelComponent},

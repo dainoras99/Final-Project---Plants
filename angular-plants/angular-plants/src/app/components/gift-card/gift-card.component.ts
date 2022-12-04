@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { GiftCard } from 'src/app/common/gift-card';
 import { GiftCardService } from 'src/app/services/gift-card.service';
 
@@ -16,7 +17,7 @@ export class GiftCardComponent implements OnInit {
   giftCard: GiftCard = new GiftCard();
 
 
-  constructor(private giftCardService: GiftCardService) { }
+  constructor(private giftCardService: GiftCardService, private router:Router) { }
 
   ngOnInit(): void {}
 
@@ -78,6 +79,7 @@ export class GiftCardComponent implements OnInit {
     {
       next: response => {
         alert(response);
+        this.router.navigate(['/plants']);
       },
       error: err => {
         alert(err);

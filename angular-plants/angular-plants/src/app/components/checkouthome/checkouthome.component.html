@@ -44,7 +44,6 @@
                         <option>Pristatyti į paštomatą</option>
                         <option>Atsiimsiu parduotuvėje</option>
                     </select>
-                    <div class="invalid-feedback"> Please select a valid country. </div>
                 </div>
             </div>
             <form [formGroup]="deliveryForm" class="needs-validation" (ngSubmit)="postOrder()" novalidate="">
@@ -52,7 +51,6 @@
                     <label for="address">Pristatymo adresas*</label>
                     <input type="text" class="form-control" id="address" name="address" placeholder="Gedimino pr. 9-81"
                         required="" formControlName="address" [(ngModel)]="delivery.address">
-                    <div class="invalid-feedback"> Please enter your shipping address. </div>
                     <div class="form-text text-danger"
                         *ngIf="Address.errors?.['required'] && (Address.touched || errors)">
                         Pristatymo adreso laukelis negali būti tuščias

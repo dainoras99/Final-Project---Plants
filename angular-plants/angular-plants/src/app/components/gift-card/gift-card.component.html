@@ -1,9 +1,86 @@
-<h1 class="text-center">Dovanų kuponas</h1>
-<hr/>
+<h1 class="text-center"><b>Dovanų kuponai</b></h1>
+<p class="text-center">Augalų oazės internetinės prekybos puslapyje taip pat galite įsigyti dovanų kuponų sau arba
+    kitiems žmonėms.
+    Pasirinkite dovanų kuponą tarp <b>25€</b>, <b>50€</b>, <b>75€</b> arba <b>100€</b>!
+</p>
+<hr />
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-8">
-            <img class="img-responsive" width="900px" src="../../../assets/images/Photos/gift-cards/25/1.jpg" />
+    <div class="row justify-content-center align-items-center">
+        <div *ngIf="currentSelectionImage!=1; else empty1" class="col-2 text-center arrow" (click)="changePicture(false)">
+            <</div>
+                <ng-template #empty1>
+                    <div class="col-2 text-center arrow"></div>
+                </ng-template>
+                <div class="col-8">
+                    <img class="img-fluid" width="900px"
+                        src="../../../assets/images/Photos/gift-cards/{{currentSelectionPrice}}/{{currentSelectionImage}}.jpg" />
+                </div>
+                <div *ngIf="currentSelectionImage!=3; else empty2" class="col-2 text-center arrow"
+                    (click)="changePicture(true)">></div>
+                <ng-template #empty2>
+                    <div class="col-2 text-center arrow"></div>
+                </ng-template>
         </div>
     </div>
-</div>
+    <hr />
+
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-9">
+                <fieldset class="border border-success p-2 mt-3">
+                    <legend class="w-auto">Dovanų kupono pirkimo forma</legend>
+                    <div class="container justify-content-center">
+                        Dovanų kupono suma:
+                        <div class="btn-group">
+                            <input type="radio" class="btn-check" name="options" (change)="chosen25($event)"id="option1" autocomplete="off"
+                                checked />
+                            <label class="btn btn-primary" for="option1">25€</label>
+
+                            <input type="radio" class="btn-check" name="options" (change)="chosen50($event)" id="option2" autocomplete="off" />
+                            <label class="btn btn-primary" for="option2">50€</label>
+
+                            <input type="radio" class="btn-check" name="options" (change)="chosen75($event)"  id="option3" autocomplete="off" />
+                            <label class="btn btn-primary" for="option3">75€</label>
+
+                            <input type="radio" class="btn-check" name="options" (change)="chosen100($event)"id="option4" autocomplete="off" />
+                            <label class="btn btn-primary" for="option4">100€</label>
+                        </div>
+                    </div>
+                    <form [formGroup]="giftCardForm" (ngSubmit)="postGiftCard()" class="needs-validation mt-5" novalidate="">
+                        <div class="row">
+                            <div class="mb-3 col-6">
+                                <label for="name">Dovanų kupono gavėjo Vardas ir Pavardė</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    placeholder="Vardenis Pavardenis" formControlName="name" [(ngModel)]="giftCard.name" required="">
+                                <div class="form-text text-danger"
+                                *ngIf="Name.errors?.['required'] && (Name.touched || errors)">
+                                Vardo, pavardės laukelis negali būti tuščias
+                            </div>
+                            </div>
+                            <div class="mb-3 col-6">
+                                <label for="email">Dovanų kupono gavėjo el. paštas</label>
+                                <input type="text" class="form-control" id="email" name="email"
+                                    placeholder="vardenis.pavardenis@gmail.com" required="" formControlName="email" [(ngModel)]="giftCard.email">
+                                    <div class="form-text text-danger" *ngIf="Email.errors?.['required'] && (Email.touched || errors)">
+                                        El. pašto laukelis negali būti tusčias
+                                    </div>
+                                    <div class="form-text text-danger" *ngIf="Email.errors?.['email'] && (Email.dirty || errors)">
+                                        El. paštas netinkamas
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message">Dovanų kupono žinutė! <span
+                                    class="text-muted">(Nebūtina)</span></label>
+                            <textarea type="text" name="message" class="form-control" formControlName="message" [(ngModel)]="giftCard.message" id="message" rows="5"
+                                placeholder="Sveikinu su gimtadieniu!"></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-primary btn-lg btn-block" type="submit">Pateikti dovanų kupono
+                                pirkimą</button>
+                        </div>
+                    </form>
+                </fieldset>
+            </div>
+        </div>
+    </div>

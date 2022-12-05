@@ -127,6 +127,9 @@ export class CheckoutComponent implements OnInit {
         if(this.giftCard==null) this.giftCardError = true;
         else {
           this.giftCardError = false;
+
+          console.log("remaining balance: " + this.giftCard.remainingBalance);
+          console.log("used balance: " + this.giftCard.usedBalance);
         
           if (this.giftCard.remainingBalance > this.cartSession.total_price) {
             this.giftCard.remainingBalance -= this.cartSession.total_price

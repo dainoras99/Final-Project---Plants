@@ -31,7 +31,7 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between" *ngIf="cartSession.total_price > giftCard.remainingBalance">
                         <span>Galutinė suma</span>
-                        <strong>{{cartSession.total_price - giftCard.remainingBalance | currency: 'EUR'}}</strong>
+                        <strong>{{cartSession.total_price - giftCard.usedBalance | currency: 'EUR'}}</strong>
                     </li>
                 </div>
             </ul>
@@ -49,7 +49,7 @@
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
                     <span>Panaudojama dovanų kupono suma: </span>
-                    <strong>{{cartSession.total_price| currency: 'EUR'}}</strong>
+                    <strong>{{giftCard.usedBalance| currency: 'EUR'}}</strong>
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
                     <span>Dovanų kupono likutis: </span>

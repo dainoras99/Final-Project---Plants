@@ -101,7 +101,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <label for="address">Jeigu turite, įveskite dovanų kupono kodą</label>
-                                <input type="text" class="form-control" id="code" name="code"
+                                <input type="text" class="form-control" id="code" [ngClass]="disabledButton" name="code"
                                     placeholder="f33a554d-2c74-4727-a637-3369f2ga08b6" required="" [(ngModel)]="giftCardCode">
                                     <div class="form-text text-danger" *ngIf="giftCardError">
                                         Dovanų kupono kodas nėra tinkamas
@@ -109,7 +109,7 @@
                             </div>
                             <div class="col-6">
                                 <label style="visibility: hidden;">Jeigu turite, įveskite dovanų kupono kodą</label>
-                                <button class="btn btn-primary btn-lg btn-block fontTexta" (click)="codeUsed(giftCardCode)" type="button">Panaudoti kodą</button>
+                                <button class="btn btn-primary btn-lg btn-block fontTexta" [ngClass]="disabledButton" (click)="codeUsed(giftCardCode)" type="button">Panaudoti kodą</button>
                             </div> 
                         </div>
                     </div>

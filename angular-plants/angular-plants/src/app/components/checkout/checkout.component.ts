@@ -34,6 +34,7 @@ export class CheckoutComponent implements OnInit {
   giftCard!: GiftCardObject;
   updateGiftCard!: GiftCardObject;
   giftCardError: boolean = false;
+  disabledButton: string = '';
 
   checkoutFormGroup!: FormGroup;
   constructor(private router: Router,
@@ -126,6 +127,7 @@ export class CheckoutComponent implements OnInit {
         this.giftCard = data;
         if(this.giftCard==null) this.giftCardError = true;
         else {
+          this.disabledButton = 'disabled';
           this.giftCardError = false;
 
           console.log("remaining balance: " + this.giftCard.remainingBalance);

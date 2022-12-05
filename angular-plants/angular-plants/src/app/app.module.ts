@@ -117,7 +117,6 @@ const routes: Routes = [
     MdbTabsModule,
     MdbTooltipModule,
     MdbValidationModule,
-    NoopAnimationsModule,
   ],
   providers: [ProductService, CartService],
   bootstrap: [AppComponent]

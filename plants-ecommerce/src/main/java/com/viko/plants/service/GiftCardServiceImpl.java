@@ -50,4 +50,21 @@ public class GiftCardServiceImpl implements GiftCardService {
 
         return UUID.randomUUID().toString();
     }
+
+    @Override
+    @Transactional
+    public GiftCard checkIfCodeValid(String code) {
+
+        GiftCard giftCard = giftCardRepository.findByCode(code);
+        System.out.println(giftCard);
+
+        return giftCard;
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<String> updateGiftCard(GiftCard giftCard) {
+        giftCardRepository.save(giftCard);
+        return new ResponseEntity<>("Dovanų kupono informacija atnaujinta", HttpStatus.OK);
+    }
 }

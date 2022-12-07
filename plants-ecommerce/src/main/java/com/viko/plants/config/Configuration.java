@@ -4,6 +4,7 @@ import javax.persistence.metamodel.EntityType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import javax.persistence.EntityManager;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 @org.springframework.context.annotation.Configuration
+@EnableAsync
 public class Configuration implements RepositoryRestConfigurer {
     private EntityManager entityManager;
 

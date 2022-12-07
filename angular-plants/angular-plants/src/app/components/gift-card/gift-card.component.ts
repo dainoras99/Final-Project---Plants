@@ -78,7 +78,7 @@ export class GiftCardComponent implements OnInit {
   .subscribe(
     {
       next: response => {
-        alert(response);
+        alert("Dovanų kupono užsakymas pateiktas!");
         this.router.navigate(['/plants']);
       },
       error: err => {

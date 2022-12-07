@@ -28,6 +28,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
     private CartSessionRepository cartSessionRepository;
     private CartSessionItemRepository cartSessionItemRepository;
+    private EmailSenderService emailSenderService;
 
     public OrderServiceImpl(OrderTypeRepository orderTypeRepository,
                             UserRepository userRepository,
@@ -37,7 +38,8 @@ public class OrderServiceImpl implements OrderService {
                             DeliveryRepository deliveryRepository,
                             OrderRepository orderRepository,
                             CartSessionRepository cartSessionRepositry,
-                            CartSessionItemRepository cartSessionItemRepository) {
+                            CartSessionItemRepository cartSessionItemRepository,
+                            EmailSenderService emailSenderService) {
         this.orderTypeRepository = orderTypeRepository;
         this.userRepository = userRepository;
         this.plantRepository = plantRepository;
@@ -47,6 +49,7 @@ public class OrderServiceImpl implements OrderService {
         this.orderRepository = orderRepository;
         this.cartSessionRepository = cartSessionRepositry;
         this.cartSessionItemRepository = cartSessionItemRepository;
+        this.emailSenderService = emailSenderService;
     }
 
     @Override
@@ -108,13 +111,15 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public Set<Order> setNewOrdersStatus(OrdersStatusChangeRequest ordersStatusChangeRequest) {
         for (Order order : ordersStatusChangeRequest.getOrders()) {
-            System.out.println("orderis: " + order);
-            System.out.println("user: " + order.getId());
-            System.out.println("order: " + ordersStatusChangeRequest.getStatus());
+
             orderRepository.updateOrderStatusById(ordersStatusChangeRequest.getStatus(), order.getId());
         }
         Set<Order> orders = orderRepository.getOrdersByStatus(ordersStatusChangeRequest.getStatus());
         return orders;
+    }
+
+    private void sendInformationToUser() {
+
     }
 
     private OrderType setOrderType(String orderTypeName, Integer id, Delivery delivery) {

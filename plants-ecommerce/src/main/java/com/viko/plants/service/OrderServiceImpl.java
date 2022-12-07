@@ -9,6 +9,7 @@ import com.viko.plants.request.OrdersStatusChangeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -110,16 +111,17 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public Set<Order> setNewOrdersStatus(OrdersStatusChangeRequest ordersStatusChangeRequest) {
-        for (Order order : ordersStatusChangeRequest.getOrders()) {
 
+        for (Order order : ordersStatusChangeRequest.getOrders()) {
             orderRepository.updateOrderStatusById(ordersStatusChangeRequest.getStatus(), order.getId());
         }
+
+        for (Order order : ordersStatusChangeRequest.getOrders()) {
+            emailSenderService.sendInformationToUser(order, ordersStatusChangeRequest.getStatus());
+        }
+
         Set<Order> orders = orderRepository.getOrdersByStatus(ordersStatusChangeRequest.getStatus());
         return orders;
-    }
-
-    private void sendInformationToUser() {
-
     }
 
     private OrderType setOrderType(String orderTypeName, Integer id, Delivery delivery) {

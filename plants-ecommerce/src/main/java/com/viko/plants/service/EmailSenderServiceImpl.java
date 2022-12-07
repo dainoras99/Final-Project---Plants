@@ -1,10 +1,12 @@
 package com.viko.plants.service;
 
+import com.viko.plants.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -46,5 +48,13 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         mimeMessageHelper.addAttachment(fileSystem.getFilename(), fileSystem);
 
         mailSender.send(mimeMessage);
+    }
+
+    @Async
+    @Override
+    public void sendInformationToUser(Order order, String status) {
+        this.sendSimpleEmail(order.getUser().getEmail(),
+                "Sveiki, jūsų užsakymo būsena pakeistas",
+                "Augalų oazės #" + order.getId() + " užsakymas " + status);
     }
 }

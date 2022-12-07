@@ -35,6 +35,7 @@ export class CheckoutComponent implements OnInit {
   updateGiftCard!: GiftCardObject;
   giftCardError: boolean = false;
   disabledButton: string = '';
+  remainingBalanceBeforeUse: number = 0;
 
   checkoutFormGroup!: FormGroup;
   constructor(private router: Router,
@@ -42,19 +43,13 @@ export class CheckoutComponent implements OnInit {
     private orderTypesService: OrderTypesService,
     private orderService: OrderService,
     private authenticationService: AuthenticationService,
-    private giftCardService: GiftCardService,) { }
+    private giftCardService: GiftCardService) { }
 
   ngOnInit(): void {
     this.handleShops();
     this.cartService.getCartData().subscribe((data) => {
       this.cartSession = data;
     });
-    // this.userItemsService.selectedProducts.subscribe((data) => {
-    //   this.selectedProducts = data;
-    // });
-    // this.userItemsService.selectedTotalPrice.subscribe((data) => {
-    //   this.selectedTotal = data;
-    // });
   }
 
   handleShops() {
@@ -129,19 +124,16 @@ export class CheckoutComponent implements OnInit {
         else {
           this.disabledButton = 'disabled';
           this.giftCardError = false;
-
-          console.log("remaining balance: " + this.giftCard.remainingBalance);
-          console.log("used balance: " + this.giftCard.usedBalance);
+          this.remainingBalanceBeforeUse = this.giftCard.remainingBalance;
         
-          if (this.giftCard.remainingBalance > this.cartSession.total_price) {
-            this.giftCard.remainingBalance -= this.cartSession.total_price
-            this.giftCard.usedBalance = this.giftCard.sum - this.giftCard.remainingBalance;
+          if (this.remainingBalanceBeforeUse > this.cartSession.total_price) {
+            this.giftCard.usedBalance = this.cartSession.total_price;
+            this.giftCard.remainingBalance = this.remainingBalanceBeforeUse - this.giftCard.usedBalance;
           }
-          if (this.giftCard.remainingBalance <= this.cartSession.total_price) {
-            this.giftCard.usedBalance = this.giftCard.remainingBalance;
+          if (this.remainingBalanceBeforeUse <= this.cartSession.total_price) {
             this.giftCard.remainingBalance = 0;
+            this.giftCard.usedBalance = this.remainingBalanceBeforeUse;
           }
-          console.log(this.giftCard.remainingBalance);
         }
       }
     )

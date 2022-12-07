@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartItem } from 'src/app/common/cart-item';
 import { CartSession } from 'src/app/common/cart-session';
+import { GiftCardObject } from 'src/app/common/gift-card-object';
 import { Parcel } from 'src/app/common/parcel';
 import { UserItem } from 'src/app/common/user-item';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CartService } from 'src/app/services/cart.service';
+import { GiftCardService } from 'src/app/services/gift-card.service';
 import { OrderTypesService } from 'src/app/services/order-types.service';
 import { OrderService } from 'src/app/services/order.service';
 import { UserItemsService } from 'src/app/services/user-items.service';
@@ -24,11 +26,19 @@ export class CheckoutparcelComponent implements OnInit {
   cartItems: CartItem[] = [];
   cartItem!: CartItem;
 
+  giftCardCode: string = '';
+  giftCard!: GiftCardObject;
+  updateGiftCard!: GiftCardObject;
+  giftCardError: boolean = false;
+  disabledButton: string = '';
+  remainingBalanceBeforeUse: number = 0;
+
   constructor(private router: Router, 
     private cartService: CartService,
     private orderTypesService: OrderTypesService, 
     private authenticationService: AuthenticationService,
-    private orderService: OrderService) { }
+    private orderService: OrderService,
+    private giftCardService: GiftCardService) { }
 
   ngOnInit(): void {
     this.handleParcels();
@@ -83,29 +93,42 @@ export class CheckoutparcelComponent implements OnInit {
         }
       }
     );
-  //   this.selectedProducts.forEach(element => {
-  //     this.cartItem = new CartItem(0, 0, null!);
-  //     this.cartItem.id = element.id;
-  //     this.cartItem.quantity = element.quantity;
-  //     this.cartItems.push(this.cartItem);
-  //   });
-  //   let username = this.authenticationService.getLoggedInUserName();
-  //   if (this.parcelSelected === undefined) this.parcelSelected = "Akropolis - Vilnius, Ozo g. 25, 07150";
-  //   this.parcelList.forEach(parcel => {
-  //       if (this.parcelSelected === parcel.name + " - " + parcel.city + ", " + parcel.address + ", " + parcel.zipCode) this.parcelId = parcel.id;
-  //   });
-  //   this.orderService.postCartItemParcel(username!, this.cartItems,
-  //   this.selectedTotal, this.parcelId).subscribe(
-  //     {
-  //       next: response => {
-  //         alert("Sėkmingai pateiktas užsakymas");
-  //         this.router.navigate(['/plants']);
-  //       },
-  //       error: err => {
-  //         console.log(err);
-  //         alert("Sistemos klaida");
-  //       }
-  //     }
-  //   )
+
+    if (this.giftCard != null) {
+      this.giftCardService.updateGiftCard(this.giftCard).subscribe(
+        {
+          next: response => {
+            console.log(response);
+          },
+          error: err => {
+            alert("Svetainės klaida, kreipkitės į administratorių");
+            this.router.navigate(['/plants']);
+          }
+        }
+      )
+    }
    }
+
+   codeUsed(giftCardCode: string) {
+    this.giftCardService.getGiftCard(giftCardCode).subscribe(
+      data => {
+        this.giftCard = data;
+        if(this.giftCard==null) this.giftCardError = true;
+        else {
+          this.disabledButton = 'disabled';
+          this.giftCardError = false;
+          this.remainingBalanceBeforeUse = this.giftCard.remainingBalance;
+        
+          if (this.remainingBalanceBeforeUse > this.cartSession.total_price) {
+            this.giftCard.usedBalance = this.cartSession.total_price;
+            this.giftCard.remainingBalance = this.remainingBalanceBeforeUse - this.giftCard.usedBalance;
+          }
+          if (this.remainingBalanceBeforeUse <= this.cartSession.total_price) {
+            this.giftCard.remainingBalance = 0;
+            this.giftCard.usedBalance = this.remainingBalanceBeforeUse;
+          }
+        }
+      }
+    )
+  }
 }

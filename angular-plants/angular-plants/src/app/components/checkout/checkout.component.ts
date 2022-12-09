@@ -39,7 +39,7 @@ export class CheckoutComponent implements OnInit {
   disabledButton: string = '';
   remainingBalanceBeforeUse: number = 0;
 
-  isDiscount!: Observable<boolean>
+  isDiscount!: boolean
 
   count: number = 0;
 
@@ -53,11 +53,19 @@ export class CheckoutComponent implements OnInit {
     private discountService: DiscountService) { }
 
   ngOnInit(): void {
-    this.isDiscount = this.discountService.getisDiscount();
+    this.subscribeDiscount();
     this.handleShops();
     this.cartService.getCartData().subscribe((data) => {
       this.cartSession = data;
+      console.log("labas" + this.isDiscount);
+      if (this.isDiscount) this.cartSession.total_price = this.cartSession.total_price - this.cartSession.total_price * 0.25;
     });
+  }
+
+  subscribeDiscount() {
+    this.discountService.getisDiscount().subscribe(response => {
+      this.isDiscount = response;
+    })
   }
 
   handleShops() {

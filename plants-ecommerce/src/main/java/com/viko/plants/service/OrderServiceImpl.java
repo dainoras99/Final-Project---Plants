@@ -102,6 +102,8 @@ public class OrderServiceImpl implements OrderService {
 
         orderRepository.save(order);
 
+        emailSenderService.sendOrderConfirmationEmail(order, user);
+
         cartSessionItemRepository.deleteAllSessionCartItems(user.getId());
         cartSessionRepository.deleteCartSession(user.getId());
 

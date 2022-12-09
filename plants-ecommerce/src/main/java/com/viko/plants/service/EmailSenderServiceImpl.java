@@ -1,7 +1,9 @@
 package com.viko.plants.service;
 
 import com.viko.plants.entity.Order;
+import com.viko.plants.entity.User;
 import com.viko.plants.request.GiftCardRequest;
+import com.viko.plants.request.OrderRequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -53,10 +55,19 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
     @Async
     @Override
+    public void sendOrderConfirmationEmail(Order order, User user) {
+        sendSimpleEmail(user.getEmail(), "Sveiki, " + user.getFirstname() + " Jūsų užsakymas buvo sėkmingai pateiktas \n\n" +
+                        "Detalesnę informaciją galite rasti mūsų internetinės parduotuvės svetainėje.",
+                "Jūsų užsakymas #" + order.getId() + " pateiktas!");
+    }
+
+    @Async
+    @Override
     public void sendOrderStatusInformationToUser(Order order, String status) {
         sendSimpleEmail(order.getUser().getEmail(),
-                "Sveiki, jūsų užsakymo būsena pakeistas",
-                "Augalų oazės #" + order.getId() + " užsakymas " + status);
+                "Sveiki " + order.getUser().getFirstname() + ", jūsų užsakymo #" + order.getId() + " būsena buvo pakeista į" + status + "\n\n" +
+                        "Detalesnę užsakymo informacija rasite prisijungę prie mūsų internetinės parduotuvės",
+                "Augalų oazės #" + order.getId() + " užsakymo būsena pakeista į " + ",," + status + "''");
     }
 
     @Async

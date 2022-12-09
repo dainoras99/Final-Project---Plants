@@ -27,20 +27,30 @@
                     <span class="text-muted float-end" [ngStyle]="{'display': tips}">{{radioButtonSelected | currency:
                         'EUR'}}</span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between" *ngIf="giftCard == null">
-                    <span>Galutinė suma</span>
-                    <strong>{{cartSession.total_price | currency: 'EUR'}}</strong>
-                </li>
+                <div *ngIf="giftCard == null">
+                    <li *ngIf="isDiscount == true" class="list-group-item d-flex justify-content-between">
+                        <span>Pritaikyta nuolaida: </span>
+                        <strong>25%</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Galutinė suma</span>
+                        <strong>{{total_price | currency: 'EUR'}}</strong>
+                    </li>
+                </div>
                 <div *ngIf="giftCard != null">
+                    <li *ngIf="isDiscount == true" class="list-group-item d-flex justify-content-between">
+                        <span>Pritaikyta nuolaida: </span>
+                        <strong>25%</strong>
+                    </li>
                     <li class="list-group-item d-flex justify-content-between"
-                        *ngIf="cartSession.total_price <= giftCard.remainingBalance">
+                        *ngIf="total_price <= giftCard.remainingBalance">
                         <span>Galutinė suma</span>
                         <strong>{{0 | currency: 'EUR'}}</strong>
                     </li>
                     <li class="list-group-item d-flex justify-content-between"
-                        *ngIf="cartSession.total_price > giftCard.remainingBalance">
+                        *ngIf="total_price > giftCard.remainingBalance">
                         <span>Galutinė suma</span>
-                        <strong>{{cartSession.total_price - giftCard.usedBalance | currency: 'EUR'}}</strong>
+                        <strong>{{total_price - giftCard.usedBalance | currency: 'EUR'}}</strong>
                     </li>
                 </div>
             </ul>
@@ -126,19 +136,19 @@
                         <label for="radio" class="m-2">Ar norite palikti arbatpinigių kurjeriui?<span
                                 class="text-muted"> (Nebūtina)</span></label>
 
-                        <input type="radio" class="btn-check" (change)="radioButtonChecked0($event)" value="0"
+                        <input type="radio" class="btn-check" (change)="radioButtonChecked0($event)" [ngClass]="disabledButton" value="0"
                             name="options" id="option1" autocomplete="off" checked />
                         <label class="btn btn-primary" for="option1">0€</label>
 
-                        <input type="radio" class="btn-check" (change)="radioButtonChecked05($event)" value="0.5"
+                        <input type="radio" class="btn-check" (change)="radioButtonChecked05($event)" [ngClass]="disabledButton" value="0.5"
                             name="options" id="option2" autocomplete="off" />
                         <label class="btn btn-primary" for="option2">0.5€</label>
 
-                        <input type="radio" class="btn-check" (change)="radioButtonChecked1($event)" value="1"
+                        <input type="radio" class="btn-check" (change)="radioButtonChecked1($event)" [ngClass]="disabledButton" value="1"
                             name="options" id="option3" autocomplete="off" />
                         <label class="btn btn-primary" for="option3">1€</label>
 
-                        <input type="radio" class="btn-check" (change)="radioButtonChecked2($event)" value="2"
+                        <input type="radio" class="btn-check" (change)="radioButtonChecked2($event)" [ngClass]="disabledButton" value="2"
                             name="options" id="option4" autocomplete="off" />
                         <label class="btn btn-primary" for="option4">2€</label>
                     </div>

@@ -43,6 +43,8 @@ export class CheckoutComponent implements OnInit {
 
   count: number = 0;
 
+  total_price: number = 0;
+
   checkoutFormGroup!: FormGroup;
   constructor(private router: Router,
     private cartService: CartService,
@@ -57,8 +59,11 @@ export class CheckoutComponent implements OnInit {
     this.handleShops();
     this.cartService.getCartData().subscribe((data) => {
       this.cartSession = data;
-      console.log("labas" + this.isDiscount);
-      if (this.isDiscount) this.cartSession.total_price = this.cartSession.total_price - this.cartSession.total_price * 0.25;
+      this.total_price = this.cartSession.total_price;
+      if (this.isDiscount) {
+        this.total_price = this.cartSession.total_price - this.cartSession.total_price * 0.25;
+        console.log(this.total_price);
+      }
     });
   }
 
@@ -109,6 +114,8 @@ export class CheckoutComponent implements OnInit {
     });
     // 
 
+    this.cartSession.total_price = this.total_price;
+
 
     this.orderService.postOrder(this.cartSession, this.authenticationService.getLoggedInUserName()!, "shop", this.shopId, null!)
       .subscribe(
@@ -158,11 +165,11 @@ export class CheckoutComponent implements OnInit {
           this.giftCardError = false;
           this.remainingBalanceBeforeUse = this.giftCard.remainingBalance;
         
-          if (this.remainingBalanceBeforeUse > this.cartSession.total_price) {
-            this.giftCard.usedBalance = this.cartSession.total_price;
+          if (this.remainingBalanceBeforeUse > this.total_price) {
+            this.giftCard.usedBalance = this.total_price;
             this.giftCard.remainingBalance = this.remainingBalanceBeforeUse - this.giftCard.usedBalance;
           }
-          if (this.remainingBalanceBeforeUse <= this.cartSession.total_price) {
+          if (this.remainingBalanceBeforeUse <= this.total_price) {
             this.giftCard.remainingBalance = 0;
             this.giftCard.usedBalance = this.remainingBalanceBeforeUse;
           }

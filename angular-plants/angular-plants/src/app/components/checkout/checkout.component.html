@@ -27,7 +27,7 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Galutinė suma</span>
-                        <strong>{{cartSession.total_price | currency: 'EUR'}}</strong>
+                        <strong>{{total_price | currency: 'EUR'}}</strong>
                     </li>
                 </div>
                 <div *ngIf="giftCard != null">
@@ -36,14 +36,14 @@
                         <strong>25%</strong>
                     </li>
                     <li class="list-group-item d-flex justify-content-between"
-                        *ngIf="cartSession.total_price <= giftCard.remainingBalance">
+                        *ngIf="total_price <= giftCard.remainingBalance">
                         <span>Galutinė suma</span>
                         <strong>{{0 | currency: 'EUR'}}</strong>
                     </li>
                     <li class="list-group-item d-flex justify-content-between"
-                        *ngIf="cartSession.total_price > giftCard.remainingBalance">
+                        *ngIf="total_price > giftCard.remainingBalance">
                         <span>Galutinė suma</span>
-                        <strong>{{cartSession.total_price - giftCard.usedBalance | currency: 'EUR'}}</strong>
+                        <strong>{{total_price - giftCard.usedBalance | currency: 'EUR'}}</strong>
                     </li>
                 </div>
             </ul>

@@ -37,7 +37,8 @@ export class CheckouthomeComponent implements OnInit {
   disabledButton: string = '';
   remainingBalanceBeforeUse: number = 0;
 
-  isDiscount!: Observable<boolean>
+  isDiscount!: boolean
+  total_price: number = 0;
 
   constructor(private router: Router,
     private cartService: CartService,
@@ -47,10 +48,18 @@ export class CheckouthomeComponent implements OnInit {
     private discountService: DiscountService) { }
 
   ngOnInit(): void {
-    this.isDiscount = this.discountService.getisDiscount();
+    this.subscribeDiscount();
     this.cartService.getCartData().subscribe((data) => {
       this.cartSession = data;
+      this.total_price = this.cartSession.total_price;
+      if (this.isDiscount) this.total_price = this.cartSession.total_price - this.cartSession.total_price * 0.25;
     });
+  }
+
+  subscribeDiscount() {
+    this.discountService.getisDiscount().subscribe(response => {
+      this.isDiscount = response;
+    })
   }
 
   deliveryForm = new FormGroup({
@@ -80,11 +89,10 @@ export class CheckouthomeComponent implements OnInit {
 
   radioButtonChecked0(event: any) {
 
-    if (this.radioButtonSelected != undefined) this.cartSession.total_price -= +this.radioButtonSelected;
-    this.cartSession.total_price += 0;
+    if (this.radioButtonSelected != undefined) this.total_price -= +this.radioButtonSelected;
+    this.total_price += 0;
     this.radioButtonSelected = event.target.value;
     this.tips = 'none';
-    this.cartService.setCartData(this.cartSession);
 
 
 
@@ -96,11 +104,10 @@ export class CheckouthomeComponent implements OnInit {
 
   radioButtonChecked05(event: any) {
 
-    if (this.radioButtonSelected != undefined) this.cartSession.total_price -= +this.radioButtonSelected;
-    this.cartSession.total_price += 0.5;
+    if (this.radioButtonSelected != undefined) this.total_price -= +this.radioButtonSelected;
+    this.total_price += 0.5;
     this.radioButtonSelected = event.target.value;
     this.tips = 'inline';
-    this.cartService.setCartData(this.cartSession);
 
 
     // if (this.radioButtonSelected != undefined) this.userItemsService.setTotalPrice(this.selectedTotal - +this.radioButtonSelected);
@@ -111,8 +118,8 @@ export class CheckouthomeComponent implements OnInit {
 
   radioButtonChecked1(event: any) {
 
-    if (this.radioButtonSelected != undefined) this.cartSession.total_price -= +this.radioButtonSelected;
-    this.cartSession.total_price += 1;
+    if (this.radioButtonSelected != undefined) this.total_price -= +this.radioButtonSelected;
+    this.total_price += 1;
     this.radioButtonSelected = event.target.value;
     this.tips = 'inline';
 
@@ -124,8 +131,8 @@ export class CheckouthomeComponent implements OnInit {
 
   radioButtonChecked2(event: any) {
 
-    if (this.radioButtonSelected != undefined) this.cartSession.total_price -= +this.radioButtonSelected;
-    this.cartSession.total_price += 2;
+    if (this.radioButtonSelected != undefined) this.total_price -= +this.radioButtonSelected;
+    this.total_price += 2;
     this.radioButtonSelected = event.target.value;
     this.tips = 'inline';
 
@@ -140,36 +147,38 @@ export class CheckouthomeComponent implements OnInit {
   }
 
   postOrder() {
-     
+
     if (this.deliveryForm.invalid) {
-       this.errors = true;
-       return;
+      this.errors = true;
+      return;
     }
     this.errors = false;
 
     if (this.radioButtonSelected === undefined) this.radioButtonSelected = "0";
     this.delivery.courierTips = +this.radioButtonSelected;
 
-    this.orderService.postOrder(this.cartSession, this.authenticationService.getLoggedInUserName()!, "delivery", null!, this.delivery)
-    .subscribe(
-      {
-        next: response => {
-          this.orderService.getOrders(this.authenticationService.getLoggedInUserName()!).subscribe(response => {
-            if (response.length % 5 == 0) {
-              alert("Jūs jau pateikėte " + response.length + " užsakymų/us. Dovanojame jums 25% nuolaida sekančiam apsipirkimui!");
-            }
-            else alert("Užsakymas pateiktas!");
+    this.cartSession.total_price = this.total_price;
 
-            this.cartService.setCartData(null!);
+    this.orderService.postOrder(this.cartSession, this.authenticationService.getLoggedInUserName()!, "delivery", null!, this.delivery)
+      .subscribe(
+        {
+          next: response => {
+            this.orderService.getOrders(this.authenticationService.getLoggedInUserName()!).subscribe(response => {
+              if (response.length % 5 == 0) {
+                alert("Jūs jau pateikėte " + response.length + " užsakymų/us. Dovanojame jums 25% nuolaida sekančiam apsipirkimui!");
+              }
+              else alert("Užsakymas pateiktas!");
+
+              this.cartService.setCartData(null!);
+              this.router.navigate(['/plants']);
+            })
+          },
+          error: err => {
+            alert("Svetainės klaida, kreipkitės į administratorių");
             this.router.navigate(['/plants']);
-        })
-        },
-        error: err => {
-          alert("Svetainės klaida, kreipkitės į administratorių");
-          this.router.navigate(['/plants']);
+          }
         }
-      }
-    );
+      );
 
     if (this.giftCard != null) {
       this.giftCardService.updateGiftCard(this.giftCard).subscribe(
@@ -184,23 +193,23 @@ export class CheckouthomeComponent implements OnInit {
         }
       )
     }
-   }
+  }
 
-   codeUsed(giftCardCode: string) {
+  codeUsed(giftCardCode: string) {
     this.giftCardService.getGiftCard(giftCardCode).subscribe(
       data => {
         this.giftCard = data;
-        if(this.giftCard==null) this.giftCardError = true;
+        if (this.giftCard == null) this.giftCardError = true;
         else {
           this.disabledButton = 'disabled';
           this.giftCardError = false;
           this.remainingBalanceBeforeUse = this.giftCard.remainingBalance;
-        
-          if (this.remainingBalanceBeforeUse > this.cartSession.total_price) {
-            this.giftCard.usedBalance = this.cartSession.total_price;
+
+          if (this.remainingBalanceBeforeUse > this.total_price) {
+            this.giftCard.usedBalance = this.total_price;
             this.giftCard.remainingBalance = this.remainingBalanceBeforeUse - this.giftCard.usedBalance;
           }
-          if (this.remainingBalanceBeforeUse <= this.cartSession.total_price) {
+          if (this.remainingBalanceBeforeUse <= this.total_price) {
             this.giftCard.remainingBalance = 0;
             this.giftCard.usedBalance = this.remainingBalanceBeforeUse;
           }

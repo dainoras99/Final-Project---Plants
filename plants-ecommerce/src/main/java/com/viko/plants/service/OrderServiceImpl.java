@@ -30,6 +30,7 @@ public class OrderServiceImpl implements OrderService {
     private CartSessionRepository cartSessionRepository;
     private CartSessionItemRepository cartSessionItemRepository;
     private EmailSenderService emailSenderService;
+    private PlantService plantService;
 
     public OrderServiceImpl(OrderTypeRepository orderTypeRepository,
                             UserRepository userRepository,
@@ -40,7 +41,8 @@ public class OrderServiceImpl implements OrderService {
                             OrderRepository orderRepository,
                             CartSessionRepository cartSessionRepositry,
                             CartSessionItemRepository cartSessionItemRepository,
-                            EmailSenderService emailSenderService) {
+                            EmailSenderService emailSenderService,
+                            PlantService plantService) {
         this.orderTypeRepository = orderTypeRepository;
         this.userRepository = userRepository;
         this.plantRepository = plantRepository;
@@ -51,6 +53,7 @@ public class OrderServiceImpl implements OrderService {
         this.cartSessionRepository = cartSessionRepositry;
         this.cartSessionItemRepository = cartSessionItemRepository;
         this.emailSenderService = emailSenderService;
+        this.plantService = plantService;
     }
 
     @Override
@@ -89,6 +92,8 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setQuantity(cartTempItem.getQuantity());
             orderItem.setOrderType(orderType);
             orderItems.add(orderItem);
+
+            plantService.UpdatePlantStock(cartTempItem.getPlant(), cartTempItem.getQuantity());
         }
         order.setOrderItems(orderItems);
         order.setTotal(request.getCartSession().getTotal_price());

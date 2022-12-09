@@ -21,7 +21,7 @@
                 <input id="form1" min="1" max="{{cartItem.plant.inStock}}" name="quantity" value="{{cartItem.quantity}}" type="number"
                     class="form-control form-control-sm" />
 
-                <button *ngIf="cartItem.quantity < 50; else empty2" class="btn px-2" (click)="updateCartItem(cartItem, true)"
+                <button *ngIf="cartItem.quantity < cartItem.plant.inStock; else empty2" class="btn px-2" (click)="updateCartItem(cartItem, true)"
                     onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
 
                     <ng-template #empty2>

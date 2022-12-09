@@ -18,9 +18,12 @@
             <p class="text-left">{{plant.description}}</p>
             <p class="alignRightBold">Likutis: {{plant.inStock}}</p>
             <div class="mt-5">
-                <button (click)="addToCart(plant)" *ngIf="authenticationService.isUserLoggedIn()"
+                <button (click)="addToCart(plant)" *ngIf="authenticationService.isUserLoggedIn() && plant.inStock > 0"
                     class="btn btn-success alignLeft mb-3" type="button">
                     Pridėti į krepšelį
+                </button>
+                <button class="btn btn-success alignLeft mb-3" *ngIf="authenticationService.isUserLoggedIn() && plant.inStock == 0" disabled>
+                    Augalo likutis baigėsi
                 </button>
                 <p class="alignRightBold">Kaina: {{plant.price | currency:'EUR'}} </p>
             </div>

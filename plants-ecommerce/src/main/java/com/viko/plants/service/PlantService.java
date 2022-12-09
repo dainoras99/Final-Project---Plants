@@ -10,4 +10,5 @@ public interface PlantService {
     ResponseEntity<String> uploadPlant(PlantUploadRequest plantUploadRequest);
     ResponseEntity<String> deletePlant(Integer plantId);
     ResponseEntity<String> uploadImage(MultipartFile file);
+    void UpdatePlantStock(Plant plant, Integer newStock);
 }

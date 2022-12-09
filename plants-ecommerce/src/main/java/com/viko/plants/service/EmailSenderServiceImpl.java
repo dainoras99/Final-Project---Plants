@@ -1,6 +1,7 @@
 package com.viko.plants.service;
 
 import com.viko.plants.entity.Order;
+import com.viko.plants.request.GiftCardRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -19,8 +20,8 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Override
-    public void sendSimpleEmail(String toEmail, String body, String subject) {
+
+    private void sendSimpleEmail(String toEmail, String body, String subject) {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("augalu.oazes.pasaulis@gmail.com");
@@ -31,8 +32,8 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         mailSender.send(message);
     }
 
-    @Override
-    public void SendEmailWithAttachment(String toEmail, String body, String subject, String attachment) throws MessagingException {
+
+    private void SendEmailWithAttachment(String toEmail, String body, String subject, String attachment) throws MessagingException {
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
 
@@ -52,9 +53,20 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
     @Async
     @Override
-    public void sendInformationToUser(Order order, String status) {
-        this.sendSimpleEmail(order.getUser().getEmail(),
+    public void sendOrderStatusInformationToUser(Order order, String status) {
+        sendSimpleEmail(order.getUser().getEmail(),
                 "Sveiki, jūsų užsakymo būsena pakeistas",
                 "Augalų oazės #" + order.getId() + " užsakymas " + status);
+    }
+
+    @Async
+    @Override
+    public void sendGiftCardEmail(GiftCardRequest request, String giftCardNumber) throws MessagingException {
+        SendEmailWithAttachment(
+                request.getEmail(),
+                "Sveiki, " + request.getName() + "!\nJums yra dovanojamas dovanų kuponas!\n\nŽinutė nuo dovanos teikėjo:\n" + request.getMessage()
+                        + "\n\n Dovanų kupono kodas: " + giftCardNumber,
+                request.getSum().intValue() + "€ Dovanų kuponas iš Augalų oazės",
+                "src/main/resources/Images/GiftCards/" + request.getSum().intValue() + "/" + request.getPicture() + ".jpg");
     }
 }

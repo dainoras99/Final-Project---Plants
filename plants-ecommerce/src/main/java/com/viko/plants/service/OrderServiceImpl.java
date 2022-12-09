@@ -117,7 +117,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         for (Order order : ordersStatusChangeRequest.getOrders()) {
-            emailSenderService.sendInformationToUser(order, ordersStatusChangeRequest.getStatus());
+            emailSenderService.sendOrderStatusInformationToUser(order, ordersStatusChangeRequest.getStatus());
         }
 
         Set<Order> orders = orderRepository.getOrdersByStatus(ordersStatusChangeRequest.getStatus());

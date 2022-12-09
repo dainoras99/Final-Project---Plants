@@ -38,18 +38,9 @@ public class GiftCardServiceImpl implements GiftCardService {
         giftCard.setUsedBalance(0.0f);
 
         giftCardRepository.save(giftCard);
-        sendGiftCardEmail(request, giftCardNumber);
+        emailSenderService.sendGiftCardEmail(request, giftCardNumber);
 
         return new ResponseEntity<>("Dovanų kupono užsakymas pateiktas!", HttpStatus.CREATED);
-    }
-
-    private void sendGiftCardEmail(GiftCardRequest request, String giftCardNumber) throws MessagingException {
-        emailSenderService.SendEmailWithAttachment(
-                request.getEmail(),
-                "Sveiki, " + request.getName() + "!\nJums yra dovanojamas dovanų kuponas!\n\nŽinutė nuo dovanos teikėjo:\n" + request.getMessage()
-                        + "\n\n Dovanų kupono kodas: " + giftCardNumber,
-                request.getSum().intValue() + "€ Dovanų kuponas iš Augalų oazės",
-                "src/main/resources/Images/GiftCards/" + request.getSum().intValue() + "/" + request.getPicture() + ".jpg");
     }
 
     private String generateGiftCardNumber() {

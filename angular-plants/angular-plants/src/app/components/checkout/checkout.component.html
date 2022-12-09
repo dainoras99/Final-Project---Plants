@@ -20,7 +20,7 @@
                     <span *ngIf="cartItem.quantity > 1" class="text-muted">{{cartItem.plant.price * cartItem.quantity
                         | currency: 'EUR'}}</span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between" *ngIf="giftCard == null">
+                <li class="list-group-item d-flex justify-content-between" *ngIf="giftCard == null && (isDiscount | async)">
                     <span>Galutinė suma</span>
                     <strong>{{cartSession.total_price | currency: 'EUR'}}</strong>
                 </li>
@@ -76,7 +76,6 @@
                         <option>Pristatyti į namus</option>
                         <option>Pristatyti į paštomatą</option>
                     </select>
-                    <div class="invalid-feedback"> Please select a valid country. </div>
                 </div>
                 <form (ngSubmit)="postOrder()" class="needs-validation" novalidate="">
                     <div class="col-md-5 mb-3">

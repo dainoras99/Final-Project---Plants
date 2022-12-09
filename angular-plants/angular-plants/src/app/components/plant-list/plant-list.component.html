@@ -11,6 +11,8 @@
 
 <div class="container-fluid">
     <div class="row justify-content-center">
+
+
         <div class="cardStyle col-3 m-4" *ngFor="let tempPlant of plants">
             <a routerLink="/plants/{{ tempPlant.id }}">
                 <img class="img-responsive mt-3 mainPlants" src="../../../{{ tempPlant.imageUrl }}"
@@ -26,8 +28,16 @@
             <button class="btn btn-success alignLeft mb-3" *ngIf="authenticationService.isUserLoggedIn() && tempPlant.inStock == 0" disabled>
                 Augalo likutis baigėsi
             </button>
-            <p class="alignRightBold">Kaina: {{tempPlant.price | currency:'EUR'}}</p>
+            <p *ngIf="isDiscount == false" class="alignRightBold">Kaina: {{tempPlant.price | currency:'EUR'}}</p>
+            <div *ngIf="isDiscount == true">
+                <p class="float-right"><span class="font-weightBold">Kaina: </span><del>{{tempPlant.price | currency:'EUR'}}</del> 
+                    <span class="font-weightBold"> {{tempPlant.price - tempPlant.price * 0.25 | currency:'EUR'}}</span>
+                </p>
+            </div>
         </div>
+
+
+
         <div *ngIf="plants?.length == 0" class="alert alert-warning col-md-12 m-4">
             Pagal jūsų raktažodį - augalų nerasta
         </div>

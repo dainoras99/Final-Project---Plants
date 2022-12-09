@@ -25,7 +25,12 @@
                 <button class="btn btn-success alignLeft mb-3" *ngIf="authenticationService.isUserLoggedIn() && plant.inStock == 0" disabled>
                     Augalo likutis baigėsi
                 </button>
-                <p class="alignRightBold">Kaina: {{plant.price | currency:'EUR'}} </p>
+                <p *ngIf="(isDiscount | async)==false" class="alignRightBold">Kaina: {{plant.price | currency:'EUR'}}</p>
+                <div *ngIf="(isDiscount | async)==true">
+                    <p class="float-right"><span class="font-weightBold">Kaina: </span><del>{{plant.price | currency:'EUR'}}</del> 
+                        <span class="font-weightBold"> {{plant.price - plant.price * 0.25 | currency:'EUR'}}</span>
+                    </p>
+                </div>
             </div>
         </div>
     </div>

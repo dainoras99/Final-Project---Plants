@@ -1,11 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CartSession } from 'src/app/common/cart-session';
 import { Plant } from 'src/app/common/plant';
 import { User } from 'src/app/common/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CartService } from 'src/app/services/cart.service';
+import { DiscountService } from 'src/app/services/discount.service';
+import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -19,17 +22,33 @@ export class PlantListComponent implements OnInit {
   currentCategoryId: number = 1;
   isSearch: boolean = false;
   user!: User;
+  isDiscount: boolean = false;
 
   cartSession!: CartSession;
 
   constructor(private productService: ProductService,
-              private route: ActivatedRoute,
-              public authenticationService: AuthenticationService,
-              private cartService: CartService) { }
+    private route: ActivatedRoute,
+    public authenticationService: AuthenticationService,
+    private cartService: CartService,
+    private orderService: OrderService, private discountService: DiscountService) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(()=> {
+    this.loadOrdersCount();
+    this.route.paramMap.subscribe(() => {
       this.listPlants();
+    });
+  }
+
+  loadOrdersCount() {
+    this.orderService.getOrders(this.authenticationService.getLoggedInUserName()!).subscribe(response => {
+      if (response.length % 5 == 0) {
+        this.isDiscount = true;
+        this.discountService.setisDiscount(true);
+      }
+      else {
+        this.isDiscount = false;
+        this.discountService.setisDiscount(false);
+      }
     });
   }
 
@@ -54,7 +73,7 @@ export class PlantListComponent implements OnInit {
 
     if (categoryIdValid) this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
     else this.currentCategoryId = 3;
-    
+
     this.productService.getProductList(this.currentCategoryId).subscribe(
       data => {
         this.plants = data;
@@ -67,13 +86,13 @@ export class PlantListComponent implements OnInit {
     this.cartService.postCartItem(username!, plant.name!).subscribe(
       {
         next: response => {
-         this.cartSession = JSON.parse(response);
-         this.cartService.setCartData(this.cartSession);
+          this.cartSession = JSON.parse(response);
+          this.cartService.setCartData(this.cartSession);
         },
         error: err => {
           console.log(err);
         }
       }
     )
-    }
+  }
 }

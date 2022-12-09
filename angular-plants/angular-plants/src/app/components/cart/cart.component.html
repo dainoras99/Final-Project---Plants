@@ -29,7 +29,10 @@
                     </ng-template>
             </div>
             <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h3 class="mb-0">{{cartItem.plant.price * cartItem.quantity | currency:'EUR'}}</h3>
+                <h3 *ngIf="(isDiscount | async) == false" class="mb-0">{{cartItem.plant.price * cartItem.quantity | currency:'EUR'}}</h3>
+                <h3 *ngIf="(isDiscount | async) == true" class="mb-0">{{(cartItem.plant.price * cartItem.quantity) 
+                    - (cartItem.plant.price * cartItem.quantity) *0.25
+                     | currency:'EUR'}}</h3>
             </div>
             <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                 <button (click)="deleteCartItem(cartItem.id)">

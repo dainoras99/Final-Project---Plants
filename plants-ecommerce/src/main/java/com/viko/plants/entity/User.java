@@ -55,6 +55,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
+    @Column(name = "orderCount")
+    private Integer orderCount;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     @JsonIgnore
     private Set<CartSession> cartSessions;

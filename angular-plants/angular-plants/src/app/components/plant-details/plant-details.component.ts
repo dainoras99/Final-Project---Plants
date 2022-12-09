@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { CartSession } from 'src/app/common/cart-session';
 import { Plant } from 'src/app/common/plant';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CartService } from 'src/app/services/cart.service';
+import { DiscountService } from 'src/app/services/discount.service';
+import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -15,15 +18,20 @@ export class PlantDetailsComponent implements OnInit {
 
   plant!: Plant;
   cartSession!: CartSession;
+  
+  isDiscount!: Observable<boolean>;
 
   constructor(private productService: ProductService, private route: ActivatedRoute,
-    public authenticationService: AuthenticationService, private cartService: CartService) { }
+    public authenticationService: AuthenticationService, private cartService: CartService,
+    private orderService: OrderService, private discountService: DiscountService) { }
 
   ngOnInit(): void {
+    this.isDiscount = this.discountService.getisDiscount();
     this.route.paramMap.subscribe(() => {
       this.handlePlantDetails();
     })
   }
+
 
   handlePlantDetails() {
     const productId: number = +this.route.snapshot.paramMap.get('id')!;

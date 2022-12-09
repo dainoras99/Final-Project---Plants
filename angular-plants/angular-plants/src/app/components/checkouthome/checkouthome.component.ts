@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { CartItem } from 'src/app/common/cart-item';
 import { CartSession } from 'src/app/common/cart-session';
 import { Delivery } from 'src/app/common/delivery';
@@ -8,6 +9,7 @@ import { GiftCardObject } from 'src/app/common/gift-card-object';
 import { UserItem } from 'src/app/common/user-item';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CartService } from 'src/app/services/cart.service';
+import { DiscountService } from 'src/app/services/discount.service';
 import { GiftCardService } from 'src/app/services/gift-card.service';
 import { OrderService } from 'src/app/services/order.service';
 import { UserItemsService } from 'src/app/services/user-items.service';
@@ -35,13 +37,17 @@ export class CheckouthomeComponent implements OnInit {
   disabledButton: string = '';
   remainingBalanceBeforeUse: number = 0;
 
+  isDiscount!: Observable<boolean>
+
   constructor(private router: Router,
     private cartService: CartService,
     private authenticationService: AuthenticationService,
     private orderService: OrderService,
-    private giftCardService: GiftCardService) { }
+    private giftCardService: GiftCardService,
+    private discountService: DiscountService) { }
 
   ngOnInit(): void {
+    this.isDiscount = this.discountService.getisDiscount();
     this.cartService.getCartData().subscribe((data) => {
       this.cartSession = data;
     });
@@ -148,9 +154,15 @@ export class CheckouthomeComponent implements OnInit {
     .subscribe(
       {
         next: response => {
-          alert(response);
-          this.cartService.setCartData(null!);
-          this.router.navigate(['/plants']);
+          this.orderService.getOrders(this.authenticationService.getLoggedInUserName()!).subscribe(response => {
+            if (response.length % 5 == 0) {
+              alert("Jūs jau pateikėte " + response.length + " užsakymų/us. Dovanojame jums 25% nuolaida sekančiam apsipirkimui!");
+            }
+            else alert("Užsakymas pateiktas!");
+
+            this.cartService.setCartData(null!);
+            this.router.navigate(['/plants']);
+        })
         },
         error: err => {
           alert("Svetainės klaida, kreipkitės į administratorių");

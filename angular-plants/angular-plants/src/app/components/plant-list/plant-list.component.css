@@ -3,3 +3,11 @@
     left: 280px;
     bottom: 100px;
 }
+
+.float-right{
+    float: right;
+}
+
+.font-weightBold{
+    font-weight: bold;
+}

@@ -26,7 +26,6 @@ public class GiftCardServiceImpl implements GiftCardService {
 
     @Override
     @Transactional
-    @Async
     public ResponseEntity<String> postGiftCard(GiftCardRequest request) throws MessagingException {
 
         String giftCardNumber = generateGiftCardNumber();
@@ -44,7 +43,6 @@ public class GiftCardServiceImpl implements GiftCardService {
     }
 
     private String generateGiftCardNumber() {
-
         return UUID.randomUUID().toString();
     }
 

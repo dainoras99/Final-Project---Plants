@@ -41,11 +41,14 @@ export class PlantListComponent implements OnInit {
 
   loadOrdersCount() {
     this.orderService.getOrders(this.authenticationService.getLoggedInUserName()!).subscribe(response => {
+      console.log("nu" + response.length);
       if (response.length % 5 == 0) {
         this.isDiscount = true;
         this.discountService.setisDiscount(true);
+        console.log("cia" + this.isDiscount);
       }
       else {
+        console.log("nu da");
         this.isDiscount = false;
         this.discountService.setisDiscount(false);
       }
@@ -58,6 +61,7 @@ export class PlantListComponent implements OnInit {
     else this.handleListPlants();
   }
 
+  
   handleSearchPlants() {
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
 

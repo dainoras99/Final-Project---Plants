@@ -23,7 +23,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mynav">
-                <ul class="navbar-nav float-left col-lg-4">
+                <ul class="navbar-nav float-left col-lg-6">
                     <li class="nav-item justify-content-center align-self-center">
                         <a class="nav-link" routerLinkActive="active" routerLink="plants">Parduotuvė</a>
                     </li>
@@ -39,7 +39,7 @@
                         <a class="nav-link"  routerLinkActive="active" routerLink="orders">Mano užsakymai</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav col-lg-7 justify-content-end">
+                <ul class="navbar-nav col-lg-5 justify-content-end">
                     <li *ngIf="authenticationService.isUserLoggedIn()" class="nav-item">
                         <button (click)="authenticationService.logOut()" class="btn btn-dark">
                             <b>ATSIJUNGTI</b>
@@ -75,7 +75,7 @@
         </header>
         <div class="container-fluid main">
             <div class="row">
-                <div class="col-lg-2 col-md-5 imaginaryRightBorder">
+                <div class="col-lg-2 col-md-3 d-none d-md-block imaginaryRightBorder">
                     <app-plant-category-menu></app-plant-category-menu>
                     <div class="ad block h-40 mb-5 ">
                         <a href="https://www.novaturas.lt/"><img src="../../../assets/images/Photos/ads/novaturas.png"
@@ -86,7 +86,7 @@
                                 alt="reklama - eurojackpot" /></a>
                     </div>
                 </div>
-                <div class="col-lg-10 col-md-7">
+                <div class="col-lg-10 col-md-9">
                     <router-outlet></router-outlet>
                 </div>
             </div>

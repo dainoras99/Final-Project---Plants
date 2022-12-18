@@ -13,7 +13,7 @@
     <div class="row justify-content-center">
 
 
-        <div class="cardStyle col-3 m-4" *ngFor="let tempPlant of plants">
+        <div class="cardStyle col-lg-3 col-md-4 m-4" *ngFor="let tempPlant of plants">
             <a routerLink="/plants/{{ tempPlant.id }}">
                 <img class="img-responsive mt-3 mainPlants" src="../../../{{ tempPlant.imageUrl }}"
                     alt="Augalas - {{ tempPlant.name }}" />

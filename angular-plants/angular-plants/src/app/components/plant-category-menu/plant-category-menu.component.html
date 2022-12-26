@@ -1,12 +1,3 @@
-<!-- <div class="block pt-2">
-    <p class="specialWords">Kategorijos</p>
-    <ul>
-        <li *ngFor="let tempCategory of plantCategory">
-            <a routerLink="/category/{{tempCategory.id}}" routerLinkActive="active-link">{{tempCategory.name}}</a>
-        </li>
-    </ul>
-</div>
- -->
  <nav class="navbar navbar-nav block">
  <table>
     <tr>
@@ -15,7 +6,7 @@
       </th>
     </tr>
     <tr *ngFor="let tempCategory of plantCategory" class="nav-item">
-      <td><a class="nav-link" routerLinkActive="active" routerLink="/category/{{tempCategory.id}}">{{tempCategory.name}}</a></td>
+      <td><a class="nav-link" routerLinkActive="active" routerLink="/category/{{tempCategory.id}}"><b>{{tempCategory.name}}</b></a></td>
     </tr>
 </table>
 </nav>

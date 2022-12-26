@@ -8,6 +8,7 @@ import { RegistrationComponent } from '../registration/registration.component';
 import { CartService } from 'src/app/services/cart.service';
 import { Observable } from 'rxjs';
 import { CartSession } from 'src/app/common/cart-session';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-drawer',
@@ -20,11 +21,14 @@ export class DrawerComponent implements OnInit {
   showSearchResults = true;
   opened: any = false;
   cartSession!: Observable<CartSession>;
+  isCheckoutPage: boolean = false;
 
   constructor(private sideNavService: SidenavService, private dialogRef: MatDialog,
-    public authenticationService: AuthenticationService, private cartService: CartService) { }
+    public authenticationService: AuthenticationService, private cartService: CartService,
+    public route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.isCheckoutPage = this.route.snapshot.paramMap.has('checkout');
     this.sideNavService.sideNavToggleSubject.subscribe(() => {
       this.sidenav.toggle();
       this.loadCart();

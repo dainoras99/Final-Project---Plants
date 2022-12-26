@@ -14,3 +14,24 @@ mat-sidenav {
     padding-left: .75em;
     padding-right: .75em;
 }
+
+.titlePlaceSecond {
+    position: relative;
+    background: hsla(0,0%,100%,.3);
+    overflow: hidden;
+    z-index: 1;
+}
+.titlePlaceSecond::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    filter: blur(20px);
+    margin: -30px;
+    z-index: -1;
+}
+
+.titlePlace, .titlePlaceSecond::before {
+    background: url('/angular-plants/src/assets/images/Photos/header.jpg') fixed;
+    background-size: 100%;
+    background-position: 0px -65px;
+}

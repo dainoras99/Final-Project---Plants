@@ -11,3 +11,12 @@
 .font-weightBold{
     font-weight: bold;
 }
+
+a {
+    text-decoration: none;
+}
+
+#plant-name {
+    color: rgb(0, 37, 17);
+    text-shadow: 0 0 .1em, 0 0 .2em;
+}

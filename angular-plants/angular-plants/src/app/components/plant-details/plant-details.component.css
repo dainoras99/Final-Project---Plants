@@ -5,3 +5,12 @@
 .font-weightBold{
     font-weight: bold;
 }
+
+#imgTransition {
+    transition: transform .5s; 
+}
+
+#imgTransition:hover {
+      transform: scale(1.5);
+      cursor: zoom-in;
+}

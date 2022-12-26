@@ -1,0 +1,22 @@
+table, td, th {
+    border: 1px solid black;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+}
+
+#glowingText {
+    background: #198754;
+    color: #ffc;
+    text-shadow: 0 0 .1em, 0 0 .3em;
+}
+
+.block {
+    background-color: #86F70D3E;
+    padding: 20px;
+    border-style: ridge;
+    margin-bottom: 5%;
+    margin-top: 5%;
+}

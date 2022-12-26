@@ -1,4 +1,4 @@
-<div class="block pt-2">
+<!-- <div class="block pt-2">
     <p class="specialWords">Kategorijos</p>
     <ul>
         <li *ngFor="let tempCategory of plantCategory">
@@ -6,3 +6,16 @@
         </li>
     </ul>
 </div>
+ -->
+ <nav class="navbar navbar-nav block">
+ <table>
+    <tr>
+      <th id="glowingText">
+        <h2>Kategorijos</h2>
+      </th>
+    </tr>
+    <tr *ngFor="let tempCategory of plantCategory" class="nav-item">
+      <td><a class="nav-link" routerLinkActive="active" routerLink="/category/{{tempCategory.id}}">{{tempCategory.name}}</a></td>
+    </tr>
+</table>
+</nav>

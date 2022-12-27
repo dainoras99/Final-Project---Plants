@@ -8,7 +8,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { DiscountService } from 'src/app/services/discount.service';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
-import {Title} from "@angular/platform-browser";
+import {Title, Meta} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-plant-details',
@@ -24,9 +24,8 @@ export class PlantDetailsComponent implements OnInit {
 
   constructor(private productService: ProductService, private route: ActivatedRoute,
     public authenticationService: AuthenticationService, private cartService: CartService,
-    private orderService: OrderService, private discountService: DiscountService, private titleService: Title) {
-      // this.titleService.setTitle(this.plant.name);
-     }
+    private orderService: OrderService, private discountService: DiscountService, private titleService: Title,
+    private meta: Meta) {}
 
   ngOnInit(): void {
     this.isDiscount = this.discountService.getisDiscount();
@@ -37,12 +36,16 @@ export class PlantDetailsComponent implements OnInit {
 
 
   handlePlantDetails() {
-    //const productId: number = +this.route.snapshot.paramMap.get('id')!;
     const productName: string = this.route.snapshot.paramMap.get('name')!;
 
     this.productService.getPlant(productName).subscribe(
       data => {
         this.plant = data;
+
+        this.titleService.setTitle(`${this.plant.name} - www.augaluoaze.lt`);
+
+        let description: string[] = this.plant.description.split('.');
+        this.meta.updateTag({ name: 'description', content: description[0] })
       }
     )
   }

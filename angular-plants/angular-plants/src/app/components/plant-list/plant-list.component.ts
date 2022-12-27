@@ -10,6 +10,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { DiscountService } from 'src/app/services/discount.service';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
+import { Title, Meta } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-plant-list',
@@ -30,9 +31,11 @@ export class PlantListComponent implements OnInit {
     private route: ActivatedRoute,
     public authenticationService: AuthenticationService,
     private cartService: CartService,
-    private orderService: OrderService, private discountService: DiscountService) { }
+    private orderService: OrderService, private discountService: DiscountService, private titleService: Title, private meta: Meta) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle(`Augalų Oazė - www.augaluoaze.lt`);
+    this.meta.updateTag({ name: 'description', content: 'Internetinė augalų parduotuvė - internetinės prekybos lyderiai Lietuvoje bei viena didžiausių augalais prekiaujančių įmonių Lietuvoje ir Rytų Europoje.' })
     this.loadOrdersCount();
     this.route.paramMap.subscribe(() => {
       this.listPlants();
@@ -41,14 +44,11 @@ export class PlantListComponent implements OnInit {
 
   loadOrdersCount() {
     this.orderService.getOrders(this.authenticationService.getLoggedInUserName()!).subscribe(response => {
-      console.log("nu" + response.length);
       if (response.length % 5 == 0) {
         this.isDiscount = true;
         this.discountService.setisDiscount(true);
-        console.log("cia" + this.isDiscount);
       }
       else {
-        console.log("nu da");
         this.isDiscount = false;
         this.discountService.setisDiscount(false);
       }

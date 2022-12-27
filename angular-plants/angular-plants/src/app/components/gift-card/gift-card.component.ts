@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GiftCard } from 'src/app/common/gift-card';
 import { GiftCardService } from 'src/app/services/gift-card.service';
+import { Title, Meta } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-gift-card',
@@ -17,9 +18,12 @@ export class GiftCardComponent implements OnInit {
   giftCard: GiftCard = new GiftCard();
 
 
-  constructor(private giftCardService: GiftCardService, private router:Router) { }
+  constructor(private giftCardService: GiftCardService, private router:Router, private titleService: Title, private meta: Meta) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.titleService.setTitle("Dovanų kuponai - www.augaluoaze.lt");
+    this.meta.updateTag({ name: 'description', content: 'Augalų oazės internetinės prekybos dovanų kuponų puslapis kuriame galite įsigyti kuponų sau arba kitiems žmonėms. Pasirinkite dovanų kuponą tarp 25€, 50€, 75€ arba 100€!' });
+  }
 
   giftCardForm = new FormGroup({
     name: new FormControl("", [Validators.required]),

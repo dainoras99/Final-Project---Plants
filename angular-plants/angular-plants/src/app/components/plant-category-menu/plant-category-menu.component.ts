@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PlantCategory } from 'src/app/common/plant-category';
 import { ProductService } from 'src/app/services/product.service';
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-plant-category-menu',
@@ -11,7 +12,7 @@ export class PlantCategoryMenuComponent implements OnInit {
 
   plantCategory: PlantCategory[] = [];
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private titleService: Title) { }
 
   ngOnInit(): void {
     this.listProductCategories();
@@ -21,6 +22,7 @@ export class PlantCategoryMenuComponent implements OnInit {
     this.productService.getPlantCategories().subscribe(
       data => {
         this.plantCategory = data;
+        this.titleService.setTitle(`Augalų Oazė - www.augaluoaze.lt`);
       }
     );
   }

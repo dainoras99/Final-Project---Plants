@@ -37,9 +37,10 @@ export class PlantDetailsComponent implements OnInit {
 
 
   handlePlantDetails() {
-    const productId: number = +this.route.snapshot.paramMap.get('id')!;
+    //const productId: number = +this.route.snapshot.paramMap.get('id')!;
+    const productName: string = this.route.snapshot.paramMap.get('name')!;
 
-    this.productService.getPlant(productId).subscribe(
+    this.productService.getPlant(productName).subscribe(
       data => {
         this.plant = data;
       }

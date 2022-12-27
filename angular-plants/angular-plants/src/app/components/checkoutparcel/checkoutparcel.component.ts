@@ -72,9 +72,9 @@ export class CheckoutparcelComponent implements OnInit {
 
   selectedType(event: any) {
     this.typeSelected = event.target.value;
-    if (this.typeSelected === "Atsiimsiu parduotuvėje") this.router.navigate(['/checkout']);
-    if (this.typeSelected === "Pristatyti į namus") this.router.navigate(['checkout/home']);
-    if (this.typeSelected === "Pristatyti į paštomatą") this.router.navigate(['checkout/parcel']);
+    if (this.typeSelected === "Atsiimsiu parduotuvėje") this.router.navigate(['/atsiskaitymas']);
+    if (this.typeSelected === "Pristatyti į namus") this.router.navigate(['atsiskaitymas/i-namus']);
+    if (this.typeSelected === "Pristatyti į paštomatą") this.router.navigate(['atsiskaitymas/i-pastomata']);
   }
 
   selectedParcel(event: any) {
@@ -107,12 +107,12 @@ export class CheckoutparcelComponent implements OnInit {
             else alert("Užsakymas pateiktas!");
 
             this.cartService.setCartData(null!);
-            this.router.navigate(['/plants']);
+            this.router.navigate(['/augalai']);
         })
         },
         error: err => {
           alert("Svetainės klaida, kreipkitės į administratorių");
-          this.router.navigate(['/plants']);
+          this.router.navigate(['/augalai']);
         }
       }
     );
@@ -125,7 +125,7 @@ export class CheckoutparcelComponent implements OnInit {
           },
           error: err => {
             alert("Svetainės klaida, kreipkitės į administratorių");
-            this.router.navigate(['/plants']);
+            this.router.navigate(['/augalai']);
           }
         }
       )

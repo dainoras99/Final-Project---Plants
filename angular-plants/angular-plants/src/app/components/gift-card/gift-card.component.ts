@@ -79,28 +79,13 @@ export class GiftCardComponent implements OnInit {
     {
       next: response => {
         alert("Dovanų kupono užsakymas pateiktas!");
-        this.router.navigate(['/plants']);
+        this.router.navigate(['/augalai']);
       },
       error: err => {
         alert(err);
       }
     }
   )
-
-    // this.orderService.postOrder(this.cartSession, this.authenticationService.getLoggedInUserName()!, "delivery", null!, this.delivery)
-    // .subscribe(
-    //   {
-    //     next: response => {
-    //       alert(response);
-    //       this.cartService.setCartData(null!);
-    //       this.router.navigate(['/plants']);
-    //     },
-    //     error: err => {
-    //       alert("Svetainės klaida, kreipkitės į administratorių");
-    //       this.router.navigate(['/plants']);
-    //     }
-    //   }
-    // );
   }
 
 }

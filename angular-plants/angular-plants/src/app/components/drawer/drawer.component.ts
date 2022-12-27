@@ -22,6 +22,7 @@ export class DrawerComponent implements OnInit {
   opened: any = false;
   cartSession!: Observable<CartSession>;
   isCheckoutPage: boolean = false;
+  navbarOpen = false;
 
   constructor(private sideNavService: SidenavService, private dialogRef: MatDialog,
     public authenticationService: AuthenticationService, private cartService: CartService,
@@ -42,15 +43,19 @@ export class DrawerComponent implements OnInit {
 
   openDialog() {
     this.dialogRef.open(RegistrationComponent, {
-      height: '80%',
-      width: '60%'
+        width: "100vw",
+        height: "100vh",
+        maxWidth: "900px",
+        maxHeight: "750px"
     });
   }
 
   openLoginDialog() {
     this.dialogRef.open(LoginComponent, {
-      height: '45%',
-      width: '30%'
+        width: "100vw",
+        height: "100vh",
+        maxWidth: "500px",
+        maxHeight: "400px"
     });
   }
 
@@ -60,4 +65,8 @@ export class DrawerComponent implements OnInit {
   }
 
   onOpen(): void {}
+
+  openNavbar() {
+    this.navbarOpen = !this.navbarOpen;
+  }
 }

@@ -35,3 +35,9 @@ mat-sidenav {
     background-size: 100%;
     background-position: 0px -65px;
 }
+
+#logoMinimized {
+    width: 4rem;
+    max-width: 20%;
+    max-height: 20%;
+}

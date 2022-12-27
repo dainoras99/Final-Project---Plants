@@ -48,7 +48,7 @@
                     </div>
                     <form [formGroup]="giftCardForm" (ngSubmit)="postGiftCard()" class="needs-validation mt-5" novalidate="">
                         <div class="row">
-                            <div class="mb-3 col-6">
+                            <div class="mb-3 col-lg-6">
                                 <label for="name">Dovanų kupono gavėjo Vardas ir Pavardė</label>
                                 <input type="text" class="form-control" id="name" name="name"
                                     placeholder="Vardenis Pavardenis" formControlName="name" [(ngModel)]="giftCard.name" required="">
@@ -57,7 +57,7 @@
                                 Vardo, pavardės laukelis negali būti tuščias
                             </div>
                             </div>
-                            <div class="mb-3 col-6">
+                            <div class="mb-3 col-lg-6">
                                 <label for="email">Dovanų kupono gavėjo el. paštas</label>
                                 <input type="text" class="form-control" id="email" name="email"
                                     placeholder="vardenis.pavardenis@gmail.com" required="" formControlName="email" [(ngModel)]="giftCard.email">

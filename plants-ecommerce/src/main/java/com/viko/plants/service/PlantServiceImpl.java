@@ -86,4 +86,12 @@ public class PlantServiceImpl implements PlantService {
         }
         return new ResponseEntity<>("Nuotrauka išsaugota", HttpStatus.OK);
     }
+
+    @Override
+    @Transactional
+    public void UpdatePlantStock(Plant plant,Integer quantity) {
+        Integer newStock = plant.getInStock() - quantity;
+        plant.setInStock(newStock);
+        plantRepository.save(plant);
+    }
 }

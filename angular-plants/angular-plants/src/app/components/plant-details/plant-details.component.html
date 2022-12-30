@@ -1,28 +1,48 @@
-<div *ngIf="authenticationService.isUserLoggedIn()" class="navbar navbar-expand-xl navbar-dark bg-success">
-    <div class="col-xl-2"></div>
-    <div class="col-xl-5 col-lg-6 px-5">
+<div class="navbar navbar-dark bg-success displayNone">
+    <div class="col-xl-2 col-lg-0"></div>
+    <div class="col-xl-5 col-lg-6 col-md-5 px-5">
         <app-search></app-search>
     </div>
-    <div class="col-xl-2"></div>
+    <div class="col-xl-2 col-lg-0"></div>
     <div class="col-xl-3 col-lg-6">
-        <app-cart-status></app-cart-status>
+        <app-cart-status *ngIf="authenticationService.isUserLoggedIn()"></app-cart-status>
     </div>
 </div>
-<div class="container">
-    <div class="cardStyle row col-3 m-4 w-100">
-        <div class="col-6">
-            <img src="../../../{{ plant.imageUrl }}" class="img-responsive" style="max-height: 400px" />
+
+<div class="displayInline">
+    <div style="background-color: #198754" class="p-2">
+        <div class="px-5">
+            <app-search></app-search>
         </div>
-        <div class="col-6">
-            <h2>{{plant.name}}</h2>
+        <div class="px-5 m-2">
+            <app-cart-status *ngIf="authenticationService.isUserLoggedIn()"></app-cart-status>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="cardStyle row col-lg-3 m-lg-4 m-0 my-4 w-100 align-items-center">
+        <div class="col-lg-6">
+            <img src="../../../{{ plant.imageUrl }}" alt="{{plant.name}}" class="img-responsive img-fluid mx-auto" id="imgTransition" style="max-height: 400px" />
+        </div>
+        <div class="col-lg-6">
+            <h1 id="glowingText">{{plant.name}}</h1>
             <p class="text-left">{{plant.description}}</p>
             <p class="alignRightBold">Likutis: {{plant.inStock}}</p>
             <div class="mt-5">
-                <button (click)="addToCart(plant)" *ngIf="authenticationService.isUserLoggedIn()"
+                <button (click)="addToCart(plant)" *ngIf="authenticationService.isUserLoggedIn() && plant.inStock > 0"
                     class="btn btn-success alignLeft mb-3" type="button">
                     Pridėti į krepšelį
                 </button>
-                <p class="alignRightBold">Kaina: {{plant.price | currency:'EUR'}} </p>
+                <button class="btn btn-success alignLeft mb-3" *ngIf="authenticationService.isUserLoggedIn() && plant.inStock == 0" disabled>
+                    Augalo likutis baigėsi
+                </button>
+                <p *ngIf="(isDiscount | async)==false" class="alignRightBold">Kaina: {{plant.price | currency:'EUR'}}</p>
+                <div *ngIf="(isDiscount | async)==true">
+                    <p class="float-right"><span class="font-weightBold">Kaina: </span><del>{{plant.price | currency:'EUR'}}</del> 
+                        <span class="font-weightBold"> {{plant.price - plant.price * 0.25 | currency:'EUR'}}</span>
+                    </p>
+                </div>
             </div>
         </div>
     </div>

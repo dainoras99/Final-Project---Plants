@@ -19,6 +19,8 @@
         {{(cartSession | async)?.cartItems?.length}}
         <span *ngIf="(cartSession | async)?.cartItems?.length==1">augalas</span>
         <span *ngIf="(cartSession | async)?.cartItems!.length>1 && (cartSession | async)?.cartItems!.length<10">augalai</span>
-        <span *ngIf="(cartSession | async)?.cartItems!.length>10">augalų</span>
-        krepšelyje | {{(cartSession | async)?.total_price | currency:'EUR'}}
+        <span *ngIf="(cartSession | async)?.cartItems!.length>9">augalų</span>
+
+        <span *ngIf="(isDiscount | async) == false"> krepšelyje | {{(cartSession | async)?.total_price | currency:'EUR'}}</span>
+        <span *ngIf="(isDiscount | async) == true"> krepšelyje | {{(cartSession | async)?.total_price! - (cartSession | async)?.total_price! * 0.25 | currency:'EUR'}}</span>
     </button>

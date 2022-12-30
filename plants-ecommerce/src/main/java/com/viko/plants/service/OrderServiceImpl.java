@@ -9,6 +9,7 @@ import com.viko.plants.request.OrdersStatusChangeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,6 +29,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
     private CartSessionRepository cartSessionRepository;
     private CartSessionItemRepository cartSessionItemRepository;
+    private EmailSenderService emailSenderService;
+    private PlantService plantService;
 
     public OrderServiceImpl(OrderTypeRepository orderTypeRepository,
                             UserRepository userRepository,
@@ -37,7 +40,9 @@ public class OrderServiceImpl implements OrderService {
                             DeliveryRepository deliveryRepository,
                             OrderRepository orderRepository,
                             CartSessionRepository cartSessionRepositry,
-                            CartSessionItemRepository cartSessionItemRepository) {
+                            CartSessionItemRepository cartSessionItemRepository,
+                            EmailSenderService emailSenderService,
+                            PlantService plantService) {
         this.orderTypeRepository = orderTypeRepository;
         this.userRepository = userRepository;
         this.plantRepository = plantRepository;
@@ -47,6 +52,8 @@ public class OrderServiceImpl implements OrderService {
         this.orderRepository = orderRepository;
         this.cartSessionRepository = cartSessionRepositry;
         this.cartSessionItemRepository = cartSessionItemRepository;
+        this.emailSenderService = emailSenderService;
+        this.plantService = plantService;
     }
 
     @Override
@@ -85,6 +92,8 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setQuantity(cartTempItem.getQuantity());
             orderItem.setOrderType(orderType);
             orderItems.add(orderItem);
+
+            plantService.UpdatePlantStock(cartTempItem.getPlant(), cartTempItem.getQuantity());
         }
         order.setOrderItems(orderItems);
         order.setTotal(request.getCartSession().getTotal_price());
@@ -98,6 +107,8 @@ public class OrderServiceImpl implements OrderService {
 
         orderRepository.save(order);
 
+        emailSenderService.sendOrderConfirmationEmail(order, user);
+
         cartSessionItemRepository.deleteAllSessionCartItems(user.getId());
         cartSessionRepository.deleteCartSession(user.getId());
 
@@ -107,12 +118,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public Set<Order> setNewOrdersStatus(OrdersStatusChangeRequest ordersStatusChangeRequest) {
+
         for (Order order : ordersStatusChangeRequest.getOrders()) {
-            System.out.println("orderis: " + order);
-            System.out.println("user: " + order.getId());
-            System.out.println("order: " + ordersStatusChangeRequest.getStatus());
             orderRepository.updateOrderStatusById(ordersStatusChangeRequest.getStatus(), order.getId());
         }
+
+        for (Order order : ordersStatusChangeRequest.getOrders()) {
+            emailSenderService.sendOrderStatusInformationToUser(order, ordersStatusChangeRequest.getStatus());
+        }
+
         Set<Order> orders = orderRepository.getOrdersByStatus(ordersStatusChangeRequest.getStatus());
         return orders;
     }

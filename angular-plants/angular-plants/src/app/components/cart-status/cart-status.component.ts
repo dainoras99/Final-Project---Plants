@@ -9,6 +9,7 @@ import { SidenavService } from 'src/app/services/sidenav.service';
 import { CartComponent } from '../cart/cart.component';
 import { UserItemsService } from 'src/app/services/user-items.service';
 import { LoginService } from 'src/app/services/login.service';
+import { DiscountService } from 'src/app/services/discount.service';
 
 @Component({
   selector: 'app-cart-status',
@@ -24,16 +25,21 @@ export class CartStatusComponent implements OnInit {
 
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-  cartSessionReal!: CartSession
+  cartSessionReal!: CartSession;
+
+  isDiscount!: Observable<boolean>;
 
   constructor(@Inject(AuthenticationService) public authenticationService: AuthenticationService, 
   private cartService: CartService,
   private sideNavService: SidenavService,
   private userItemsService: UserItemsService,
-  private loginService: LoginService,) { }
+  private loginService: LoginService,
+  private discountService: DiscountService) { }
 
   ngOnInit(): void {
-        this.handleUserSession();
+    this.isDiscount = this.discountService.getisDiscount();
+    console.log("cart statuse cia: " + this.isDiscount);
+    this.handleUserSession();
   }
 
   // handleUser() {

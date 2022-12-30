@@ -8,6 +8,7 @@ import { RegistrationComponent } from '../registration/registration.component';
 import { CartService } from 'src/app/services/cart.service';
 import { Observable } from 'rxjs';
 import { CartSession } from 'src/app/common/cart-session';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-drawer',
@@ -20,11 +21,15 @@ export class DrawerComponent implements OnInit {
   showSearchResults = true;
   opened: any = false;
   cartSession!: Observable<CartSession>;
+  isCheckoutPage: boolean = false;
+  navbarOpen = false;
 
   constructor(private sideNavService: SidenavService, private dialogRef: MatDialog,
-    public authenticationService: AuthenticationService, private cartService: CartService) { }
+    public authenticationService: AuthenticationService, private cartService: CartService,
+    public route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.isCheckoutPage = this.route.snapshot.paramMap.has('checkout');
     this.sideNavService.sideNavToggleSubject.subscribe(() => {
       this.sidenav.toggle();
       this.loadCart();
@@ -38,15 +43,19 @@ export class DrawerComponent implements OnInit {
 
   openDialog() {
     this.dialogRef.open(RegistrationComponent, {
-      height: '80%',
-      width: '60%'
+        width: "100vw",
+        height: "100vh",
+        maxWidth: "900px",
+        maxHeight: "750px"
     });
   }
 
   openLoginDialog() {
     this.dialogRef.open(LoginComponent, {
-      height: '45%',
-      width: '30%'
+        width: "100vw",
+        height: "100vh",
+        maxWidth: "500px",
+        maxHeight: "400px"
     });
   }
 
@@ -56,4 +65,8 @@ export class DrawerComponent implements OnInit {
   }
 
   onOpen(): void {}
+
+  openNavbar() {
+    this.navbarOpen = !this.navbarOpen;
+  }
 }

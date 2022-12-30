@@ -27,24 +27,70 @@
                     <span class="text-muted float-end" [ngStyle]="{'display': tips}">{{radioButtonSelected | currency:
                         'EUR'}}</span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>Galutinė suma</span>
-                    <strong>{{cartSession.total_price | currency: 'EUR'}}</strong>
-                </li>
+                <div *ngIf="giftCard == null">
+                    <li *ngIf="isDiscount == true" class="list-group-item d-flex justify-content-between">
+                        <span>Pritaikyta nuolaida: </span>
+                        <strong>25%</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Galutinė suma</span>
+                        <strong>{{total_price | currency: 'EUR'}}</strong>
+                    </li>
+                </div>
+                <div *ngIf="giftCard != null">
+                    <li *ngIf="isDiscount == true" class="list-group-item d-flex justify-content-between">
+                        <span>Pritaikyta nuolaida: </span>
+                        <strong>25%</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between"
+                        *ngIf="total_price <= giftCard.remainingBalance">
+                        <span>Galutinė suma</span>
+                        <strong>{{0 | currency: 'EUR'}}</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between"
+                        *ngIf="total_price > giftCard.remainingBalance">
+                        <span>Galutinė suma</span>
+                        <strong>{{total_price - giftCard.usedBalance | currency: 'EUR'}}</strong>
+                    </li>
+                </div>
             </ul>
+            <div *ngIf="giftCard != null">
+
+                <h4 class="d-flex justify-content-between align-items-center mb-3 mt-5">
+                    <span class="text-muted">Dovanų kortelės duomenys</span>
+                </h4>
+
+                <ul class="list-group mb-3 sticky-top mt-2">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Dovanų kupono suma: </span>
+                        <strong>{{giftCard.sum| currency: 'EUR'}}</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Likusi dovanų kupono suma: </span>
+                        <strong>{{remainingBalanceBeforeUse | currency: 'EUR'}}</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Panaudojama dovanų kupono suma: </span>
+                        <strong>{{giftCard.usedBalance| currency: 'EUR'}}</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Būsimas dovanų kupono likutis po pateikimo: </span>
+                        <strong>{{giftCard.remainingBalance| currency: 'EUR'}}</strong>
+                    </li>
+                    </ul>
+                    </div>
         </div>
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">Įveskite savo duomenis</h4>
             <div class="row">
                 <div class="col-md-12 mb-4">
                     <label for="country">Pasirinkite užsakymo tipą</label>
-                    <select (change)="selectedType($event)" class="custom-select d-block w-100" id="country"
+                    <select (change)="selectedType($event)" class="custom-select d-block w-100" size="3" id="country"
                         required="">
-                        <option>Pristatyti į namus</option>
-                        <option>Pristatyti į paštomatą</option>
                         <option>Atsiimsiu parduotuvėje</option>
+                        <option style="font-weight: bold;">Pristatyti į namus</option>
+                        <option>Pristatyti į paštomatą</option>
                     </select>
-                    <div class="invalid-feedback"> Please select a valid country. </div>
                 </div>
             </div>
             <form [formGroup]="deliveryForm" class="needs-validation" (ngSubmit)="postOrder()" novalidate="">
@@ -52,7 +98,6 @@
                     <label for="address">Pristatymo adresas*</label>
                     <input type="text" class="form-control" id="address" name="address" placeholder="Gedimino pr. 9-81"
                         required="" formControlName="address" [(ngModel)]="delivery.address">
-                    <div class="invalid-feedback"> Please enter your shipping address. </div>
                     <div class="form-text text-danger"
                         *ngIf="Address.errors?.['required'] && (Address.touched || errors)">
                         Pristatymo adreso laukelis negali būti tuščias
@@ -91,21 +136,39 @@
                         <label for="radio" class="m-2">Ar norite palikti arbatpinigių kurjeriui?<span
                                 class="text-muted"> (Nebūtina)</span></label>
 
-                        <input type="radio" class="btn-check" (change)="radioButtonChecked0($event)" value="0"
+                        <input type="radio" class="btn-check" (change)="radioButtonChecked0($event)" [ngClass]="disabledButton" value="0"
                             name="options" id="option1" autocomplete="off" checked />
                         <label class="btn btn-primary" for="option1">0€</label>
 
-                        <input type="radio" class="btn-check" (change)="radioButtonChecked05($event)" value="0.5"
+                        <input type="radio" class="btn-check" (change)="radioButtonChecked05($event)" [ngClass]="disabledButton" value="0.5"
                             name="options" id="option2" autocomplete="off" />
                         <label class="btn btn-primary" for="option2">0.5€</label>
 
-                        <input type="radio" class="btn-check" (change)="radioButtonChecked1($event)" value="1"
+                        <input type="radio" class="btn-check" (change)="radioButtonChecked1($event)" [ngClass]="disabledButton" value="1"
                             name="options" id="option3" autocomplete="off" />
                         <label class="btn btn-primary" for="option3">1€</label>
 
-                        <input type="radio" class="btn-check" (change)="radioButtonChecked2($event)" value="2"
+                        <input type="radio" class="btn-check" (change)="radioButtonChecked2($event)" [ngClass]="disabledButton" value="2"
                             name="options" id="option4" autocomplete="off" />
                         <label class="btn btn-primary" for="option4">2€</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="address">Jeigu turite, įveskite dovanų kupono kodą</label>
+                            <input type="text" class="form-control" id="code" [ngClass]="disabledButton" [ngModelOptions]="{standalone: true}" name="code"
+                                placeholder="f33a554d-2c74-4727-a637-3369f2ga08b6" required=""
+                                [(ngModel)]="giftCardCode">
+                            <div class="form-text text-danger" *ngIf="giftCardError">
+                                Dovanų kupono kodas nėra tinkamas
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label style="visibility: hidden;">Jeigu turite, įveskite dovanų kupono kodą</label>
+                            <button class="btn btn-primary btn-lg btn-block fontTexta" [ngClass]="disabledButton"
+                                (click)="codeUsed(giftCardCode)" type="button">Panaudoti kodą</button>
+                        </div>
                     </div>
                 </div>
                 <hr class="mb-4">

@@ -53,16 +53,18 @@ public class SessionServiceImpl implements SessionService {
         Set<CartItem> cartItems = new LinkedHashSet<>();
         CartItem cartItem = new CartItem();
 
+        Plant plant = plantRepository.findByName(request.getPlantName());
+
         if (sessionRepository.UserSessionExist(user.getId()) > 0) {
             cartSession = sessionRepository.findUserSession(user.getId());
             cartItems = cartSession.getCartItems();
+            if (noMoreStock(cartSession, plant))
+                return new CartSessionResponse(cartSession.getId(), cartSession.getTotal_price(), cartSession.getCartItems());
             if (samePlantExist(cartSession, request)) {
                 cartSession = updateCartItemQuantity(cartSession, request);
                 return new CartSessionResponse(cartSession.getId(), cartSession.getTotal_price(), cartSession.getCartItems());
             }
         }
-
-        Plant plant = plantRepository.findByName(request.getPlantName());
 
         cartItem.setUser(user);
         cartItem.setPlant(plant);
@@ -132,6 +134,16 @@ public class SessionServiceImpl implements SessionService {
         for (CartItem cartItem : cartSession.getCartItems()) {
             if (cartItem.getPlant().getName().equals(request.getPlantName())) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    private Boolean noMoreStock(CartSession cartSession, Plant plant) {
+
+        for (CartItem cartItem : cartSession.getCartItems()) {
+            if (cartItem.getPlant().getName().equals(plant.getName())) {
+                if (cartItem.getQuantity() == plant.getInStock()) return true;
             }
         }
         return false;

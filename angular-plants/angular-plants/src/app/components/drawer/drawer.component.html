@@ -1,47 +1,51 @@
 <mat-sidenav-container class='app-drawer-container' fullscreen>
     <mat-sidenav (openedChanged)="onOpen()" #sidenav position="end" mode="over" style="background-color: #eee;">
-        <section class="h-100" style="background-color: #eee;">
-            <div class="container h-100 py-5">
-                <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="h-100" style="background-color: #eee;">
+            <div class="container h-100 py-md-5 py-0">
+                <div class="row justify-content-center align-items-center h-100">
                     <div class="col-10">
                         <app-cart></app-cart>
                         <div class="card">
                             <div class="card-body">
-                                <a routerLink="checkout" (click)="sidenav.toggle()"
+                                <a routerLink="atsiskaitymas" (click)="sidenav.toggle()"
                                     class="btn btn-success btn-block btn-lg">Atsiskaitymas</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </mat-sidenav>
     <mat-sidenav-content [ngClass]="{'removeScrollBar': sidenav.opened}">
-        <nav class="navbar navbar-expand-xl navbar-dark bg-success">
-            <img class="navbar-brand logo" src="./assets/images/Photos/logo.png" />
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mynav">
+        <nav class="navbar navbar-expand-md navbar-dark bg-success">
+            <img class="navbar-brand logo d-none d-lg-block" src="./assets/images/Photos/logo.png" />
+            <img class="navbar-brand d-lg-none d-none d-md-block" id="logoMinimized" width="16%" height="16%" src="./assets/images/Photos/logominimized.png" />
+            <button class="navbar-toggler m-1" (click)="openNavbar()" type="button" data-toggle="collapse" data-target="#mynav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="mynav">
-                <ul class="navbar-nav float-left col-lg-4">
+            <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }" id="mynav">
+                <ul class="navbar-nav float-left col-md-5 col-xl-6 align-items-center">
                     <li class="nav-item justify-content-center align-self-center">
-                        <a class="nav-link" routerLinkActive="active" routerLink="plants">Parduotuvė</a>
+                        <a class="nav-link" routerLinkActive="active" routerLink="augalai">Parduotuvė</a>
                     </li>
                     <li class="nav-item justify-content-center align-self-center">
-                        <a class="nav-link"  routerLinkActive="active" routerLink="about-us">Apie mus</a>
+                        <a class="nav-link" routerLinkActive="active" routerLink="apie-mus">Apie mus</a>
+                    </li>
+                    <li class="nav-item justify-content-center align-self-center">
+                        <a class="nav-link" routerLinkActive="active" routerLink="dovanu-kuponai">Dovanų kuponai</a>
                     </li>
                     <li *ngIf="authenticationService.isUserLoggedIn()"
                         class="nav-item justify-content-center align-self-center">
-                        <a class="nav-link"  routerLinkActive="active" routerLink="orders">Mano užsakymai</a>
+                        <a class="nav-link" routerLinkActive="active" routerLink="uzsakymai">Mano užsakymai</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav col-lg-7 justify-content-end">
-                    <li *ngIf="authenticationService.isUserLoggedIn()" class="nav-item">
+                <ul class="navbar-nav col-md-7 col-xl-5 justify-content-end">
+                    <li *ngIf="authenticationService.isUserLoggedIn()" class="nav-item justify-content-center align-self-center">
                         <button (click)="authenticationService.logOut()" class="btn btn-dark">
                             <b>ATSIJUNGTI</b>
                         </button>
                     </li>
-                    <li *ngIf="authenticationService.isUserLoggedIn()==false" class="nav-item">
+                    <li *ngIf="authenticationService.isUserLoggedIn()==false" class="nav-item m-lg-0 m-2 justify-content-center align-self-center">
                         <button (click)="openDialog()" class="btn btn-dark">
                             <svg width="40" height="40" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -51,7 +55,7 @@
                             <b> REGISTRACIJA</b>
                         </button>
                     </li>
-                    <li *ngIf="authenticationService.isUserLoggedIn()==false" class="nav-item">
+                    <li *ngIf="authenticationService.isUserLoggedIn()==false" class="nav-item justify-content-center align-self-center">
                         <button (click)="openLoginDialog()" class="mx-3 btn btn-dark">
                             <svg width="40" height="40" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -71,18 +75,22 @@
         </header>
         <div class="container-fluid main">
             <div class="row">
-                <div class="col-lg-2 col-md-5 imaginaryRightBorder">
+                <div class="col-lg-2 col-md-3 imaginaryRightBorder">
                     <app-plant-category-menu></app-plant-category-menu>
-                    <div class="ad block h-40 mb-5 ">
-                        <a href="https://www.novaturas.lt/"><img src="../../../assets/images/Photos/ads/novaturas.png"
-                                alt="reklama - novaturas" /></a>
-                    </div>
-                    <div class="ad block h-40 mb-5">
-                        <a href="https://eurojackpot.lt/"><img src="../../../assets/images/Photos/ads/eurojackpot.png"
-                                alt="reklama - eurojackpot" /></a>
+                    <div class="d-none d-md-block">
+                        <div class="ad block h-40 mb-3">
+                            <a href="https://www.novaturas.lt/"><img
+                                    src="../../../assets/images/Photos/ads/sleep-foods.jpg"
+                                    alt="reklama - sleep foods" /></a>
+                        </div>
+                        <div *ngIf="isCheckoutPage==false" class="ad block h-40 mb-3">
+                            <a href="https://eurojackpot.lt/"><img
+                                    src="../../../assets/images/Photos/ads/novaturas-ziema.png"
+                                    alt="reklama - novaturas" /></a>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-10 col-md-7">
+                <div class="col-lg-10 col-md-9">
                     <router-outlet></router-outlet>
                 </div>
             </div>

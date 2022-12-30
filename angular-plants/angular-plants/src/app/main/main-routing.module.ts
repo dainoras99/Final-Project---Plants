@@ -4,22 +4,24 @@ import { AboutUsComponent } from '../components/about-us/about-us.component';
 import { CheckoutComponent } from '../components/checkout/checkout.component';
 import { CheckouthomeComponent } from '../components/checkouthome/checkouthome.component';
 import { CheckoutparcelComponent } from '../components/checkoutparcel/checkoutparcel.component';
+import { GiftCardComponent } from '../components/gift-card/gift-card.component';
 import { OrdersComponent } from '../components/orders/orders.component';
 import { PlantDetailsComponent } from '../components/plant-details/plant-details.component';
 import { PlantListComponent } from '../components/plant-list/plant-list.component';
 
 const routes: Routes = [
-  {path: 'orders', component: OrdersComponent},
-  {path: 'about-us', component: AboutUsComponent},
-  {path: 'checkout/home', component: CheckouthomeComponent},
-  {path: 'checkout/parcel', component: CheckoutparcelComponent},
-  {path: 'checkout', component: CheckoutComponent},
-  {path: 'plants/:id', component: PlantDetailsComponent},
-  {path: 'search/:keyword', component: PlantListComponent},
-  {path: 'category/:id', component: PlantListComponent},
-  {path: 'category', component: PlantListComponent},
-  {path: 'plants', component: PlantListComponent},
-  {path: '', redirectTo: '/plants', pathMatch: 'full'}
+  {path: 'uzsakymai', component: OrdersComponent},
+  {path: 'dovanu-kuponai', component: GiftCardComponent},
+  {path: 'apie-mus', component: AboutUsComponent},
+  {path: 'atsiskaitymas/i-namus', component: CheckouthomeComponent},
+  {path: 'atsiskaitymas/i-pastomata', component: CheckoutparcelComponent},
+  {path: 'atsiskaitymas', component: CheckoutComponent},
+  {path: 'augalas/:name', component: PlantDetailsComponent},
+  {path: 'ieskoti/:keyword', component: PlantListComponent},
+  {path: 'kategorija/:id', component: PlantListComponent},
+  {path: 'kategorija', component: PlantListComponent},
+  {path: 'augalai', component: PlantListComponent},
+  {path: '', redirectTo: '/augalai', pathMatch: 'full'}
 ];
 
 @NgModule({

@@ -8,6 +8,7 @@ import { User } from 'src/app/common/user';
 import { UserItem } from 'src/app/common/user-item';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CartService } from 'src/app/services/cart.service';
+import { DiscountService } from 'src/app/services/discount.service';
 import { LoginService } from 'src/app/services/login.service';
 import { UserItemsService } from 'src/app/services/user-items.service';
 
@@ -29,11 +30,14 @@ export class CartComponent implements OnInit {
 
   realCartSession!: CartSession;
 
+  isDiscount!: Observable<boolean>
+
   constructor(public authenticationService: AuthenticationService,
     private cartService: CartService,
-    private loginService: LoginService) { }
+    private loginService: LoginService, private discountService: DiscountService) { }
 
   ngOnInit(): void {
+    this.isDiscount = this.discountService.getisDiscount();
     this.loginService.getUserData().subscribe(data => {
       if (data != "username") {
         this.handleUserSession(data);

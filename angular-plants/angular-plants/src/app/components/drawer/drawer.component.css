@@ -3,9 +3,17 @@
     opacity: 0.5;
 }
 
-mat-sidenav {
-    background-color: #8d9e2b3e;
-    width:900px ;
+@media (max-width: 927px) {
+    mat-sidenav {
+        background-color: #8d9e2b3e;
+        width: 100vw;
+    } 
+}
+@media (min-width: 928px) {
+    mat-sidenav {
+        background-color: #8d9e2b3e;
+        width:900px;
+    } 
 }
 
 .mainly .select-input.form-control[readonly]:not([disabled]) {
@@ -13,4 +21,42 @@ mat-sidenav {
     line-height: 2.15;
     padding-left: .75em;
     padding-right: .75em;
+}
+
+.titlePlaceSecond {
+    position: relative;
+    background: hsla(0,0%,100%,.3);
+    overflow: hidden;
+    z-index: 1;
+}
+.titlePlaceSecond::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    filter: blur(20px);
+    margin: -30px;
+    z-index: -1;
+}
+
+.titlePlace, .titlePlaceSecond::before {
+    background: url('/angular-plants/src/assets/images/Photos/header.jpg') fixed;
+    background-size: 100%;
+    background-position: 0px -65px;
+}
+
+#logoMinimized {
+    width: 4rem;
+    max-width: 20%;
+    max-height: 20%;
+}
+
+.block {
+    background-color: #86F70D3E;
+    border-style: ridge;
+    margin-bottom: 5%;
+    margin-top: 5%;
+}
+
+.additionalPadding {
+    padding: 20px;
 }

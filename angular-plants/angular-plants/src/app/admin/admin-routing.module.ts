@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminGuardGuard } from '../guards/admin-guard.guard';
 import { AdminComponent } from './components/admin/admin.component';
 import { OrdersManagementComponent } from './components/orders-management/orders-management.component';
 import { PanelComponent } from './components/panel/panel.component';

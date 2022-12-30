@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { Plant } from '../common/plant';
 import { map } from 'rxjs/operators';
 import { PlantCategory } from '../common/plant-category';
-import { FileHandler } from '../common/file-handler';
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +27,8 @@ export class ProductService {
     return this.getPlants(searchUrl);
   }
 
-  getPlant(productId: number) : Observable<Plant> {
-    const plantUrl = `${this.baseUrl}/${productId}`;
+  getPlant(productName: string) : Observable<Plant> {
+    const plantUrl = `${this.baseUrl}/search/findByName?name=${productName}`;
     return this.httpClient.get<Plant>(plantUrl);
   }
 

@@ -1,30 +1,55 @@
-<div *ngIf="authenticationService.isUserLoggedIn()" class="navbar navbar-expand-xl navbar-dark bg-success">
-    <div class="col-xl-2"></div>
-    <div class="col-xl-5 col-lg-6 px-5">
+<div class="navbar navbar-dark bg-success displayNone">
+    <div class="col-xl-2 col-lg-0"></div>
+    <div class="col-xl-5 col-lg-6 col-md-5 px-5">
         <app-search></app-search>
     </div>
-    <div class="col-xl-2"></div>
+    <div class="col-xl-2 col-lg-0"></div>
     <div class="col-xl-3 col-lg-6">
-        <app-cart-status></app-cart-status>
+        <app-cart-status *ngIf="authenticationService.isUserLoggedIn()"></app-cart-status>
+    </div>
+</div>
+
+<div class="displayInline">
+    <div style="background-color: #198754" class="p-2">
+        <div class="px-5">
+            <app-search></app-search>
+        </div>
+        <div class="px-5 m-2">
+            <app-cart-status *ngIf="authenticationService.isUserLoggedIn()"></app-cart-status>
+        </div>
     </div>
 </div>
 
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="cardStyle col-3 m-4" *ngFor="let tempPlant of plants">
-            <a routerLink="/plants/{{ tempPlant.id }}">
+
+
+        <div class="cardStyle col-lg-3 col-md-4 m-4" *ngFor="let tempPlant of plants">
+            <a routerLink="/augalas/{{ tempPlant.name }}">
                 <img class="img-responsive mt-3 mainPlants" src="../../../{{ tempPlant.imageUrl }}"
                     alt="Augalas - {{ tempPlant.name }}" />
             </a>
-            <a routerLink="/plants/{{ tempPlant.id }}">
-                <p>{{ tempPlant.name }}</p>
+            <a routerLink="/augalas/{{ tempPlant.name }}">
+                <p id="plant-name">{{ tempPlant.name }}</p>
             </a>
-            <button (click)="addToCart(tempPlant)" *ngIf="authenticationService.isUserLoggedIn()"
+            <button (click)="addToCart(tempPlant)"
+                *ngIf="authenticationService.isUserLoggedIn() && tempPlant.inStock > 0"
                 class="btn btn-success alignLeft mb-3" type="button">
                 Pridėti į krepšelį
             </button>
-            <p class="alignRightBold">Kaina: {{tempPlant.price | currency:'EUR'}}</p>
+            <button class="btn btn-success alignLeft mb-3"
+                *ngIf="authenticationService.isUserLoggedIn() && tempPlant.inStock == 0" disabled>
+                Augalo likutis baigėsi
+            </button>
+            <p *ngIf="isDiscount == false" class="alignRightBold">Kaina: {{tempPlant.price | currency:'EUR'}}</p>
+            <div *ngIf="isDiscount == true">
+                <p class="float-right"><span class="font-weightBold">Kaina: </span><del>{{tempPlant.price |
+                        currency:'EUR'}}</del>
+                    <span class="font-weightBold"> {{tempPlant.price - tempPlant.price * 0.25 | currency:'EUR'}}</span>
+                </p>
+            </div>
         </div>
+
         <div *ngIf="plants?.length == 0" class="alert alert-warning col-md-12 m-4">
             Pagal jūsų raktažodį - augalų nerasta
         </div>

@@ -36,7 +36,6 @@ export class CartService {
   getCartData(): Observable<CartSession> {
     return this.sharedCartData.asObservable();
   }
-
   constructor(private httpClient: HttpClient) { }
 
   getCartSession(username: string) : Observable<CartSession> {

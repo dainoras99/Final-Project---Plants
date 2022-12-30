@@ -17,25 +17,73 @@
                     </div>
                     <span *ngIf="tempProduct.quantity == 1" class="text-muted">{{tempProduct.plant.price | currency:
                         'EUR'}}</span>
-                    <span *ngIf="tempProduct.quantity > 1" class="text-muted">{{tempProduct.plant.price * tempProduct.quantity
+                    <span *ngIf="tempProduct.quantity > 1" class="text-muted">{{tempProduct.plant.price *
+                        tempProduct.quantity
                         | currency: 'EUR'}}</span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>Galutinė suma</span>
-                    <strong>{{cartSession.total_price | currency: 'EUR'}}</strong>
-                </li>
+                <div>
+                    <li *ngIf="isDiscount == true" class="list-group-item d-flex justify-content-between">
+                        <span>Pritaikyta nuolaida: </span>
+                        <strong>25%</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between" *ngIf="giftCard == null">
+                        <span>Galutinė suma</span>
+                        <strong>{{total_price | currency: 'EUR'}}</strong>
+                    </li>
+                </div>
+                <div *ngIf="giftCard != null">
+                    <li *ngIf="isDiscount == true" class="list-group-item d-flex justify-content-between">
+                        <span>Pritaikyta nuolaida: </span>
+                        <strong>25%</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between"
+                        *ngIf="total_price <= giftCard.remainingBalance">
+                        <span>Galutinė suma</span>
+                        <strong>{{0 | currency: 'EUR'}}</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between"
+                        *ngIf="total_price > giftCard.remainingBalance">
+                        <span>Galutinė suma</span>
+                        <strong>{{total_price - giftCard.usedBalance | currency: 'EUR'}}</strong>
+                    </li>
+                </div>
             </ul>
+            <div *ngIf="giftCard != null">
+
+                <h4 class="d-flex justify-content-between align-items-center mb-3 mt-5">
+                    <span class="text-muted">Dovanų kortelės duomenys</span>
+                </h4>
+
+                <ul class="list-group mb-3 sticky-top mt-2">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Dovanų kupono suma: </span>
+                        <strong>{{giftCard.sum| currency: 'EUR'}}</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Likusi dovanų kupono suma: </span>
+                        <strong>{{remainingBalanceBeforeUse | currency: 'EUR'}}</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Panaudojama dovanų kupono suma: </span>
+                        <strong>{{giftCard.usedBalance| currency: 'EUR'}}</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Būsimas dovanų kupono likutis po pateikimo: </span>
+                        <strong>{{giftCard.remainingBalance| currency: 'EUR'}}</strong>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">Įveskite savo duomenis</h4>
             <div class="row">
                 <div class="col-md-12 mb-4">
                     <label for="country">Pasirinkite užsakymo tipą</label>
-                    <select (change)="selectedType($event)" class="custom-select d-block w-100" id="country"
+                    <select (change)="selectedType($event)" class="custom-select d-block w-100" size="3" id="country"
                         required="">
-                        <option>Pristatyti į paštomatą</option>
                         <option>Atsiimsiu parduotuvėje</option>
                         <option>Pristatyti į namus</option>
+                        <option style="font-weight: bold;">Pristatyti į paštomatą</option>
                     </select>
                     <div class="invalid-feedback"> Pasirinkite tinkamą </div>
                 </div>
@@ -48,6 +96,24 @@
                                 {{parcel.address}}, {{parcel.zipCode}}</option>
                         </select>
                         <div class="invalid-feedback"> </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="address">Jeigu turite, įveskite dovanų kupono kodą</label>
+                                <input type="text" class="form-control" id="code" [ngClass]="disabledButton" name="code"
+                                    placeholder="f33a554d-2c74-4727-a637-3369f2ga08b6" required=""
+                                    [(ngModel)]="giftCardCode">
+                                <div class="form-text text-danger" *ngIf="giftCardError">
+                                    Dovanų kupono kodas nėra tinkamas
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label style="visibility: hidden;">Jeigu turite, įveskite dovanų kupono kodą</label>
+                                <button class="btn btn-primary btn-lg btn-block fontTexta" [ngClass]="disabledButton"
+                                    (click)="codeUsed(giftCardCode)" type="button">Panaudoti kodą</button>
+                            </div>
+                        </div>
                     </div>
                     <hr class="mb-4">
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Pateikti užsakymą</button>

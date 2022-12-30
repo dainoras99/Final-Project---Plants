@@ -1,8 +1,8 @@
 <mat-sidenav-container class='app-drawer-container' fullscreen>
     <mat-sidenav (openedChanged)="onOpen()" #sidenav position="end" mode="over" style="background-color: #eee;">
-        <section class="h-100" style="background-color: #eee;">
-            <div class="container h-100 py-5">
-                <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="h-100" style="background-color: #eee;">
+            <div class="container h-100 py-md-5 py-0">
+                <div class="row justify-content-center align-items-center h-100">
                     <div class="col-10">
                         <app-cart></app-cart>
                         <div class="card">
@@ -14,7 +14,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </mat-sidenav>
     <mat-sidenav-content [ngClass]="{'removeScrollBar': sidenav.opened}">
         <nav class="navbar navbar-expand-md navbar-dark bg-success">
@@ -78,15 +78,15 @@
                 <div class="col-lg-2 col-md-3 imaginaryRightBorder">
                     <app-plant-category-menu></app-plant-category-menu>
                     <div class="d-none d-md-block">
-                        <div class="ad block h-40 mb-5 ">
+                        <div class="ad block h-40 mb-3">
                             <a href="https://www.novaturas.lt/"><img
-                                    src="../../../assets/images/Photos/ads/novaturas.png"
-                                    alt="reklama - novaturas" /></a>
+                                    src="../../../assets/images/Photos/ads/sleep-foods.jpg"
+                                    alt="reklama - sleep foods" /></a>
                         </div>
-                        <div *ngIf="isCheckoutPage==false" class="ad block h-40 mb-5">
+                        <div *ngIf="isCheckoutPage==false" class="ad block h-40 mb-3">
                             <a href="https://eurojackpot.lt/"><img
-                                    src="../../../assets/images/Photos/ads/eurojackpot.png"
-                                    alt="reklama - eurojackpot" /></a>
+                                    src="../../../assets/images/Photos/ads/novaturas-ziema.png"
+                                    alt="reklama - novaturas" /></a>
                         </div>
                     </div>
                 </div>

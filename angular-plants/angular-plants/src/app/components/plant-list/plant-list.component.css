@@ -20,3 +20,19 @@ a {
     color: rgb(0, 37, 17);
     text-shadow: 0 0 .1em, 0 0 .2em;
 }
+
+@media (max-width: 615px) {
+    .displayNone {
+        display: none !important;
+    }
+    .displayInline {
+        display: inline !important;
+    }
+  }
+
+  @media (min-width: 616px) {
+    .displayInline {
+        display: none;
+    }
+  }
+  

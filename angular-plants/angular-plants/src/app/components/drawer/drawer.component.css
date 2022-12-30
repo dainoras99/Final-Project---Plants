@@ -3,9 +3,17 @@
     opacity: 0.5;
 }
 
-mat-sidenav {
-    background-color: #8d9e2b3e;
-    width:900px ;
+@media (max-width: 927px) {
+    mat-sidenav {
+        background-color: #8d9e2b3e;
+        width: 100vw;
+    } 
+}
+@media (min-width: 928px) {
+    mat-sidenav {
+        background-color: #8d9e2b3e;
+        width:900px;
+    } 
 }
 
 .mainly .select-input.form-control[readonly]:not([disabled]) {
@@ -40,4 +48,15 @@ mat-sidenav {
     width: 4rem;
     max-width: 20%;
     max-height: 20%;
+}
+
+.block {
+    background-color: #86F70D3E;
+    border-style: ridge;
+    margin-bottom: 5%;
+    margin-top: 5%;
+}
+
+.additionalPadding {
+    padding: 20px;
 }

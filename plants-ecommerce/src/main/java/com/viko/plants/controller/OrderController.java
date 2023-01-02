@@ -1,23 +1,12 @@
 package com.viko.plants.controller;
 
-import com.viko.plants.dto.CartSessionResponse;
 import com.viko.plants.dto.OrdersResponse;
 import com.viko.plants.entity.*;
-import com.viko.plants.repository.*;
-import com.viko.plants.request.CartSessionRequest;
 import com.viko.plants.request.OrderRequestBody;
-import com.viko.plants.request.OrderRequestDeliveryBody;
 import com.viko.plants.request.OrdersStatusChangeRequest;
 import com.viko.plants.service.OrderService;
-import com.viko.plants.service.SessionService;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 @RestController

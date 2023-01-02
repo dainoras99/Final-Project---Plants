@@ -1,18 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { CartItem } from 'src/app/common/cart-item';
 import { CartSession } from 'src/app/common/cart-session';
 import { Delivery } from 'src/app/common/delivery';
 import { GiftCardObject } from 'src/app/common/gift-card-object';
-import { UserItem } from 'src/app/common/user-item';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CartService } from 'src/app/services/cart.service';
 import { DiscountService } from 'src/app/services/discount.service';
 import { GiftCardService } from 'src/app/services/gift-card.service';
 import { OrderService } from 'src/app/services/order.service';
-import { UserItemsService } from 'src/app/services/user-items.service';
 
 @Component({
   selector: 'app-checkouthome',
@@ -93,13 +90,6 @@ export class CheckouthomeComponent implements OnInit {
     this.total_price += 0;
     this.radioButtonSelected = event.target.value;
     this.tips = 'none';
-
-
-
-    // if (this.radioButtonSelected != undefined) this.userItemsService.setTotalPrice(this.selectedTotal - +this.radioButtonSelected);
-    // this.userItemsService.setTotalPrice(this.selectedTotal + 0);
-    // this.radioButtonSelected = event.target.value;
-    // this.tips = 'none';
   }
 
   radioButtonChecked05(event: any) {
@@ -108,12 +98,6 @@ export class CheckouthomeComponent implements OnInit {
     this.total_price += 0.5;
     this.radioButtonSelected = event.target.value;
     this.tips = 'inline';
-
-
-    // if (this.radioButtonSelected != undefined) this.userItemsService.setTotalPrice(this.selectedTotal - +this.radioButtonSelected);
-    // this.userItemsService.setTotalPrice(this.selectedTotal + 0.5);
-    // this.radioButtonSelected = event.target.value;
-    // this.tips = 'inline';
   }
 
   radioButtonChecked1(event: any) {
@@ -122,11 +106,6 @@ export class CheckouthomeComponent implements OnInit {
     this.total_price += 1;
     this.radioButtonSelected = event.target.value;
     this.tips = 'inline';
-
-    // if (this.radioButtonSelected != undefined) this.userItemsService.setTotalPrice(this.selectedTotal - +this.radioButtonSelected);
-    // this.userItemsService.setTotalPrice(this.selectedTotal + 1);
-    // this.radioButtonSelected = event.target.value;
-    // this.tips = 'inline';
   }
 
   radioButtonChecked2(event: any) {
@@ -135,11 +114,6 @@ export class CheckouthomeComponent implements OnInit {
     this.total_price += 2;
     this.radioButtonSelected = event.target.value;
     this.tips = 'inline';
-
-    // if (this.radioButtonSelected != undefined) this.userItemsService.setTotalPrice(this.selectedTotal - +this.radioButtonSelected);
-    // this.userItemsService.setTotalPrice(this.selectedTotal + 2);
-    // this.radioButtonSelected = event.target.value;
-    // this.tips = 'inline';
   }
 
   get getTypeSelected() {

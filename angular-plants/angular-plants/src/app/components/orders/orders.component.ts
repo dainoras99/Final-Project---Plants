@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/app/common/order';
-import { OrderItem } from 'src/app/common/order-item';
-import { OrderType } from 'src/app/common/order-type';
-import { User } from 'src/app/common/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { OrderService } from 'src/app/services/order.service';
 import { Title, Meta } from "@angular/platform-browser";

@@ -1,20 +1,16 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { CartItem } from 'src/app/common/cart-item';
 import { CartSession } from 'src/app/common/cart-session';
-import { GiftCard } from 'src/app/common/gift-card';
 import { GiftCardObject } from 'src/app/common/gift-card-object';
 import { Shop } from 'src/app/common/shop';
-import { UserItem } from 'src/app/common/user-item';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CartService } from 'src/app/services/cart.service';
 import { DiscountService } from 'src/app/services/discount.service';
 import { GiftCardService } from 'src/app/services/gift-card.service';
 import { OrderTypesService } from 'src/app/services/order-types.service';
 import { OrderService } from 'src/app/services/order.service';
-import { UserItemsService } from 'src/app/services/user-items.service';
 
 @Component({
   selector: 'app-checkout',

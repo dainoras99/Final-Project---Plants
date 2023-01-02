@@ -1,6 +1,5 @@
 package com.viko.plants.request;
 
-import com.viko.plants.entity.Plant;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

@@ -1,10 +1,7 @@
 package com.viko.plants.service;
 
-import com.viko.plants.dto.OrdersResponse;
-import com.viko.plants.entity.Order;
 import com.viko.plants.entity.Plant;
 import com.viko.plants.entity.PlantCategory;
-import com.viko.plants.entity.User;
 import com.viko.plants.repository.PlantCategoryRepository;
 import com.viko.plants.repository.PlantRepository;
 import com.viko.plants.request.PlantUploadRequest;
@@ -14,16 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
-import java.awt.*;
 import java.io.*;
-import java.net.URL;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class PlantServiceImpl implements PlantService {

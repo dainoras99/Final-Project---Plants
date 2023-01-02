@@ -2,15 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
-import { CartItem } from '../common/cart-item';
 import { CartSession } from '../common/cart-session';
 import { Delivery } from '../common/delivery';
 import { Order } from '../common/order';
-import { OrderItem } from '../common/order-item';
-import { OrderType } from '../common/order-type';
-import { Parcel } from '../common/parcel';
-import { Plant } from '../common/plant';
-import { Shop } from '../common/shop';
 
 @Injectable({
   providedIn: 'root',

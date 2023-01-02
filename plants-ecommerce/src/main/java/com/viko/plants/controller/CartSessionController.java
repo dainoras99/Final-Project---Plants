@@ -1,25 +1,9 @@
 package com.viko.plants.controller;
 
 import com.viko.plants.dto.CartSessionResponse;
-import com.viko.plants.entity.CartItem;
-import com.viko.plants.entity.CartSession;
-import com.viko.plants.entity.Plant;
-import com.viko.plants.entity.User;
-import com.viko.plants.repository.CartSessionItemRepository;
-import com.viko.plants.repository.CartSessionRepository;
-import com.viko.plants.repository.PlantRepository;
-import com.viko.plants.repository.UserRepository;
 import com.viko.plants.request.CartSessionRequest;
 import com.viko.plants.service.SessionService;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")

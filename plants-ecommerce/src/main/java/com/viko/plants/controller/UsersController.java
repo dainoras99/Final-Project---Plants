@@ -1,7 +1,6 @@
 package com.viko.plants.controller;
 
 import com.viko.plants.service.UsersService;
-import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

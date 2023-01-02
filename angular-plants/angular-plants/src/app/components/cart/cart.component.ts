@@ -79,16 +79,5 @@ export class CartComponent implements OnInit {
       }
     )
   }
-  // deleteUserSession(cartItemId: number) {
-  //   // this.cartService.removeSession(cartItemId).subscribe(
-  //   //   {
-  //   //     next: response => {},
-  //   //     error: err => {
-  //   //       console.log(err);
-  //   //     }
-  //   //   }
-  //   // )
-  // }
-
 }
 

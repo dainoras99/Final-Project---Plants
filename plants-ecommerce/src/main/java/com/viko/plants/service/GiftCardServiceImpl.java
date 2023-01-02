@@ -3,10 +3,8 @@ package com.viko.plants.service;
 import com.viko.plants.entity.GiftCard;
 import com.viko.plants.repository.GiftCardRepository;
 import com.viko.plants.request.GiftCardRequest;
-import org.aspectj.lang.annotation.AfterReturning;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;

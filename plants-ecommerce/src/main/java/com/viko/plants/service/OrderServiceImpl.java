@@ -1,15 +1,12 @@
 package com.viko.plants.service;
 
-import com.viko.plants.dto.CartSessionResponse;
 import com.viko.plants.dto.OrdersResponse;
 import com.viko.plants.entity.*;
 import com.viko.plants.repository.*;
 import com.viko.plants.request.OrderRequestBody;
 import com.viko.plants.request.OrdersStatusChangeRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

@@ -1,6 +1,5 @@
 package com.viko.plants.repository;
 
-import com.viko.plants.entity.CartSession;
 import com.viko.plants.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

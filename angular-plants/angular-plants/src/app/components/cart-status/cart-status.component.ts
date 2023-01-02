@@ -42,29 +42,8 @@ export class CartStatusComponent implements OnInit {
     this.handleUserSession();
   }
 
-  // handleUser() {
-  //   this.authenticationService.getUserByUsername().subscribe(
-  //     data => { 
-  //       this.user = data;
-  //       this.cartService.getCartData().subscribe(data => {
-  //         this.cartSession = data;
-  //         this.userItemsService.setTotalPrice(this.cartSession.total_price);
-  //       })
-  //       //this.handleUserSession(this.user.username);
-
-  //     }
-  //   );
-  // }
-
   handleUserSession() {
     this.cartSession = this.cartService.getCartData();
-    // this.cartService.getCartData().subscribe(
-    //   data => {
-    //     this.cartSession = data;
-    //     console.log("ar cia? " + this.cartSession.total_price)
-    //     this.userItemsService.setTotalPrice(this.cartSession.total_price);
-    //   }
-    // );
   }
 
   clickSideNav() { 

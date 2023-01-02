@@ -2,7 +2,6 @@ package com.viko.plants.service;
 
 import com.viko.plants.dto.OrdersResponse;
 import com.viko.plants.entity.Order;
-import com.viko.plants.entity.Plant;
 import com.viko.plants.request.OrderRequestBody;
 import com.viko.plants.request.OrdersStatusChangeRequest;
 import org.springframework.http.ResponseEntity;

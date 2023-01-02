@@ -1,6 +1,5 @@
 package com.viko.plants.controller;
 
-import com.viko.plants.entity.CartItem;
 import com.viko.plants.entity.User;
 import com.viko.plants.entity.UserRole;
 import com.viko.plants.repository.UserRepository;
@@ -11,10 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @AllArgsConstructor

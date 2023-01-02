@@ -1,18 +1,10 @@
 package com.viko.plants.controller;
 
-import com.viko.plants.entity.Plant;
-import com.viko.plants.request.OrderRequestBody;
 import com.viko.plants.request.PlantUploadRequest;
 import com.viko.plants.service.PlantService;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.swing.*;
-import java.io.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")

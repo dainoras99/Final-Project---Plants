@@ -1,12 +1,8 @@
 package com.viko.plants.controller;
 
-import com.viko.plants.dto.CartSessionResponse;
 import com.viko.plants.entity.GiftCard;
-import com.viko.plants.request.CartSessionRequest;
 import com.viko.plants.request.GiftCardRequest;
-import com.viko.plants.service.EmailSenderService;
 import com.viko.plants.service.GiftCardService;
-import org.springframework.context.event.EventListener;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

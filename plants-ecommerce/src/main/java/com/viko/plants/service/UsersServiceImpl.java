@@ -1,7 +1,5 @@
 package com.viko.plants.service;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import com.viko.plants.entity.Plant;
 import com.viko.plants.entity.User;
 import com.viko.plants.entity.UserRole;
 import com.viko.plants.repository.UserRepository;
@@ -10,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @Service

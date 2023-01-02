@@ -126,21 +126,6 @@ export class PlantsFormComponent implements OnInit {
         }
       }
     )
-
-    // this.orderService.postOrder(this.cartSession, this.authenticationService.getLoggedInUserName()!, "shop", this.shopId, null!)
-    // .subscribe(
-    //   {
-    //     next: response => {
-    //       alert(response);
-    //       this.cartService.setCartData(null!);
-    //       this.router.navigate(['/plants']);
-    //     },
-    //     error: err => {
-    //       alert("Svetainės klaida, kreipkitės į administratorių");
-    //       this.router.navigate(['/plants']);
-    //     }
-    //   }
-    // );
   }
 
 

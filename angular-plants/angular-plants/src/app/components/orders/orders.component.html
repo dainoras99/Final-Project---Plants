@@ -16,13 +16,14 @@
         </mat-expansion-panel-header>
         <ul class="list-group mb-3 sticky-top">
             <li *ngFor="let orderItem of order.orderItems"
-                class="list-group-item d-flex justify-content-between lh-condensed">
-                <div>
+                class="list-group-item d-flex lh-condensed">
+                <div class="col-6">
                     <h3 class="my-0">{{orderItem.name}}</h3>
                     <small class="text-muted">Produkto kiekis: {{orderItem.quantity}}</small>
                 </div>
-                <img src="../../../{{orderItem.imageUrl}}" class="img-fluid rounded-3" width="80" height="80">
-                <span class="text-muted">{{orderItem.price | currency: "EUR"}}</span>
+                <img src="../../../{{orderItem.imageUrl}}" class="img-fluid rounded-3 col-xl-1 col-3" width="80" height="80">
+                <div class="col-xl-4 col-0"></div>
+                <span class="text-muted col-4">{{orderItem.price | currency: "EUR"}}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between lh-condensed">
                 <div *ngIf="order.orderType.orderTypeName == 'shop'">

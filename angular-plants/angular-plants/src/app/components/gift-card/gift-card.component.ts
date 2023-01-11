@@ -16,6 +16,7 @@ export class GiftCardComponent implements OnInit {
   currentSelectionPrice: number = 25;
   errors: boolean = false;
   giftCard: GiftCard = new GiftCard();
+  handler:any = null;
 
 
   constructor(private giftCardService: GiftCardService, private router:Router, private titleService: Title, private meta: Meta) { }
@@ -23,6 +24,7 @@ export class GiftCardComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("Dovanų kuponai - www.augaluoaze.lt");
     this.meta.updateTag({ name: 'description', content: 'Augalų oazės internetinės prekybos dovanų kuponų puslapis kuriame galite įsigyti kuponų sau arba kitiems žmonėms. Pasirinkite dovanų kuponą tarp 25€, 50€, 75€ arba 100€!' });
+    
   }
 
   giftCardForm = new FormGroup({
@@ -82,14 +84,40 @@ export class GiftCardComponent implements OnInit {
   .subscribe(
     {
       next: response => {
-        alert("Dovanų kupono užsakymas pateiktas!");
-        this.router.navigate(['/augalai']);
+        this.pay(this.currentSelectionPrice);
+        
       },
       error: err => {
         alert(err);
       }
     }
   )
+  }
+
+ 
+
+   pay(amount: any) {    
+ 
+    var handler = (<any>window).StripeCheckout.configure({
+      currency: "eur",
+      customer_email: "kazkodel@dsadasd.com",
+      key: 'pk_test_51MP391DkOj7oXrK7NNq8UqTc7yg0UTaRPQ0wgDIRy4spp367dIUJ1hV7Dv1EYP9NWWu1IoXccISuIZ3wjczbvKuR00LMLfDVXQ',
+      locale: 'auto',
+      token: function (token: any) {
+        // You can access the token ID with `token.id`.
+        // Get the token ID to your server-side code for use.
+        alert("Dovanų kupono užsakymas pateiktas!");
+        this.router.navigate(['/augalai']);
+      }
+    });
+ 
+    handler.open({
+      name: 'Augalų Oazė',
+      description: 'Augalų elektroninė pardutuovė',
+      amount: amount * 100,
+      email: "dasdasdasd"
+    });
+ 
   }
 
 }

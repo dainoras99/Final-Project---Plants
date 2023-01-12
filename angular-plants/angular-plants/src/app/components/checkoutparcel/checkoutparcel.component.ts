@@ -4,6 +4,7 @@ import { CartItem } from 'src/app/common/cart-item';
 import { CartSession } from 'src/app/common/cart-session';
 import { GiftCardObject } from 'src/app/common/gift-card-object';
 import { Parcel } from 'src/app/common/parcel';
+import { User } from 'src/app/common/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CartService } from 'src/app/services/cart.service';
 import { DiscountService } from 'src/app/services/discount.service';
@@ -32,12 +33,14 @@ export class CheckoutparcelComponent implements OnInit {
   disabledButton: string = '';
   remainingBalanceBeforeUse: number = 0;
   total_price: number = 0;
+  user!: User;
+  oldBalance!: number;
 
   isDiscount!: boolean
 
-  constructor(private router: Router, 
+  constructor(private router: Router,
     private cartService: CartService,
-    private orderTypesService: OrderTypesService, 
+    private orderTypesService: OrderTypesService,
     private authenticationService: AuthenticationService,
     private orderService: OrderService,
     private giftCardService: GiftCardService,
@@ -51,6 +54,7 @@ export class CheckoutparcelComponent implements OnInit {
       this.total_price = this.cartSession.total_price;
       if (this.isDiscount) this.total_price = this.cartSession.total_price - this.cartSession.total_price * 0.25;
     });
+    this.total_price = +this.total_price.toFixed(2);
   }
 
   subscribeDiscount() {
@@ -60,7 +64,7 @@ export class CheckoutparcelComponent implements OnInit {
   }
 
   handleParcels() {
-   this.orderTypesService.getParcelsList().subscribe(
+    this.orderTypesService.getParcelsList().subscribe(
       data => {
         this.parcelList = data;
       }
@@ -82,73 +86,150 @@ export class CheckoutparcelComponent implements OnInit {
     return this.typeSelected;
   }
 
-  postOrder() {
-  if (this.parcelSelected === undefined) this.parcelSelected = "Akropolis - Vilnius, Ozo g. 25, 07150";
+  pay(amount: any, theEmail: any) {
+    var handler = (<any>window).StripeCheckout.configure({
+      currency: "EUR",
+      email: theEmail,
+      key: 'pk_test_51MP391DkOj7oXrK7NNq8UqTc7yg0UTaRPQ0wgDIRy4spp367dIUJ1hV7Dv1EYP9NWWu1IoXccISuIZ3wjczbvKuR00LMLfDVXQ',
+      locale: 'auto',
+      token: (token: any) => {
+        if (this.parcelSelected === undefined) this.parcelSelected = "Akropolis - Vilnius, Ozo g. 25, 07150";
 
-  // 
-  this.parcelList.forEach(parcel => {
-    if (this.parcelSelected === parcel.name + " - " + parcel.city + ", " + parcel.address + ", " + parcel.zipCode) this.parcelId = parcel.id;
-  });
-  // 
+        // 
+        this.parcelList.forEach(parcel => {
+          if (this.parcelSelected === parcel.name + " - " + parcel.city + ", " + parcel.address + ", " + parcel.zipCode) this.parcelId = parcel.id;
+        });
+        // 
 
-  this.cartSession.total_price = this.total_price;
+        this.cartSession.total_price = this.total_price;
 
-  this.orderService.postOrder(this.cartSession, this.authenticationService.getLoggedInUserName()!, "parcel",  this.parcelId, null!)
-    .subscribe(
-      {
-        next: response => {
-          this.orderService.getOrders(this.authenticationService.getLoggedInUserName()!).subscribe(response => {
-            if (response.length % 5 == 0) {
-              alert("Jūs jau pateikėte " + response.length + " užsakymų/us. Dovanojame jums 25% nuolaida sekančiam apsipirkimui!");
+        this.orderService.postOrder(this.cartSession, this.authenticationService.getLoggedInUserName()!, "parcel", this.parcelId, null!)
+          .subscribe(
+            {
+              next: response => {
+                this.orderService.getOrders(this.authenticationService.getLoggedInUserName()!).subscribe(response => {
+                  if (response.length % 5 == 0) {
+                    alert("Jūs jau pateikėte " + response.length + " užsakymų/us. Dovanojame jums 25% nuolaida sekančiam apsipirkimui!");
+                  }
+                  else alert("Užsakymas pateiktas!");
+
+                  this.cartService.setCartData(null!);
+                  this.router.navigate(['/augalai']);
+                })
+              },
+              error: err => {
+                alert("Svetainės klaida, kreipkitės į administratorių");
+                this.router.navigate(['/augalai']);
+              }
             }
-            else alert("Užsakymas pateiktas!");
+          );
 
-            this.cartService.setCartData(null!);
-            this.router.navigate(['/augalai']);
-        })
-        },
-        error: err => {
-          alert("Svetainės klaida, kreipkitės į administratorių");
-          this.router.navigate(['/augalai']);
+        if (this.giftCard != null) {
+          this.giftCardService.updateGiftCard(this.giftCard).subscribe(
+            {
+              next: response => {
+                console.log(response);
+              },
+              error: err => {
+                alert("Svetainės klaida, kreipkitės į administratorių");
+                this.router.navigate(['/augalai']);
+              }
+            }
+          )
         }
       }
-    );
+    });
+    handler.open({
+      name: 'Augalų Oazė',
+      description: 'Augalų elektroninė pardutuovė',
+      amount: (amount * 100).toFixed(2)
+    });
 
-    if (this.giftCard != null) {
-      this.giftCardService.updateGiftCard(this.giftCard).subscribe(
-        {
-          next: response => {
-            console.log(response);
-          },
-          error: err => {
-            alert("Svetainės klaida, kreipkitės į administratorių");
-            this.router.navigate(['/augalai']);
+  }
+
+  postOrder() {
+    this.authenticationService.getUserByUsername().subscribe(
+      data => {
+        this.user = data;
+        if (this.giftCard != null) {
+          if (this.total_price > this.oldBalance) {
+            this.pay(this.total_price - this.oldBalance, this.user.email);
+          }
+          if (this.total_price <= this.oldBalance) {
+            if (this.parcelSelected === undefined) this.parcelSelected = "Akropolis - Vilnius, Ozo g. 25, 07150";
+
+            // 
+            this.parcelList.forEach(parcel => {
+              if (this.parcelSelected === parcel.name + " - " + parcel.city + ", " + parcel.address + ", " + parcel.zipCode) this.parcelId = parcel.id;
+            });
+            // 
+
+            this.cartSession.total_price = this.total_price;
+
+            this.orderService.postOrder(this.cartSession, this.authenticationService.getLoggedInUserName()!, "parcel", this.parcelId, null!)
+              .subscribe(
+                {
+                  next: response => {
+                    this.orderService.getOrders(this.authenticationService.getLoggedInUserName()!).subscribe(response => {
+                      if (response.length % 5 == 0) {
+                        alert("Jūs jau pateikėte " + response.length + " užsakymų/us. Dovanojame jums 25% nuolaida sekančiam apsipirkimui!");
+                      }
+                      else alert("Užsakymas pateiktas!");
+
+                      this.cartService.setCartData(null!);
+                      this.router.navigate(['/augalai']);
+                    })
+                  },
+                  error: err => {
+                    alert("Svetainės klaida, kreipkitės į administratorių");
+                    this.router.navigate(['/augalai']);
+                  }
+                }
+              );
+
+            if (this.giftCard != null) {
+              this.giftCardService.updateGiftCard(this.giftCard).subscribe(
+                {
+                  next: response => {
+                    console.log(response);
+                  },
+                  error: err => {
+                    alert("Svetainės klaida, kreipkitės į administratorių");
+                    this.router.navigate(['/augalai']);
+                  }
+                }
+              )
+            }
           }
         }
-      )
-    }
-   }
-
-   codeUsed(giftCardCode: string) {
-    this.giftCardService.getGiftCard(giftCardCode).subscribe(
-      data => {
-        this.giftCard = data;
-        if(this.giftCard==null) this.giftCardError = true;
         else {
-          this.disabledButton = 'disabled';
-          this.giftCardError = false;
-          this.remainingBalanceBeforeUse = this.giftCard.remainingBalance;
-        
-          if (this.remainingBalanceBeforeUse > this.total_price) {
-            this.giftCard.usedBalance = this.total_price;
-            this.giftCard.remainingBalance = this.remainingBalanceBeforeUse - this.giftCard.usedBalance;
-          }
-          if (this.remainingBalanceBeforeUse <= this.total_price) {
-            this.giftCard.remainingBalance = 0;
-            this.giftCard.usedBalance = this.remainingBalanceBeforeUse;
-          }
+          this.pay(this.total_price, this.user.email);
         }
       }
     )
   }
+
+codeUsed(giftCardCode: string) {
+  this.giftCardService.getGiftCard(giftCardCode).subscribe(
+    data => {
+      this.giftCard = data;
+      this.oldBalance = this.giftCard.remainingBalance;
+      if (this.giftCard == null) this.giftCardError = true;
+      else {
+        this.disabledButton = 'disabled';
+        this.giftCardError = false;
+        this.remainingBalanceBeforeUse = this.giftCard.remainingBalance;
+
+        if (this.remainingBalanceBeforeUse > this.total_price) {
+          this.giftCard.usedBalance = this.total_price;
+          this.giftCard.remainingBalance = this.remainingBalanceBeforeUse - this.giftCard.usedBalance;
+        }
+        if (this.remainingBalanceBeforeUse <= this.total_price) {
+          this.giftCard.remainingBalance = 0;
+          this.giftCard.usedBalance = this.remainingBalanceBeforeUse;
+        }
+      }
+    }
+  )
+}
 }

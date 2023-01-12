@@ -5,6 +5,7 @@ import { CartItem } from 'src/app/common/cart-item';
 import { CartSession } from 'src/app/common/cart-session';
 import { Delivery } from 'src/app/common/delivery';
 import { GiftCardObject } from 'src/app/common/gift-card-object';
+import { User } from 'src/app/common/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CartService } from 'src/app/services/cart.service';
 import { DiscountService } from 'src/app/services/discount.service';
@@ -26,6 +27,7 @@ export class CheckouthomeComponent implements OnInit {
   errors: boolean = false;
   tips = "none";
   cartSession!: CartSession;
+  user!: User;
 
   giftCardCode: string = '';
   giftCard!: GiftCardObject;
@@ -33,6 +35,7 @@ export class CheckouthomeComponent implements OnInit {
   giftCardError: boolean = false;
   disabledButton: string = '';
   remainingBalanceBeforeUse: number = 0;
+  oldBalance!: number;
 
   isDiscount!: boolean
   total_price: number = 0;
@@ -51,6 +54,7 @@ export class CheckouthomeComponent implements OnInit {
       this.total_price = this.cartSession.total_price;
       if (this.isDiscount) this.total_price = this.cartSession.total_price - this.cartSession.total_price * 0.25;
     });
+    this.total_price = +this.total_price.toFixed(2);
   }
 
   subscribeDiscount() {
@@ -120,6 +124,63 @@ export class CheckouthomeComponent implements OnInit {
     return this.typeSelected;
   }
 
+  pay(amount: any, theEmail: any) {
+    var handler = (<any>window).StripeCheckout.configure({
+      currency: "EUR",
+      email: theEmail,
+      key: 'pk_test_51MP391DkOj7oXrK7NNq8UqTc7yg0UTaRPQ0wgDIRy4spp367dIUJ1hV7Dv1EYP9NWWu1IoXccISuIZ3wjczbvKuR00LMLfDVXQ',
+      locale: 'auto',
+      token: (token: any) => {
+        if (this.radioButtonSelected === undefined) this.radioButtonSelected = "0";
+        this.delivery.courierTips = +this.radioButtonSelected;
+
+        this.cartSession.total_price = this.total_price;
+
+        this.orderService.postOrder(this.cartSession, this.authenticationService.getLoggedInUserName()!, "delivery", null!, this.delivery)
+          .subscribe(
+            {
+              next: response => {
+                this.orderService.getOrders(this.authenticationService.getLoggedInUserName()!).subscribe(response => {
+                  if (response.length % 5 == 0) {
+                    alert("Jūs jau pateikėte " + response.length + " užsakymų/us. Dovanojame jums 25% nuolaida sekančiam apsipirkimui!");
+                  }
+                  else alert("Užsakymas pateiktas!");
+
+                  this.cartService.setCartData(null!);
+                  this.router.navigate(['/augalai']);
+                })
+              },
+              error: err => {
+                alert("Svetainės klaida, kreipkitės į administratorių");
+                this.router.navigate(['/augalai']);
+              }
+            }
+          );
+
+        if (this.giftCard != null) {
+          this.giftCardService.updateGiftCard(this.giftCard).subscribe(
+            {
+              next: response => {
+                console.log(response);
+              },
+              error: err => {
+                alert("Svetainės klaida, kreipkitės į administratorių");
+                this.router.navigate(['/augalai']);
+              }
+            }
+          )
+        }
+      }
+    });
+
+    handler.open({
+      name: 'Augalų Oazė',
+      description: 'Augalų elektroninė pardutuovė',
+      amount: (amount * 100).toFixed(2)
+    });
+
+  }
+
   postOrder() {
 
     if (this.deliveryForm.invalid) {
@@ -128,51 +189,68 @@ export class CheckouthomeComponent implements OnInit {
     }
     this.errors = false;
 
-    if (this.radioButtonSelected === undefined) this.radioButtonSelected = "0";
-    this.delivery.courierTips = +this.radioButtonSelected;
+    this.authenticationService.getUserByUsername().subscribe(
+      data => {
+        this.user = data;
+        if (this.giftCard != null) {
+          if (this.total_price > this.oldBalance) {
+            this.pay(this.total_price - this.oldBalance, this.user.email);
+          }
+          if (this.total_price <= this.oldBalance) {
+            if (this.radioButtonSelected === undefined) this.radioButtonSelected = "0";
+            this.delivery.courierTips = +this.radioButtonSelected;
 
-    this.cartSession.total_price = this.total_price;
+            this.cartSession.total_price = this.total_price;
 
-    this.orderService.postOrder(this.cartSession, this.authenticationService.getLoggedInUserName()!, "delivery", null!, this.delivery)
-      .subscribe(
-        {
-          next: response => {
-            this.orderService.getOrders(this.authenticationService.getLoggedInUserName()!).subscribe(response => {
-              if (response.length % 5 == 0) {
-                alert("Jūs jau pateikėte " + response.length + " užsakymų/us. Dovanojame jums 25% nuolaida sekančiam apsipirkimui!");
-              }
-              else alert("Užsakymas pateiktas!");
+            this.orderService.postOrder(this.cartSession, this.authenticationService.getLoggedInUserName()!, "delivery", null!, this.delivery)
+              .subscribe(
+                {
+                  next: response => {
+                    this.orderService.getOrders(this.authenticationService.getLoggedInUserName()!).subscribe(response => {
+                      if (response.length % 5 == 0) {
+                        alert("Jūs jau pateikėte " + response.length + " užsakymų/us. Dovanojame jums 25% nuolaida sekančiam apsipirkimui!");
+                      }
+                      else alert("Užsakymas pateiktas!");
 
-              this.cartService.setCartData(null!);
-              this.router.navigate(['/augalai']);
-            })
-          },
-          error: err => {
-            alert("Svetainės klaida, kreipkitės į administratorių");
-            this.router.navigate(['/augalai']);
+                      this.cartService.setCartData(null!);
+                      this.router.navigate(['/augalai']);
+                    })
+                  },
+                  error: err => {
+                    alert("Svetainės klaida, kreipkitės į administratorių");
+                    this.router.navigate(['/augalai']);
+                  }
+                }
+              );
+
+            if (this.giftCard != null) {
+              this.giftCardService.updateGiftCard(this.giftCard).subscribe(
+                {
+                  next: response => {
+                    console.log(response);
+                  },
+                  error: err => {
+                    alert("Svetainės klaida, kreipkitės į administratorių");
+                    this.router.navigate(['/augalai']);
+                  }
+                }
+              )
+            }
           }
         }
-      );
-
-    if (this.giftCard != null) {
-      this.giftCardService.updateGiftCard(this.giftCard).subscribe(
-        {
-          next: response => {
-            console.log(response);
-          },
-          error: err => {
-            alert("Svetainės klaida, kreipkitės į administratorių");
-            this.router.navigate(['/augalai']);
-          }
+        else {
+          this.pay(this.total_price, this.user.email);
         }
-      )
-    }
+      }
+    )
+
   }
 
   codeUsed(giftCardCode: string) {
     this.giftCardService.getGiftCard(giftCardCode).subscribe(
       data => {
         this.giftCard = data;
+        this.oldBalance = this.giftCard.remainingBalance;
         if (this.giftCard == null) this.giftCardError = true;
         else {
           this.disabledButton = 'disabled';

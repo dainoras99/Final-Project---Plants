@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { GiftCard } from 'src/app/common/gift-card';
 import { GiftCardService } from 'src/app/services/gift-card.service';
 import { Title, Meta } from "@angular/platform-browser";
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { User } from 'src/app/common/user';
 
 @Component({
   selector: 'app-gift-card',
@@ -16,13 +18,16 @@ export class GiftCardComponent implements OnInit {
   currentSelectionPrice: number = 25;
   errors: boolean = false;
   giftCard: GiftCard = new GiftCard();
+  user!: User;
 
 
-  constructor(private giftCardService: GiftCardService, private router:Router, private titleService: Title, private meta: Meta) { }
+  constructor(public giftCardService: GiftCardService, private router: Router, private titleService: Title, private meta: Meta,
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.titleService.setTitle("Dovanų kuponai - www.augaluoaze.lt");
     this.meta.updateTag({ name: 'description', content: 'Augalų oazės internetinės prekybos dovanų kuponų puslapis kuriame galite įsigyti kuponų sau arba kitiems žmonėms. Pasirinkite dovanų kuponą tarp 25€, 50€, 75€ arba 100€!' });
+
   }
 
   giftCardForm = new FormGroup({
@@ -60,14 +65,14 @@ export class GiftCardComponent implements OnInit {
   }
 
   changePicture(forward: boolean) {
-      if (forward) {
-        if (this.currentSelectionImage == 3) return;
-        else this.currentSelectionImage++;
-      }
-      else {
-        if (this.currentSelectionImage == 1) return;
-        else this.currentSelectionImage--;
-      }
+    if (forward) {
+      if (this.currentSelectionImage == 3) return;
+      else this.currentSelectionImage++;
+    }
+    else {
+      if (this.currentSelectionImage == 1) return;
+      else this.currentSelectionImage--;
+    }
   }
 
   postGiftCard() {
@@ -76,20 +81,47 @@ export class GiftCardComponent implements OnInit {
       return;
     }
 
-    console.log(this.giftCard)
-
-  this.giftCardService.postGiftCard(this.giftCard.name, this.giftCard.message, this.giftCard.email, this.currentSelectionPrice, this.currentSelectionImage)
-  .subscribe(
-    {
-      next: response => {
-        alert("Dovanų kupono užsakymas pateiktas!");
-        this.router.navigate(['/augalai']);
-      },
-      error: err => {
-        alert(err);
-      }
+    if (this.authenticationService.isUserLoggedIn()) {
+      this.authenticationService.getUserByUsername().subscribe(
+        data => {
+          this.user = data;
+          this.pay(this.currentSelectionPrice, this.user.email);
+        }
+      );
     }
-  )
+    else
+      this.pay(this.currentSelectionPrice, null)
+  }
+
+  pay(amount: any, theEmail: any) {
+    var handler = (<any>window).StripeCheckout.configure({
+      currency: "EUR",
+      email: theEmail,
+      key: 'pk_test_51MP391DkOj7oXrK7NNq8UqTc7yg0UTaRPQ0wgDIRy4spp367dIUJ1hV7Dv1EYP9NWWu1IoXccISuIZ3wjczbvKuR00LMLfDVXQ',
+      locale: 'auto',
+      token: (token: any) => {
+        this.giftCardService.postGiftCard(this.giftCard.name, this.giftCard.message, this.giftCard.email, this.currentSelectionPrice, this.currentSelectionImage)
+          .subscribe(
+            {
+              next: (response: any) => {
+                alert(response);
+                this.router.navigate(['/augalai']);
+              
+              },
+              error: (err: any) => {
+                alert(err);
+              }
+            }
+          )
+      }
+    });
+
+    handler.open({
+      name: 'Augalų Oazė',
+      description: 'Augalų elektroninė pardutuovė',
+      amount: amount * 100
+    });
+
   }
 
 }

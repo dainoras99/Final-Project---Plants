@@ -49,6 +49,7 @@ export class CartComponent implements OnInit {
   handleUserSession(username: string) {
     this.cartService.getCartSession(username).subscribe(
       data => {
+        data.total_price = +data.total_price.toFixed(2);
         this.cartService.setCartData(data);
       }
     )

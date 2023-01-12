@@ -38,7 +38,6 @@ export class CartStatusComponent implements OnInit {
 
   ngOnInit(): void {
     this.isDiscount = this.discountService.getisDiscount();
-    console.log("cart statuse cia: " + this.isDiscount);
     this.handleUserSession();
   }
 

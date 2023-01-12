@@ -13,9 +13,12 @@ import com.viko.plants.request.CartSessionRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.DecimalFormat;
 import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
+import java.text.DecimalFormatSymbols;
 
 @Service
 public class SessionServiceImpl implements SessionService {
@@ -76,8 +79,16 @@ public class SessionServiceImpl implements SessionService {
 
         cartSession.setCartItems(cartItems);
 
-        if (cartSession.getTotal_price() == null) cartSession.setTotal_price(plant.getPrice());
-        else cartSession.setTotal_price(cartSession.getTotal_price() + plant.getPrice());
+        if (cartSession.getTotal_price() == null)
+        {
+            DecimalFormat decimalFormat = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
+            cartSession.setTotal_price(Float.valueOf(decimalFormat.format(plant.getPrice())));
+
+        }
+        else {
+            DecimalFormat decimalFormat = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
+            cartSession.setTotal_price(Float.valueOf(decimalFormat.format(cartSession.getTotal_price() + plant.getPrice())));
+        }
         cartSession.setUser(user);
 
         sessionRepository.save(cartSession);
@@ -92,8 +103,9 @@ public class SessionServiceImpl implements SessionService {
         Optional<CartItem> optionalCartItem = cartSessionItemRepository.findById(cartItemId);
         CartItem cartItem = optionalCartItem.get();
         CartSession cartSession = cartItem.getCartSession();
-        cartSession.setTotal_price(
-                    cartItem.getCartSession().getTotal_price() - (cartItem.getPlant().getPrice() * cartItem.getQuantity()));
+        DecimalFormat decimalFormat = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
+        cartSession.setTotal_price(Float.valueOf(decimalFormat.format(
+                cartItem.getCartSession().getTotal_price() - (cartItem.getPlant().getPrice() * cartItem.getQuantity()))));
         cartSessionItemRepository.deleteById(cartItemId);
         if (cartSession.getTotal_price() == 0) {
             deleteCartSession(cartSession.getUser().getId());
@@ -112,11 +124,13 @@ public class SessionServiceImpl implements SessionService {
         CartSession cartSession = cartItem.getCartSession();
         if (quantityIncrease) {
             cartItem.setQuantity(cartItem.getQuantity() + 1);
-            cartSession.setTotal_price(cartSession.getTotal_price() + cartItem.getPlant().getPrice());
+            DecimalFormat decimalFormat = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
+            cartSession.setTotal_price(Float.valueOf(decimalFormat.format(cartSession.getTotal_price() + cartItem.getPlant().getPrice())));
         }
         else {
             cartItem.setQuantity(cartItem.getQuantity() - 1);
-            cartSession.setTotal_price(cartSession.getTotal_price() - cartItem.getPlant().getPrice());
+            DecimalFormat decimalFormat = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
+            cartSession.setTotal_price(Float.valueOf(decimalFormat.format(cartSession.getTotal_price() - cartItem.getPlant().getPrice())));
         }
         cartSessionItemRepository.save(cartItem);
         sessionRepository.save(cartSession);
@@ -154,7 +168,8 @@ public class SessionServiceImpl implements SessionService {
         for (CartItem cartItem : cartSession.getCartItems()) {
             if (cartItem.getPlant().getName().equals(request.getPlantName())) {
                 cartItem.setQuantity(cartItem.getQuantity() + 1);
-                cartSession.setTotal_price(cartSession.getTotal_price() + cartItem.getPlant().getPrice());
+                DecimalFormat decimalFormat = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
+                cartSession.setTotal_price(Float.valueOf(decimalFormat.format(cartSession.getTotal_price() + cartItem.getPlant().getPrice())));
                 cartSessionItemRepository.save(cartItem);
             }
         }

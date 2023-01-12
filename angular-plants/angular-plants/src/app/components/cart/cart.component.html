@@ -29,9 +29,9 @@
                     </ng-template>
             </div>
             <div class="col-5 col-sm-4 col-xs-3 col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h3 *ngIf="(isDiscount | async) == false" class="mb-0">{{cartItem.plant.price * cartItem.quantity | currency:'EUR'}}</h3>
-                <h3 *ngIf="(isDiscount | async) == true" class="mb-0">{{(cartItem.plant.price * cartItem.quantity) 
-                    - (cartItem.plant.price * cartItem.quantity) *0.25
+                <h3 *ngIf="(isDiscount | async) == false" class="mb-0">{{(cartItem.plant.price * cartItem.quantity).toFixed(2) | currency:'EUR'}}</h3>
+                <h3 *ngIf="(isDiscount | async) == true" class="mb-0">{{((cartItem.plant.price * cartItem.quantity) 
+                    - (cartItem.plant.price * cartItem.quantity) *0.25).toFixed(2)
                      | currency:'EUR'}}</h3>
             </div>
             <div class="col-2 col-sm-0 col-md-1 col-lg-1 col-xl-1 text-end">

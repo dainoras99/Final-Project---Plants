@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { GiftCard } from 'src/app/common/gift-card';
 import { GiftCardService } from 'src/app/services/gift-card.service';
 import { Title, Meta } from "@angular/platform-browser";
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { User } from 'src/app/common/user';
 
 @Component({
   selector: 'app-gift-card',
@@ -16,9 +18,11 @@ export class GiftCardComponent implements OnInit {
   currentSelectionPrice: number = 25;
   errors: boolean = false;
   giftCard: GiftCard = new GiftCard();
+  user!: User;
 
 
-  constructor(public giftCardService: GiftCardService, private router: Router, private titleService: Title, private meta: Meta) { }
+  constructor(public giftCardService: GiftCardService, private router: Router, private titleService: Title, private meta: Meta,
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.titleService.setTitle("Dovanų kuponai - www.augaluoaze.lt");
@@ -77,22 +81,30 @@ export class GiftCardComponent implements OnInit {
       return;
     }
 
-    this.pay(this.currentSelectionPrice);
+    if (this.authenticationService.isUserLoggedIn()) {
+      this.authenticationService.getUserByUsername().subscribe(
+        data => {
+          this.user = data;
+          this.pay(this.currentSelectionPrice, this.user.email);
+        }
+      );
+    }
+    else
+      this.pay(this.currentSelectionPrice, null)
   }
 
-  pay(amount: any) {
+  pay(amount: any, theEmail: any) {
     var handler = (<any>window).StripeCheckout.configure({
       currency: "EUR",
-      email: "kazkodel@dsadasd.com",
+      email: theEmail,
       key: 'pk_test_51MP391DkOj7oXrK7NNq8UqTc7yg0UTaRPQ0wgDIRy4spp367dIUJ1hV7Dv1EYP9NWWu1IoXccISuIZ3wjczbvKuR00LMLfDVXQ',
       locale: 'auto',
       token: (token: any) => {
-        console.log("wtf?");
         this.giftCardService.postGiftCard(this.giftCard.name, this.giftCard.message, this.giftCard.email, this.currentSelectionPrice, this.currentSelectionImage)
           .subscribe(
             {
               next: (response: any) => {
-                alert("Ačiū");
+                alert(response);
                 this.router.navigate(['/augalai']);
               
               },

@@ -52,7 +52,7 @@ public class PlantServiceImpl implements PlantService {
                 }
             }
         }
-        plant.setImageUrl("assets/images/Photos/plant" + plantUploadRequest.getSelectedFileName());
+        plant.setImageUrl("assets/images/Photos/plant/" + plantUploadRequest.getSelectedFileName());
        plantRepository.save(plant);
        return new ResponseEntity<>("Naujas augalas pridėtas", HttpStatus.CREATED);
     }
@@ -69,8 +69,8 @@ public class PlantServiceImpl implements PlantService {
         try {
             InputStream input = new ByteArrayInputStream(file.getBytes());
             OutputStream output = new FileOutputStream
-                    ("C:/Users/daino/OneDrive/Stalinis kompiuteris/Final-Project---Plants/" +
-                            "angular-plants/angular-plants/src/assets/images/Photos/plant" + file.getOriginalFilename());
+                    ("C:/Users/Indre/Desktop/Dainoro WORKSHOP failai/BAIGIAMASIS/Final-Project---Plants/" +
+                            "angular-plants/angular-plants/src/assets/images/Photos/plant/" + file.getOriginalFilename());
             IOUtils.copy(input, output);
         } catch (IOException e) {
             e.printStackTrace();

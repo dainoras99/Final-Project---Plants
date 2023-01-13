@@ -63,7 +63,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     @Override
     public void sendOrderStatusInformationToUser(Order order, String status) {
         sendSimpleEmail(order.getUser().getEmail(),
-                "Sveiki " + order.getUser().getFirstname() + ", jūsų užsakymo #" + order.getId() + " būsena buvo pakeista į" + status + "\n\n" +
+                "Sveiki " + order.getUser().getFirstname() + ", jūsų užsakymo #" + order.getId() + " būsena buvo pakeista į " + status + "\n\n" +
                         "Detalesnę užsakymo informacija rasite prisijungę prie mūsų internetinės parduotuvės",
                 "Augalų oazės #" + order.getId() + " užsakymo būsena pakeista į " + ",," + status + "''");
     }

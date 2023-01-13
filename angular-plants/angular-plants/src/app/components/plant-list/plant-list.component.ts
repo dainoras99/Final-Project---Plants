@@ -42,7 +42,7 @@ export class PlantListComponent implements OnInit {
 
   loadOrdersCount() {
     this.orderService.getOrders(this.authenticationService.getLoggedInUserName()!).subscribe(response => {
-      if (response.length % 5 == 0) {
+      if (response.length % 5 == 0 && response.length != 0) {
         this.isDiscount = true;
         this.discountService.setisDiscount(true);
       }

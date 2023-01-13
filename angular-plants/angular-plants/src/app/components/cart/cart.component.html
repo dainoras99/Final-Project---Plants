@@ -2,7 +2,7 @@
     <h1 class="fw-normal mb-0 text-black">Jūsų Krepšelis</h1>
 </div>
 <div class="card rounded-3 mb-4"  *ngFor="let cartItem of (cartSession | async)?.cartItems">
-    <div class="card-body p-4 m-auto">
+    <div class="card-body p-4 m-md-0 m-auto">
         <div class="row d-flex justify-content-between align-items-center">
             <div class="col-md-2 col-lg-2 col-xl-2">
                 <img src="../../../{{cartItem.plant.imageUrl}}" class="img-fluid rounded-3">
